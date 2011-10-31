@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="0"
+    android:background="#FFc5c5c7"
+    >
+    <ImageButton android:id="@+id/alarm_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight=".25"
+        android:src="@drawable/home"        
+	    android:background="#FFc5c5c7"
+        />
+    <ImageButton android:id="@+id/gallery_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight=".25"
+        android:src="@drawable/contacts" 
+	    android:background="#FFc5c5c7"
+        />
+    <ImageButton android:id="@+id/music_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight=".25"
+        android:src="@drawable/flag_me"
+	    android:background="#FFc5c5c7"
+        />
+    <ImageButton android:id="@+id/home_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight=".25"
+        android:src="@drawable/weibo"
+	    android:background="#FFc5c5c7"
+        />
+     <ImageButton android:id="@+id/home_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight=".25"
+        android:src="@drawable/back"
+	    android:background="#FFc5c5c7"
+        />
+</LinearLayout>
