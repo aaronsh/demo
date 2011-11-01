@@ -2,44 +2,41 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="0"
-    android:background="#FFc5c5c7"
+    android:background="@drawable/bottom_menu_bg"
     >
-    <ImageButton android:id="@+id/alarm_button"
+    <ImageButton android:id="@+id/bottom_menu_home"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight=".25"
         android:src="@drawable/home"        
-	    android:background="#FFc5c5c7"
-        />
-    <ImageButton android:id="@+id/gallery_button"
+        android:layout_gravity="center" />
+    <ImageButton android:id="@+id/bottom_menu_company"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight=".25"
-        android:src="@drawable/contacts" 
-	    android:background="#FFc5c5c7"
+        android:src="@drawable/contacts"
+        android:layout_gravity="center" 
         />
-    <ImageButton android:id="@+id/music_button"
+    <ImageButton android:id="@+id/bottom_menu_contact_us"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight=".25"
         android:src="@drawable/flag_me"
-	    android:background="#FFc5c5c7"
-        />
-    <ImageButton android:id="@+id/home_button"
+        android:layout_gravity="center"/>
+    <ImageButton android:id="@+id/bottom_menu_weibo"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight=".25"
         android:src="@drawable/weibo"
-	    android:background="#FFc5c5c7"
+        android:layout_gravity="center"
         />
-     <ImageButton android:id="@+id/home_button"
+     <ImageButton android:id="@+id/bottom_menu_refresh"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_weight=".25"
         android:src="@drawable/back"
-	    android:background="#FFc5c5c7"
+        android:layout_gravity="center"
         />
 </LinearLayout>

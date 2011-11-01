@@ -33,7 +33,7 @@ public class ContactOur extends Activity {
 	 * 初始化布局属性
 	 */
 	private void InitView() {
-		listviews = (ListView) findViewById(R.id.listviews);
+		listviews = (ListView) findViewById(R.id.listview);
 		SimpleAdapter adapter = new SimpleAdapter(this, getData(),
 				R.layout.list_contact_view, new String[] { "username" },
 				new int[] {R.id.username });
