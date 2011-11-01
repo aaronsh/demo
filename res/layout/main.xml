@@ -40,10 +40,9 @@
                 android:layout_alignParentLeft="true"
                 android:orientation="horizontal" >
 
-                <EditText
-                    android:id="@+id/editText2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:text="bottom"/>
+                <include
+                    android:id="@+id/include3"
+                    layout="@layout/bottom_menu" />
 
             </LinearLayout>
 
@@ -54,11 +53,6 @@
                 android:layout_above="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
                 android:orientation="vertical" android:layout_below="@id/linearLayout1">
-
-                <EditText
-                    android:id="@+id/editText3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:text="main\nmain"/>
 
                 <ListView
                     android:id="@+id/listview"
