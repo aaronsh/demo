@@ -20,16 +20,14 @@
                 android:layout_alignParentTop="true"
                 android:orientation="vertical" >
 
+
+
                 <include
                     android:id="@+id/include1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     layout="@layout/top_home" />
 
                 <include
                     android:id="@+id/include2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     layout="@layout/top_gallery" />
 
             </LinearLayout>
