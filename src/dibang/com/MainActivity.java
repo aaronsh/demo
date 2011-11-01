@@ -122,8 +122,8 @@ public class MainActivity extends Activity {
 
 
     private static final String[] DATA = {
-            "Abbaye de Belloc", "Abbaye du Mont des Cats", "Abertam",
-            "Abondance", "Ackawi", "Acorn"};
+            "网站设计", "三维动画", "效果图",
+            "户型图", "电子杂志", "合作伙伴"};
 
 	/** Called when the activity is first created. */
 	@Override
