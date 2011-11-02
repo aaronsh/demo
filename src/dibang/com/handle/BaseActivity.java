@@ -2,8 +2,12 @@ package dibang.com.handle;
 
 
 
+import dibang.com.CompanyIntroduce;
+import dibang.com.ContactUs;
+import dibang.com.MainActivity;
 import dibang.com.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -59,7 +63,14 @@ public class BaseActivity extends Activity implements OnItemClickListener, OnCli
 		
 		if(mHomeBtn != null)
 			mHomeBtn.setOnClickListener(this);
-
+		if(mCompanyBtn != null)
+			mCompanyBtn.setOnClickListener(this);
+		if(mContactUsBtn != null)
+			mContactUsBtn.setOnClickListener(this);
+		if(mWeiboBtn != null)
+			mWeiboBtn.setOnClickListener(this);
+		if(mRefreshBtn != null)
+			mRefreshBtn.setOnClickListener(this);		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +99,26 @@ public class BaseActivity extends Activity implements OnItemClickListener, OnCli
 	}
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+		Intent intent=null;
+		if(mHomeBtn == v ){
+			intent = new Intent(this, MainActivity.class);
+		}
+		if(mCompanyBtn  == v ){
+			intent = new Intent(this, CompanyIntroduce.class);
+		}
+		if(mContactUsBtn  == v ){
+			intent = new Intent(this, ContactUs.class);
+		}
+		if(mWeiboBtn  == v ){
+			
+		}
+		if(mRefreshBtn  == v ){
+			
+		}
 		
+		if( intent != null )
+			intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivity(intent);
 	}
 }
 

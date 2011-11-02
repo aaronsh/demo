@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dibang.com.handle.BaseActivity;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,15 +20,16 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ContactOur extends Activity {
+public class ContactUs extends BaseActivity {
 	private ListView listviews;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
-		InitView();
+		setContentView(R.layout.contact_us);
+		onInitView();
+//		InitView();
 	}
 
 	/***
@@ -50,11 +53,11 @@ public class ContactOur extends Activity {
 				switch(arg2) {
 				case 0 : 
 					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-83171365"));
-					ContactOur.this.startActivity(intent);
+					ContactUs.this.startActivity(intent);
 				    break;
 				case 2 : 
 					Intent intent2 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:025-83171365"));
-					ContactOur.this.startActivity(intent2);
+					ContactUs.this.startActivity(intent2);
 				    break;
 				case 4 :
 					android.util.Log.v("arg2","test");
