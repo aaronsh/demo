@@ -20,13 +20,32 @@
                 android:layout_alignParentTop="true"
                 android:orientation="vertical" >
 
-                <include
-                    android:id="@+id/include1"
-                    layout="@layout/top_home" />
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" android:gravity="center" android:layout_gravity="center"/>
 
-                <include
-                    android:id="@+id/include2"
-                    layout="@layout/top_gallery" />
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" android:background="@drawable/top_divider">
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/top_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:background="@drawable/top_menu_bg">
+
+                    <TextView
+                        android:id="@+id/top_menu_latest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最新"
+                        android:textAppearance="?android:attr/textAppearanceMedium" android:drawableTop="@drawable/top_menu_latest"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -50,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
-                android:orientation="vertical" android:layout_below="@id/linearLayout1">
+                android:orientation="vertical" android:layout_below="@id/linearLayout1" android:background="#ffd5d5d7">
 
                 <GridView
                     android:id="@+id/grid"
