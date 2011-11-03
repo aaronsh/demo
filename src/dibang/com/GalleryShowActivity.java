@@ -44,12 +44,12 @@ public class GalleryShowActivity extends BaseActivity implements OnClickListener
 	
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		Intent intent=null;
+
 		if(mBtnPrev == v ){
-			intent = new Intent(this, MainActivity.class);
+			mSView.scrollBy(-40, 0);
 		}
 		if(mBtnNext  == v ){
-			intent = new Intent(this, CompanyIntroduce.class);
+			mSView.scrollBy(40, 0);
 		}
 		Log.v(TAG, "GalleryShowActivity onClick");
 		
