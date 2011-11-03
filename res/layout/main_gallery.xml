@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <FrameLayout
         android:id="@+id/frameLayout1"
@@ -24,31 +25,96 @@
                     android:id="@+id/text_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" android:gravity="center" android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="TextView" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" android:background="@drawable/top_divider">
+                    android:background="@drawable/top_divider"
+                    android:orientation="vertical" >
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/top_menu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:background="@drawable/top_menu_bg">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_menu_bg" >
 
-                    <TextView
-                        android:id="@+id/top_menu_latest"
+                    <ImageButton
+                        android:id="@+id/btn_prev"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="最新"
-                        android:textAppearance="?android:attr/textAppearanceMedium" android:drawableTop="@drawable/top_menu_latest"/>
+                        android:src="@drawable/flag_me" android:layout_alignParentLeft="true"/>
 
-                </LinearLayout>
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:layout_toLeftOf="@+id/btn_next" android:layout_toRightOf="@+id/btn_prev">
 
+                        <LinearLayout
+                            android:id="@+id/button_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:scrollbarAlwaysDrawHorizontalTrack="false"
+                            android:scrollbarAlwaysDrawVerticalTrack="false"
+                            android:scrollbars="none" >
+
+                            <Button
+                                android:id="@+id/button1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <ImageButton
+                        android:id="@+id/btn_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/flag_me" android:layout_alignParentRight="true"/>
+                </RelativeLayout>
             </LinearLayout>
-
+
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
@@ -56,11 +122,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:orientation="horizontal" >
-
+
                 <include
                     android:id="@+id/include3"
                     layout="@layout/bottom_menu" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -69,7 +134,9 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
-                android:orientation="vertical" android:layout_below="@id/linearLayout1" android:background="#ffd5d5d7">
+                android:layout_below="@id/linearLayout1"
+                android:background="#ffd5d5d7"
+                android:orientation="vertical" >
 
                 <GridView
                     android:id="@+id/grid"
@@ -77,11 +144,8 @@
                     android:layout_height="wrap_content"
                     android:numColumns="2" >
                 </GridView>
-
             </LinearLayout>
-
         </RelativeLayout>
-
     </FrameLayout>
 
 </LinearLayout>
