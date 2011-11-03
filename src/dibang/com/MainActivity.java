@@ -97,9 +97,25 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		return list;
 	}
 
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(this, GridShowActivity.class);
-		startActivity(intent);
+		Intent intent = null;
+		Class<?> clz = null;
+		switch(position){
+		case 0:
+			intent = new Intent(this, GridShowActivity.class);
+			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
+			break;
+		case 1:
+			intent = new Intent(this, GridShowActivity.class);
+			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
+			break;
+		case 2:
+			intent = new Intent(this, GalleryShowActivity.class);
+			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
+			break;
+		}
+		if( intent != null )
+			startActivity(intent);
 	}
 }
