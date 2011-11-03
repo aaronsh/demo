@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+		Intent intent = new Intent(this, GridShowActivity.class);
+		startActivity(intent);
 	}
 }
