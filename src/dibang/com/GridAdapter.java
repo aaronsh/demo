@@ -51,7 +51,9 @@ public class GridAdapter extends BaseAdapter {
         ImageView i=null; 
 
         if (convertView == null) {
-        	LinearLayout frm = new LinearLayout(mCntx);
+
+        	LinearLayout frm = (LinearLayout)mInflater.inflate(R.layout.grid_item_view, null);
+        			//new LinearLayout(mCntx);
         	frm.setOrientation(LinearLayout.VERTICAL);
             i = new ImageView(mCntx);
             i.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -59,13 +61,19 @@ public class GridAdapter extends BaseAdapter {
             ResolveInfo info = mApps.get(position);
             Drawable icon = info.activityInfo.loadIcon(mCntx.getPackageManager());
             i.setImageDrawable(icon);
-            int height = (icon.getIntrinsicHeight()*mScreenWidth)/(2*icon.getIntrinsicWidth());
-            i.setLayoutParams(new GridView.LayoutParams(mScreenWidth/2, height));
-            frm.addView(i);
-            TextView title = new TextView(mCntx);
+            int width = mScreenWidth/2 - 24;
+            int height = (icon.getIntrinsicHeight()*width)/icon.getIntrinsicWidth();
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+            params.setMargins(3, 3, 3, 3);
+            params.gravity = Gravity.CENTER;
+            i.setLayoutParams(params);
+            LinearLayout container = (LinearLayout)frm.findViewById(R.id.icon_container);
+            container.addView(i, 0);
+  
+            TextView title =(TextView)frm.findViewById(R.id.text);
             title.setText("title");
             title.setGravity(Gravity.CENTER_HORIZONTAL);
-            frm.addView(title);
+//            frm.addView(title);
         	return frm;
           
         } else {
