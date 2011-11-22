@@ -1,13 +1,15 @@
-package dibang.com;
+package dibang.com.web;
 
 
 import java.util.LinkedList;
+
+import dibang.com.OnWebTaskFinish;
 import dibang.com.web.WebBaseDecoder;
 import android.os.AsyncTask;
 
 
 
-public class JsoupDecodeTask extends AsyncTask<Object, Void, Void>
+public class WebDecodeTask extends AsyncTask<Object, Void, Void>
 {
 	private WebBaseDecoder mDecoder;
 	private int mId;
@@ -15,7 +17,7 @@ public class JsoupDecodeTask extends AsyncTask<Object, Void, Void>
 	private OnWebTaskFinish mNotifier=null;
 	private LinkedList<Object> mList = null;
 	
-	public JsoupDecodeTask(WebBaseDecoder decoder, int id, OnWebTaskFinish notifier)
+	public WebDecodeTask(WebBaseDecoder decoder, int id, OnWebTaskFinish notifier)
 	{
 		mDecoder = decoder;
 		mId = id;
