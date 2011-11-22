@@ -137,13 +137,12 @@
                 android:layout_below="@id/linearLayout1"
                 android:background="#ffd5d5d7"
                 android:orientation="vertical" >
-
-                <GridView
-                    android:id="@+id/grid"
+
+                <Gallery
+                    android:id="@+id/gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:numColumns="2" >
-                </GridView>
+                    android:layout_height="fill_parent" />
+
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

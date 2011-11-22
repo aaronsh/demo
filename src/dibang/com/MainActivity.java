@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.android.camera.ImageManager;
+import com.android.camera.ViewImage;
+import com.android.camera.gallery.IImage;
+import com.android.camera.gallery.IImageList;
+
 import dibang.com.handle.BaseActivity;
 
 
@@ -13,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,7 +102,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		
 		return list;
 	}
-
+	  private ImageManager.ImageListParam mParam;
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 		// TODO Auto-generated method stub
 		Intent intent = null;
@@ -114,8 +120,30 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 			intent = new Intent(this, GalleryShowActivity.class);
 			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
 			break;
+		case 3:
+            intent = new Intent(this, ViewImage.class);
+            mParam = allImages(true);
+            IImageList mAllImages = ImageManager.makeImageList(getContentResolver(), mParam);
+            IImage image = mAllImages.getImageAt(0);
+            intent.putExtra(ViewImage.KEY_IMAGE_LIST, mParam);
+            intent.setData(image.fullSizeImageUri());
+			break;
 		}
 		if( intent != null )
 			startActivity(intent);
 	}
+    // Returns the image list parameter which contains the subset of image/video
+    // we want.
+    private ImageManager.ImageListParam allImages(boolean storageAvailable) {
+        if (!storageAvailable) {
+            return ImageManager.getEmptyImageListParam();
+        } else {
+
+            return ImageManager.getImageListParam(
+                    ImageManager.DataLocation.EXTERNAL,
+                    ImageManager.INCLUDE_IMAGES,
+                    ImageManager.SORT_DESCENDING,
+                    null);
+        }
+    }
 }
