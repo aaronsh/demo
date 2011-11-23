@@ -177,6 +177,7 @@
                 android:exported="true"
                 android:theme="@android:style/Theme.NoDisplay"
                 android:permission="android.permission.BIND_APPWIDGET" />
+        <service android:name=".handle.WebUpdateService" />
         </application>
     <uses-sdk android:minSdkVersion="8" />
 	<uses-permission android:name="android.permission.CALL_PHONE"/>

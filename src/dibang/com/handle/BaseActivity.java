@@ -28,6 +28,7 @@ public class BaseActivity extends Activity implements OnItemClickListener, OnCli
 	protected BaseHandler mBaseHandler = null;
 	protected BottomMenuHandler mBottomMenu = null;
 	protected TopMenuHandler mTopMenu = null;
+	protected ServerManager mSM = null;
 	ImageButton mHomeBtn;
 	ImageButton mCompanyBtn;
 	ImageButton mContactUsBtn;
@@ -39,7 +40,7 @@ public class BaseActivity extends Activity implements OnItemClickListener, OnCli
 	{
 		super.onCreate(paramBundle);
 
-
+		mSM = new ServerManager(this);
 		Log.v(TAG, "create "+this.getClass().toString());
 	}
 	public void onInitView()
@@ -85,7 +86,6 @@ public class BaseActivity extends Activity implements OnItemClickListener, OnCli
 	public void onPause()
 	{
 		super.onPause();
-		//		MobclickAgent.onPause(this);
 	}
 
 	public void onResume()

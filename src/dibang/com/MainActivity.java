@@ -42,7 +42,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		InitView();
+		
+		mSM.startService();
 	}
+	
+	@Override
+	public void onDestroy() {
+		mSM.stopService();
+		super.onDestroy();
+	}
+	
 
 	/***
 	 * 初始化布局属性

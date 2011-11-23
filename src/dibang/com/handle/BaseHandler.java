@@ -53,12 +53,12 @@ public class BaseHandler
 	{
 		if (paramMenu.size() == 0)
 		{
-			MenuItem localMenuItem1 = paramMenu.add(0, 0, 0, "关于我们");
-			MenuItem localMenuItem2 = paramMenu.add(0, 1, 1, "官网网站");
-			MenuItem localMenuItem3 = paramMenu.add(0, 2, 2, "官方微博");
-			MenuItem localMenuItem4 = paramMenu.add(0, 3, 3, "意见反馈");
-			MenuItem localMenuItem5 = paramMenu.add(0, 4, 4, "检查更新");
-			MenuItem localMenuItem6 = paramMenu.add(0, 5, 5, "退出软件");
+			paramMenu.add(0, 0, 0, "关于我们");
+			paramMenu.add(0, 1, 1, "官网网站");
+			paramMenu.add(0, 2, 2, "官方微博");
+			paramMenu.add(0, 3, 3, "意见反馈");
+			paramMenu.add(0, 4, 4, "检查更新");
+			paramMenu.add(0, 5, 5, "退出软件");
 		}
 		return paramMenu;
 	}
@@ -70,12 +70,12 @@ public class BaseHandler
 
 	public void createQuestionMenu(Menu paramMenu)
 	{
-		MenuItem localMenuItem1 = paramMenu.add(0, 0, 0, "返回应用首页");
-		MenuItem localMenuItem2 = paramMenu.add(0, 1, 1, "查看分享食谱");
-		MenuItem localMenuItem3 = paramMenu.add(0, 2, 2, "查看减肥问答");
-		MenuItem localMenuItem4 = paramMenu.add(0, 3, 3, "食谱评论通知");
-		MenuItem localMenuItem5 = paramMenu.add(0, 4, 4, "问答回复通知");
-		MenuItem localMenuItem6 = paramMenu.add(0, 5, 5, "我要反馈意见");
+		paramMenu.add(0, 0, 0, "返回应用首页");
+		paramMenu.add(0, 1, 1, "查看分享食谱");
+		paramMenu.add(0, 2, 2, "查看减肥问答");
+		paramMenu.add(0, 3, 3, "食谱评论通知");
+		paramMenu.add(0, 4, 4, "问答回复通知");
+		paramMenu.add(0, 5, 5, "我要反馈意见");
 	}
 
 	public void createQuestionMenuAction(MenuItem paramMenuItem)
