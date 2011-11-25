@@ -1,10 +1,17 @@
 package dibang.com.handle;
 
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import dibang.com.MainActivity;
+import dibang.com.OnWebTaskFinish;
 import dibang.com.R;
+import dibang.com.web.UrlParamList;
+import dibang.com.web.UserProfileDecoder;
+import dibang.com.web.WebBaseDecoder;
+import dibang.com.web.WebDecodeTask;
+import dibang.com.web.WebSite;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -41,9 +48,23 @@ import android.widget.Toast;
  * interact with the user, rather than doing something more disruptive such as
  * calling startActivity().
  */
-public class WebUpdateService extends Service {
+public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public static final int CALLBACK_ID_0 = 0;
-	public static final int CALLBACK_ID_1 = 1;
+	
+	public static final int UPDATE_TASK_TOP_GALLERY = 0;
+	public static final int UPDATE_TASK_MAX = 1;
+
+	private static final int UPDATE_MODE_ALL = 0;
+	private static final int UPDATE_MODE_SINGLE = 1;
+	
+	private static final int UPDATE_STATE_IDLE = 0;	
+	private static final int UPDATE_STATE_UPDATING = 1;
+	
+	private int mUpdateMode;
+	private int mUpdateState;
+	private int mCurTask;
+	
+	
 	
 	private static final String TAG = "WebUpdateService";
     private SharedPreferences mSettings;
@@ -69,7 +90,7 @@ public class WebUpdateService extends Service {
        @Override
        public void handleMessage(Message msg) {
         // TODO Auto-generated method stub
-
+//    	   updateAll();
         super.handleMessage(msg);
        }
       
@@ -98,7 +119,6 @@ public class WebUpdateService extends Service {
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
         mState = getSharedPreferences("state", 0);
 
-
         // Start voice
         reloadSettings();
 
@@ -112,7 +132,6 @@ public class WebUpdateService extends Service {
         	}
         };
 
-        
         // Tell the user we started.
         Toast.makeText(this, getText(R.string.app_name), Toast.LENGTH_SHORT).show();
     }
@@ -130,7 +149,6 @@ public class WebUpdateService extends Service {
         if( timer != null )
         	timer.cancel();
 
-        
         mStateEditor = mState.edit();
 
         mStateEditor.commit();
@@ -153,16 +171,10 @@ public class WebUpdateService extends Service {
         return mBinder;
     }
 
-
-
-
-    
+ 
     public void registerTopGalleryNofier(WebUpdateNotification cb){
     	mTopGalleryNotification = cb;
     }
-    
-
-
     
     public void reloadSettings() {
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -197,20 +209,64 @@ public class WebUpdateService extends Service {
 
         mNM.notify(R.string.app_name, notification);
     }
+    private void update()
+    {
+    	String url = null;
+		WebBaseDecoder  decoder = null;
+		UrlParamList params = new UrlParamList();
+		params.addParam("mod", "foods");
+		switch(mCurTask){
+		case UPDATE_TASK_TOP_GALLERY:
+			decoder = new UserProfileDecoder();
+			url = WebSite.TOP_GALLERY_IMGS;
+			break;
+		}
 
-    public void updateWeb(int type){
+		decoder.init(WebBaseDecoder.DECODE_URL_GET, url, params);
+
+		WebDecodeTask strTask = new WebDecodeTask(decoder, mCurTask, this);
+		strTask.execute(null);
     	
+    }
+    
+    public void updateWeb(int type){
+    	mUpdateMode = UPDATE_MODE_SINGLE;
+    	mCurTask = type;
+    	update();
     }
     
     public void updateAll()
     {
-    	
+    	mUpdateMode = UPDATE_MODE_ALL;    	
     }
 
-	public void setNotifier(int mNotificationType,
+	public void setNotifier(int type,
 			WebUpdateNotification notifier) {
 		// TODO Auto-generated method stub
+		Log.v(TAG, "setNotifier "+type);
+		switch(type){
+		case UPDATE_TASK_TOP_GALLERY:
+			registerTopGalleryNofier(notifier);
+			break;
+		default:
+			break;
+		}
+		mCurTask = type;
+	}
+
+	public void onWebTaskFinished(int id, LinkedList<Object> list,
+			String errorText) {
+		// TODO Auto-generated method stub
+		switch(id){
+		case UPDATE_TASK_TOP_GALLERY:
+			break;
+		default:
+			break;
+		}
 		
+		if(mUpdateMode == UPDATE_MODE_ALL){
+			
+		}
 	}
 
 }

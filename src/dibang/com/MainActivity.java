@@ -11,6 +11,7 @@ import com.android.camera.gallery.IImage;
 import com.android.camera.gallery.IImageList;
 
 import dibang.com.handle.BaseActivity;
+import dibang.com.handle.WebUpdateNotification;
 
 
 import android.app.Activity;
@@ -32,7 +33,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends BaseActivity implements OnItemClickListener {
+public class MainActivity extends BaseActivity implements OnItemClickListener, WebUpdateNotification {
 	private ListView listviews;
 	EfficientAdapter mAdapter;
 
@@ -44,10 +45,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		InitView();
 		
 		mSM.startService();
+		mSM.bindService(0, this);
+		mSM.updateAll();
 	}
 	
 	@Override
 	public void onDestroy() {
+		mSM.unbindService();
 		mSM.stopService();
 		super.onDestroy();
 	}
@@ -155,4 +159,9 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
                     null);
         }
     }
+
+	public void onWebUpdateFinish() {
+		// TODO Auto-generated method stub
+		
+	}
 }

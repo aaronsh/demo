@@ -53,8 +53,11 @@ public class ServerManager implements WebUpdateNotification{
 				WebUpdateService.class));
 	}
 
-	public void bindService() {
+	public void bindService(int type, WebUpdateNotification notifier) {
 		Log.i(TAG, "[SERVICE] Bind");
+		mNotificationType = type;
+		mNotifier = notifier;
+		
 		mCntx.bindService(new Intent(mCntx, 
 				WebUpdateService.class), mConnection, Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
 	}
