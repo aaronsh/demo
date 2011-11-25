@@ -57,9 +57,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 	}
 	
 
-	/***
-	 * åˆå§‹åŒ–å¸ƒå±€å±æ€§
-	 */
+
 	private void InitView() {
 		listviews = (ListView) findViewById(R.id.listview);
 		SimpleAdapter adapter = new SimpleAdapter(this, getData(),
@@ -80,37 +78,39 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("img", R.drawable.icon);
-		map.put("username", "ç½‘ç«™è®¾è®¡");
+		map.put("username", "ÍøÕ¾Éè¼Æ");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "ä¸‰ç»´åŠ¨ç”»");
+		map.put("username", "ÈıÎ¬¶¯»­");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "æ•ˆ æœ å›¾");
+		map.put("username", "Ğ§ ¹û Í¼");
 		list.add(map);
 		
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "æˆ¶ å‹ å›¾");
+		map.put("username", "‘ô ĞÍ Í¼");
 		list.add(map);
 		
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "ç”µ å­ æ‚ çŸ¥");
+		map.put("username", "µç ×Ó ÔÓ Öª");
 		list.add(map);
 	
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "åˆ ä½œ ä¼™ ä¼´");
+		map.put("username", "ºÏ ×÷ »ï °é");
 		list.add(map);
 		
 		map = new HashMap<String, Object>();
 		map.put("img", R.drawable.icon);
-		map.put("username", "è” ç³» æˆ‘ ä»¬");
+		map.put("username", "Áª Ïµ ÎÒ ÃÇ");
+		list.add(map);
+
 		list.add(map);
 		
 		return list;

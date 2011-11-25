@@ -47,7 +47,7 @@ import android.widget.ZoomButtonsController;
 
 import com.android.camera.gallery.IImage;
 import com.android.camera.gallery.IImageList;
-import com.android.camera.gallery.VideoObject;
+
 
 import java.util.Random;
 
@@ -212,12 +212,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         updateNextPrevControls();
 
         IImage image = mAllImages.getImageAt(mCurrentPosition);
-        if (image instanceof VideoObject) {
-            mZoomButtonsController.setVisible(false);
-        } else {
+
             updateZoomButtonsEnabled();
             mZoomButtonsController.setVisible(true);
-        }
+
 
         if (mShowActionIcons
                 && mActionIconPanel.getVisibility() != View.VISIBLE) {
@@ -471,9 +469,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         item.setOnMenuItemClickListener(
                 new MenuItem.OnMenuItemClickListener() {
             public boolean onMenuItemClick(MenuItem item) {
-                Intent preferences = new Intent();
+            	Log.e("yuguang", "ViewImage 1");
+/*                Intent preferences = new Intent();
                 preferences.setClass(ViewImage.this, GallerySettings.class);
-                startActivity(preferences);
+                startActivity(preferences);*/
                 return true;
             }
         });
@@ -706,13 +705,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
         IImage image = mAllImages.getImageAt(mCurrentPosition);
         View panel = mActionIconPanel;
-        if (image instanceof VideoObject) {
-            panel.findViewById(R.id.setas).setVisibility(View.GONE);
-            panel.findViewById(R.id.play).setVisibility(View.VISIBLE);
-        } else {
+
             panel.findViewById(R.id.setas).setVisibility(View.VISIBLE);
             panel.findViewById(R.id.play).setVisibility(View.GONE);
-        }
+
     }
 
     private Animation makeInAnimation(int id) {
@@ -1035,7 +1031,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
     private void startShareMediaActivity(IImage image) {
-        boolean isVideo = image instanceof VideoObject;
+        boolean isVideo = false;
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.setType(image.getMimeType());

@@ -18,7 +18,7 @@ package com.android.camera;
 
 import com.android.camera.gallery.IImage;
 import com.android.camera.gallery.IImageList;
-import com.android.camera.gallery.VideoObject;
+
 
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -196,7 +196,6 @@ class ImageGetter {
 
                     IImage image = mImageList.getImageAt(imageNumber);
                     if (image == null) continue;
-                    if (image instanceof VideoObject) continue;
                     if (mCancel) return;
 
                     int sizeToUse = mCB.fullImageSizeToUse(

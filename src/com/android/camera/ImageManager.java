@@ -23,8 +23,8 @@ import com.android.camera.gallery.IImageList;
 import com.android.camera.gallery.ImageList;
 import com.android.camera.gallery.ImageListUber;
 import com.android.camera.gallery.SingleImageList;
-import com.android.camera.gallery.VideoList;
-import com.android.camera.gallery.VideoObject;
+
+
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -190,7 +190,7 @@ public class ImageManager {
     public static boolean isVideo(IImage image) {
         // This is the right implementation, but we use instanceof for speed.
         //return isVideoMimeType(image.getMimeType());
-        return (image instanceof VideoObject);
+        return false;
     }
 
     //
@@ -307,9 +307,7 @@ public class ImageManager {
             if ((inclusion & INCLUDE_IMAGES) != 0) {
                 l.add(new ImageList(cr, STORAGE_URI, sort, bucketId));
             }
-            if ((inclusion & INCLUDE_VIDEOS) != 0) {
-                l.add(new VideoList(cr, VIDEO_STORAGE_URI, sort, bucketId));
-            }
+
         }
         if (location == DataLocation.INTERNAL || location == DataLocation.ALL) {
             if ((inclusion & INCLUDE_IMAGES) != 0) {

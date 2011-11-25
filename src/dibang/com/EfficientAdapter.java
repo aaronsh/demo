@@ -18,8 +18,8 @@ public class EfficientAdapter extends BaseAdapter {
     private Bitmap mIcon2;
     private Bitmap mFlag;
     private String[] DATA = {
-            "ç½‘ç«™è®¾è®¡", "ä¸‰ç»´åŠ¨ç”»", "æ•ˆæœå›¾",
-            "æˆ·å‹å›¾", "ç”µå­æ‚å¿—", "åˆä½œä¼™ä¼´"};
+    		"ÍøÕ¾Éè¼Æ", "ÈıÎ¬¶¯»­", "Ğ§¹ûÍ¼",
+            "»§ĞÍÍ¼", "µç×ÓÔÓÖ¾", "ºÏ×÷»ï°é"};
 
     public EfficientAdapter(Context context) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
