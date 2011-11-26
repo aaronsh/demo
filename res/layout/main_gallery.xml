@@ -47,12 +47,15 @@
                         android:id="@+id/btn_prev"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/flag_me" android:layout_alignParentLeft="true"/>
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/flag_me" />
 
                     <HorizontalScrollView
                         android:id="@+id/horizontalScrollView1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:layout_toLeftOf="@+id/btn_next" android:layout_toRightOf="@+id/btn_prev">
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_next"
+                        android:layout_toRightOf="@+id/btn_prev" >
 
                         <LinearLayout
                             android:id="@+id/button_container"
@@ -111,7 +114,8 @@
                         android:id="@+id/btn_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/flag_me" android:layout_alignParentRight="true"/>
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/flag_me" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -130,19 +134,24 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/linearLayout1"
                 android:background="#ffd5d5d7"
                 android:orientation="vertical" >
-
+
                 <Gallery
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent" />
 
+                <include
+                    android:id="@+id/include1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    layout="@layout/viewimage" />
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>

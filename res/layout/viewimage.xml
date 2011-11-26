@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<!--
+     Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -13,106 +14,260 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/rootLayout"
+    <FrameLayout
+        android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
-    <AbsoluteLayout android:id="@+id/slideShowContainer"
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <com.android.camera.ImageViewTouch android:id="@+id/image1_slideShow"
-                android:background="#00000000"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        />
-        <com.android.camera.ImageViewTouch android:id="@+id/image2_slideShow"
-                android:background="#00000000"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-        />
-    </AbsoluteLayout>
+            android:layout_height="match_parent" >
 
-    <AbsoluteLayout android:id="@+id/abs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <com.android.camera.ImageViewTouch android:id="@+id/image"
-                    android:background="#FF000000"
-                    android:focusableInTouchMode="true"
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="TextView" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-    </AbsoluteLayout>
-    <ImageView android:id="@+id/prev_image"
-            android:clickable="true"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:visibility="invisible"
-            android:src="@drawable/btn_camera_arrow_left"
-    />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_divider"
+                    android:orientation="vertical" >
+                </LinearLayout>
 
-    <ImageView android:id="@+id/next_image"
-            android:clickable="true"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:visibility="invisible"
-            android:src="@drawable/btn_camera_arrow_right"
-    />
+                <RelativeLayout
+                    android:id="@+id/top_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_menu_bg" >
 
-    <com.android.camera.EvenlySpacedLayout
-            android:visibility="gone"
-            android:id="@+id/action_icon_panel"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/setas"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_set_as"
-                android:text="@string/camera_set"
-                style="@style/OnscreenActionIcon"
-        />
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/play"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_camera_play"
-                android:text="@string/camera_play"
-                style="@style/OnscreenActionIcon"
-        />
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/share"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_share"
-                android:text="@string/camera_share"
-                style="@style/OnscreenActionIcon"
-        />
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/discard"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_delete"
-                android:text="@string/camera_toss"
-                style="@style/OnscreenActionIcon"
-        />
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/attach"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_attach"
-                android:text="@string/camera_attach"
-                style="@style/OnscreenActionIcon"
-        />
-        <com.android.camera.ActionMenuButton
-                android:id="@+id/cancel"
-                android:visibility="gone"
-                android:drawableTop="@drawable/ic_menu_cancel"
-                android:text="@string/camera_cancel"
-                style="@style/OnscreenActionIcon"
-        />
-    </com.android.camera.EvenlySpacedLayout>
-</RelativeLayout>
+                    <ImageButton
+                        android:id="@+id/btn_prev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/flag_me" />
 
+                    <HorizontalScrollView
+                        android:id="@+id/horizontalScrollView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/btn_next"
+                        android:layout_toRightOf="@+id/btn_prev" >
+
+                        <LinearLayout
+                            android:id="@+id/button_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:scrollbarAlwaysDrawHorizontalTrack="false"
+                            android:scrollbarAlwaysDrawVerticalTrack="false"
+                            android:scrollbars="none" >
+
+                            <Button
+                                android:id="@+id/button1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+
+                            <Button
+                                android:id="@+id/button7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Button" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <ImageButton
+                        android:id="@+id/btn_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/flag_me" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal" >
+
+                <include
+                    android:id="@+id/include3"
+                    layout="@layout/bottom_menu" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/linearLayout1"
+                android:background="#ffd5d5d7"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/rootLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <AbsoluteLayout
+                        android:id="@+id/slideShowContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <com.android.camera.ImageViewTouch
+                            android:id="@+id/image1_slideShow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00000000" />
+
+                        <com.android.camera.ImageViewTouch
+                            android:id="@+id/image2_slideShow"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#00000000" />
+                    </AbsoluteLayout>
+
+                    <AbsoluteLayout
+                        android:id="@+id/abs"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <com.android.camera.ImageViewTouch
+                            android:id="@+id/image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#FF000000"
+                            android:focusableInTouchMode="true" />
+                    </AbsoluteLayout>
+
+                    <ImageView
+                        android:id="@+id/prev_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:src="@drawable/btn_camera_arrow_left"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/next_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:src="@drawable/btn_camera_arrow_right"
+                        android:visibility="invisible" />
+
+                    <com.android.camera.EvenlySpacedLayout
+                        android:id="@+id/action_icon_panel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:visibility="gone" >
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/setas"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_set_as"
+                            android:text="@string/camera_set"
+                            android:visibility="gone" />
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/play"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_camera_play"
+                            android:text="@string/camera_play"
+                            android:visibility="gone" />
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/share"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_share"
+                            android:text="@string/camera_share"
+                            android:visibility="gone" />
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/discard"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_delete"
+                            android:text="@string/camera_toss"
+                            android:visibility="gone" />
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/attach"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_attach"
+                            android:text="@string/camera_attach"
+                            android:visibility="gone" />
+
+                        <com.android.camera.ActionMenuButton
+                            android:id="@+id/cancel"
+                            style="@style/OnscreenActionIcon"
+                            android:drawableTop="@drawable/ic_menu_cancel"
+                            android:text="@string/camera_cancel"
+                            android:visibility="gone" />
+                    </com.android.camera.EvenlySpacedLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>

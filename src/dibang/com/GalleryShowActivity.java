@@ -27,7 +27,6 @@ public class GalleryShowActivity extends BaseActivity implements OnClickListener
 	}
 
 	/***
-	 * 初始化布局属性
 	 */
 	private void InitView() {
 		mSView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
