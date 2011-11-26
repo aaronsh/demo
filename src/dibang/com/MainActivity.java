@@ -60,9 +60,6 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 
 	private void InitView() {
 		listviews = (ListView) findViewById(R.id.listview);
-		SimpleAdapter adapter = new SimpleAdapter(this, getData(),
-				R.layout.list_view, new String[] { "img", "username" },
-				new int[] { R.id.img, R.id.username });
 
 		mAdapter = new EfficientAdapter(this);
 		listviews.setAdapter(mAdapter);

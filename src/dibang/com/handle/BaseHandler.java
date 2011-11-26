@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 public class BaseHandler
 {
-	public static final String PROGRESS_NORMAL = "åŠ è½½ä¸­ï¼Œè¯·ç¨åã€‚";
+	public static final String PROGRESS_NORMAL = "¼ÓÔØÖĞ£¬ÇëÉÔºó¡£";
 	Activity activity;
 	String downloadUrl = "";
 	String errorText = null;
@@ -43,7 +43,7 @@ public class BaseHandler
 		this.isShowError = paramBoolean;
 		if (paramBoolean)
 		{
-			ProgressDialog localProgressDialog = progressDlg("æ­£åœ¨æ£€æµ‹æ›´æ–°");
+			ProgressDialog localProgressDialog = progressDlg("ÕıÔÚ¼ì²â¸üĞÂ");
 			this.pDialog = localProgressDialog;
 		}
 
@@ -53,12 +53,12 @@ public class BaseHandler
 	{
 		if (paramMenu.size() == 0)
 		{
-			paramMenu.add(0, 0, 0, "å…³äºæˆ‘ä»¬");
-			paramMenu.add(0, 1, 1, "å®˜ç½‘ç½‘ç«™");
-			paramMenu.add(0, 2, 2, "å®˜æ–¹å¾®åš");
-			paramMenu.add(0, 3, 3, "æ„è§åé¦ˆ");
-			paramMenu.add(0, 4, 4, "æ£€æŸ¥æ›´æ–°");
-			paramMenu.add(0, 5, 5, "é€€å‡ºè½¯ä»¶");
+			paramMenu.add(0, 0, 0, "¹ØÓÚÎÒÃÇ");
+			paramMenu.add(0, 1, 1, "¹ÙÍøÍøÕ¾");
+			paramMenu.add(0, 2, 2, "¹Ù·½Î¢²©");
+			paramMenu.add(0, 3, 3, "Òâ¼û·´À¡");
+			paramMenu.add(0, 4, 4, "¼ì²é¸üĞÂ");
+			paramMenu.add(0, 5, 5, "ÍË³öÈí¼ş");
 		}
 		return paramMenu;
 	}
@@ -70,12 +70,12 @@ public class BaseHandler
 
 	public void createQuestionMenu(Menu paramMenu)
 	{
-		paramMenu.add(0, 0, 0, "è¿”å›åº”ç”¨é¦–é¡µ");
-		paramMenu.add(0, 1, 1, "æŸ¥çœ‹åˆ†äº«é£Ÿè°±");
-		paramMenu.add(0, 2, 2, "æŸ¥çœ‹å‡è‚¥é—®ç­”");
-		paramMenu.add(0, 3, 3, "é£Ÿè°±è¯„è®ºé€šçŸ¥");
-		paramMenu.add(0, 4, 4, "é—®ç­”å›å¤é€šçŸ¥");
-		paramMenu.add(0, 5, 5, "æˆ‘è¦åé¦ˆæ„è§");
+		paramMenu.add(0, 0, 0, "·µ»ØÓ¦ÓÃÊ×Ò³");
+		paramMenu.add(0, 1, 1, "²é¿´·ÖÏíÊ³Æ×");
+		paramMenu.add(0, 2, 2, "²é¿´¼õ·ÊÎÊ´ğ");
+		paramMenu.add(0, 3, 3, "Ê³Æ×ÆÀÂÛÍ¨Öª");
+		paramMenu.add(0, 4, 4, "ÎÊ´ğ»Ø¸´Í¨Öª");
+		paramMenu.add(0, 5, 5, "ÎÒÒª·´À¡Òâ¼û");
 	}
 
 	public void createQuestionMenuAction(MenuItem paramMenuItem)
@@ -87,10 +87,10 @@ public class BaseHandler
 	{
 		Activity localActivity = this.activity;
 		AlertDialog.Builder localBuilder1 = new AlertDialog.Builder(localActivity);
-		AlertDialog.Builder localBuilder2 = localBuilder1.setMessage("ç¡®å®šè¦é€€å‡ºå—?");
-		AlertDialog.Builder localBuilder3 = localBuilder1.setTitle("æç¤º");
+		AlertDialog.Builder localBuilder2 = localBuilder1.setMessage("È·¶¨ÒªÍË³öÂğ?");
+		AlertDialog.Builder localBuilder3 = localBuilder1.setTitle("ÌáÊ¾");
 
-		AlertDialog.Builder localBuilder4 = localBuilder1.setPositiveButton("ç¡®è®¤", new DialogInterface.OnClickListener()
+		AlertDialog.Builder localBuilder4 = localBuilder1.setPositiveButton("È·ÈÏ", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface paramDialogInterface, int paramInt)
 			{
@@ -113,7 +113,7 @@ public class BaseHandler
 			}
 		});
 
-		AlertDialog.Builder localBuilder5 = localBuilder1.setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener()
+		AlertDialog.Builder localBuilder5 = localBuilder1.setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface paramDialogInterface, int paramInt)
 			{
@@ -127,14 +127,14 @@ public class BaseHandler
 	{
 		ProgressDialog localProgressDialog = new ProgressDialog(activity);
 		localProgressDialog.setProgressStyle(0);
-		localProgressDialog.setTitle("æç¤º");
+		localProgressDialog.setTitle("ÌáÊ¾");
 		localProgressDialog.setMessage(paramString);
 		localProgressDialog.setIndeterminate(false);
 		localProgressDialog.setCancelable(true);
 		localProgressDialog.setProgress(0);
 		localProgressDialog.incrementProgressBy(1);
 
-		localProgressDialog.setButton("å–æ¶ˆ", new DialogInterface.OnClickListener()
+		localProgressDialog.setButton("È¡Ïû", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface paramDialogInterface, int paramInt)
 			{
@@ -151,11 +151,11 @@ public class BaseHandler
 		AlertDialog.Builder localBuilder1 = new AlertDialog.Builder(localActivity);
 		Spanned localSpanned = Html.fromHtml(this.information.replace("\r\n", "<br>"));
 		AlertDialog.Builder localBuilder2 = localBuilder1.setMessage(localSpanned);
-		AlertDialog.Builder localBuilder3 = localBuilder1.setTitle("æœ‰æ–°ç‰ˆæœ¬æ‹‰ï¼");
+		AlertDialog.Builder localBuilder3 = localBuilder1.setTitle("ÓĞĞÂ°æ±¾À­£¡");
 
 
 
-		AlertDialog.Builder localBuilder5 = localBuilder1.setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener()
+		AlertDialog.Builder localBuilder5 = localBuilder1.setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface paramDialogInterface, int paramInt)
 			{

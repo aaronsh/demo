@@ -1,6 +1,7 @@
 package dibang.com;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -14,21 +15,31 @@ import android.widget.TextView;
 
 public class EfficientAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
-    private Bitmap mIcon1;
-    private Bitmap mIcon2;
     private Bitmap mFlag;
     private String[] DATA = {
     		"网站设计", "三维动画", "效果图",
             "户型图", "电子杂志", "合作伙伴"};
+    private int[] ImgId = {
+    		R.drawable.wangzhansheji,
+    		R.drawable.sanweidonghua,
+    		R.drawable.xiaogutu,
+    		R.drawable.huxingtu,
+    		R.drawable.dianzizazhi,
+    		R.drawable.hezuohuoban
+    };
+    private Bitmap[] IMG = new Bitmap[6];
 
     public EfficientAdapter(Context context) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
 
         // Icons bound to the rows.
-        mIcon1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon48x48_1);
-        mIcon2 = BitmapFactory.decodeResource(context.getResources(), R.drawable.icon48x48_2);
-        mFlag = BitmapFactory.decodeResource(context.getResources(), R.drawable.app_list_item_arrow);
+        Resources res = context.getResources();
+        for(int i=0; i<6; i++){
+        	IMG[i] = BitmapFactory.decodeResource(res, ImgId[i]);
+        }
+
+        mFlag = BitmapFactory.decodeResource(res, R.drawable.app_list_item_arrow);
     }
 
     /**
@@ -95,7 +106,7 @@ public class EfficientAdapter extends BaseAdapter {
 
         // Bind the data efficiently with the holder.
         holder.text.setText(DATA[position]);
-        holder.icon.setImageBitmap((position & 1) == 1 ? mIcon1 : mIcon2);
+        holder.icon.setImageBitmap(IMG[position]);
         holder.flag.setImageBitmap(mFlag);
 
         return convertView;
