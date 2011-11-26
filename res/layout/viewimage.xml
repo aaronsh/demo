@@ -26,7 +26,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent" android:background="@drawable/common_bg">
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
@@ -63,14 +63,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/flag_me" />
-
+                        android:src="@drawable/btn_left_ind" />
+
                     <HorizontalScrollView
                         android:id="@+id/horizontalScrollView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@+id/btn_next"
-                        android:layout_toRightOf="@+id/btn_prev" >
+                        android:layout_toRightOf="@+id/btn_prev"
+                        android:fadeScrollbars="true"
+                        android:scrollbars="none" >
 
                         <LinearLayout
                             android:id="@+id/button_container"
@@ -130,7 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/flag_me" />
+                        android:src="@drawable/btn_right_ind" />
                 </RelativeLayout>
             </LinearLayout>
 

@@ -4,6 +4,7 @@ package dibang.com;
 
 import android.os.Bundle;
 import android.widget.GridView;
+import android.widget.TextView;
 import dibang.com.handle.BaseActivity;
 
 public class GridShowActivity extends BaseActivity {
@@ -19,12 +20,32 @@ public class GridShowActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_grid);
+		int type = this.getIntent().getIntExtra("type", TYPE_WEBSITE_DESIGN);
+		TextView text = (TextView)this.findViewById(R.id.text_title);
+		switch(type){
+		case  TYPE_WEBSITE_DESIGN:
+			text.setText("ÍøÕ¾Éè¼Æ");
+			break;
+		case  TYPE_3D_ANIMATION:
+			text.setText("ÈıÎ¬¶¯»­");
+			break;
+		case  TYPE_EFFECT_SHOW:
+			text.setText("Ğ§¹ûÍ¼");
+			break;
+		case  TYPE_HOUSE_SHOW:
+			text.setText("»§ĞÍÍ¼");
+			break;
+		case  TYPE_EMAGZIN:
+			text.setText("µç×ÓÔÓÖ¾");
+			break;
+		case  TYPE_PARTNER:
+			text.setText("ºÏ×÷»ï°é");
+			break;
+		}
 		InitView();
 	}
 
-	/***
-	 * åˆå§‹åŒ–å¸ƒå±€å±æ€§
-	 */
+
 	private void InitView() {
 
 		mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT);
