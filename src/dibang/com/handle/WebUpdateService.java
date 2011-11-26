@@ -139,7 +139,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
     @Override
     public void onStart(Intent intent, int startId) {
         Log.i(TAG, "[SERVICE] onStart");
-        timer.schedule(task, 1000, 1000);
+//        timer.schedule(task, 1000, 1000);
         super.onStart(intent, startId);
     }
 

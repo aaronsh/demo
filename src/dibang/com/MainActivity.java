@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		InitView();
+		enableBackBtn();
 		
 		mSM.startService();
 		mSM.bindService(0, this);
