@@ -58,7 +58,7 @@ public class DeleteImage extends NoSearchActivity {
     }
 
     @Override
-    protected void onResume() {
+	public void onResume() {
         super.onResume();
         mPausing = false;
         mHandler.post(mDeleteNextRunnable);
@@ -78,7 +78,7 @@ public class DeleteImage extends NoSearchActivity {
     }
 
     @Override
-    protected void onPause() {
+	public void onPause() {
         super.onPause();
         mPausing = true;
     }

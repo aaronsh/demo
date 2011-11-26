@@ -42,6 +42,8 @@ import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ZoomButtonsController;
 
@@ -124,6 +126,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     GestureDetector mGestureDetector;
     private ZoomButtonsController mZoomButtonsController;
     private ScaleGestureDetector mScaleGestureDetector;
+
+	HorizontalScrollView mSView;
 
     // The image view displayed for normal mode.
     private ImageViewTouch mImageView;
@@ -593,6 +597,17 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.viewimage);
 
+		mSView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
+		
+		mSView.setVerticalScrollBarEnabled(false);
+		mSView.setHorizontalScrollBarEnabled(false);
+
+		ImageButton btn = (ImageButton)findViewById(R.id.btn_prev);
+		btn.setOnClickListener(this);
+		btn = (ImageButton)findViewById(R.id.btn_next);
+		btn.setOnClickListener(this);
+		onInitView();
+
         mImageView = (ImageViewTouch) findViewById(R.id.image);
         mImageView.setEnableTrackballScroll(true);
         mCache = new BitmapCache(3);
@@ -1008,7 +1023,15 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             case R.id.prev_image:
                 moveNextOrPrevious(-1);
                 break;
+            case R.id.btn_prev:
+            	mSView.scrollBy(-40, 0);
+                break;
+            case R.id.btn_next:
+            	mSView.scrollBy(40, 0);
+                break;                
         }
+
+		Log.v(TAG, "GalleryShowActivity onClick");
     }
 
     private void moveNextOrPrevious(int delta) {

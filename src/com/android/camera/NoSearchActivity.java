@@ -16,9 +16,10 @@
 
 package com.android.camera;
 
+import dibang.com.handle.BaseActivity;
 import android.app.Activity;
 
-public class NoSearchActivity extends Activity {
+public class NoSearchActivity extends  BaseActivity {
     @Override
     public boolean onSearchRequested() {
         return false;

@@ -87,43 +87,20 @@
                                 android:id="@+id/button1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Button" />
+                                android:text="别墅" />
 
                             <Button
                                 android:id="@+id/button2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Button" />
+                                android:text="公寓" />
 
                             <Button
                                 android:id="@+id/button3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Button" />
+                                android:text="写字楼" />
 
-                            <Button
-                                android:id="@+id/button4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Button" />
-
-                            <Button
-                                android:id="@+id/button5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Button" />
-
-                            <Button
-                                android:id="@+id/button6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Button" />
-
-                            <Button
-                                android:id="@+id/button7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Button" />
                         </LinearLayout>
                     </HorizontalScrollView>
 
