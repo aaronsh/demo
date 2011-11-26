@@ -33,7 +33,7 @@ public class ContactUs extends BaseActivity {
 	}
 
 	/***
-	 * åˆå§‹åŒ–å¸ƒå±€å±æ€§
+	 * ³õÊ¼»¯²¼¾ÖÊôĞÔ
 	 */
 	private void InitView() {
 		listviews = (ListView) findViewById(R.id.listview);
@@ -62,18 +62,18 @@ public class ContactUs extends BaseActivity {
 				case 4 :
 					android.util.Log.v("arg2","test");
 			        try {
-						// åˆ›å»ºURLå¯¹è±¡
+						// ´´½¨URL¶ÔÏó
 						URL url = new URL("http://www.depcn.com");
-						// åˆ›å»ºURLè¿æ¥
+						// ´´½¨URLÁ¬½Ó
 						URLConnection connection = url.openConnection();
-						// å¯¹äº HTTP è¿æ¥å¯ä»¥ç›´æ¥è½¬æ¢æˆ HttpURLConnectionï¼Œ
-						// è¿™æ ·å°±å¯ä»¥ä½¿ç”¨ä¸€äº› HTTP è¿æ¥ç‰¹å®šçš„æ–¹æ³•ï¼Œå¦‚ setRequestMethod() ç­‰
+						// ¶ÔÓÚ HTTP Á¬½Ó¿ÉÒÔÖ±½Ó×ª»»³É HttpURLConnection£¬
+						// ÕâÑù¾Í¿ÉÒÔÊ¹ÓÃÒ»Ğ© HTTP Á¬½ÓÌØ¶¨µÄ·½·¨£¬Èç setRequestMethod() µÈ
 						// HttpURLConnection connection
 						// =(HttpURLConnection)url.openConnection(Proxy_yours);
-						// è®¾ç½®å‚æ•°
+						// ÉèÖÃ²ÎÊı
 						connection.setConnectTimeout(10000);
 						connection.addRequestProperty("User-Agent", "J2me/MIDP2.0");
-						// è¿æ¥æœåŠ¡å™¨
+						// Á¬½Ó·şÎñÆ÷
 						connection.connect();
 
 					} catch (IOException e) {
@@ -91,12 +91,12 @@ public class ContactUs extends BaseActivity {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("username", "ç”µè¯ : 025-83171365");
+		map.put("username", "µç»° : 025-8317136");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
 	
-		map.put("username", "ä¼ çœŸ : 025-83171375");
+		map.put("username", "´«Õæ : 025-83171375");
 		list.add(map);
 
 		map = new HashMap<String, Object>();
@@ -106,23 +106,23 @@ public class ContactUs extends BaseActivity {
 		
 		map = new HashMap<String, Object>();
 
-		map.put("username", "é‚®ç®± : njgj001@162.com");
+		map.put("username", "ÓÊÏä : njgj001@162.com");
 		list.add(map);
 	
 		map = new HashMap<String, Object>();
 
-		map.put("username", "ç½‘å€ : http://www.depcn.com");
+		map.put("username", "ÍøÖ· : http://www.depcn.com");
 		list.add(map);
 		
 		map = new HashMap<String, Object>();
 
-		map.put("username", "é‚®ç¼– : 210009");
+		map.put("username", "ÓÊ±à : 210009");
 		list.add(map);
 		
 		
 		map = new HashMap<String, Object>();
 
-		map.put("username", "åœ°å€ : å—äº¬å¸‚....");
+		map.put("username", "µØÖ· : ÄÏ¾©ÊĞ....");
 		list.add(map);
 		return list;
 	}
