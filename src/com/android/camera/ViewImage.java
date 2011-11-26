@@ -87,8 +87,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     private int mMode = MODE_NORMAL;
 
     private boolean mFullScreenInNormalMode;
-    private boolean mShowActionIcons;
-    private View mActionIconPanel;
 
     private int mSlideShowInterval;
     private int mLastSlideShowImage;
@@ -171,13 +169,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
     private void hideOnScreenControls() {
-        if (mShowActionIcons
-                && mActionIconPanel.getVisibility() == View.VISIBLE) {
-            Animation animation = new AlphaAnimation(1, 0);
-            animation.setDuration(500);
-            mActionIconPanel.startAnimation(animation);
-            mActionIconPanel.setVisibility(View.INVISIBLE);
-        }
+
 
         if (mNextImageView.getVisibility() == View.VISIBLE) {
             Animation a = mHideNextImageViewAnimation;
@@ -201,14 +193,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         // If the view has not been attached to the window yet, the
         // zoomButtonControls will not able to show up. So delay it until the
         // view has attached to window.
-        if (mActionIconPanel.getWindowToken() == null) {
-            mHandler.postGetterCallback(new Runnable() {
-                public void run() {
-                    showOnScreenControls();
-                }
-            });
-            return;
-        }
+
         updateNextPrevControls();
 
         IImage image = mAllImages.getImageAt(mCurrentPosition);
@@ -217,13 +202,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             mZoomButtonsController.setVisible(true);
 
 
-        if (mShowActionIcons
-                && mActionIconPanel.getVisibility() != View.VISIBLE) {
-            Animation animation = new AlphaAnimation(0, 1);
-            animation.setDuration(500);
-            mActionIconPanel.startAnimation(animation);
-            mActionIconPanel.setVisibility(View.VISIBLE);
-        }
+
     }
 
     @Override
@@ -607,8 +586,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         Intent intent = getIntent();
         mFullScreenInNormalMode = intent.getBooleanExtra(
                 MediaStore.EXTRA_FULL_SCREEN, true);
-        mShowActionIcons = intent.getBooleanExtra(
-                MediaStore.EXTRA_SHOW_ACTION_ICONS, true);
+
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -646,7 +624,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             v.setRecycler(mCache);
         }
 
-        mActionIconPanel = findViewById(R.id.action_icon_panel);
+
 
         mParam = getIntent().getParcelableExtra(KEY_IMAGE_LIST);
 
@@ -665,24 +643,13 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         // applications like MMS, we cannot pass the permission to other
         // activities due to the current framework design.
         if (!MenuHelper.isWhiteListUri(mSavedUri)) {
-            mShowActionIcons = false;
         }
 
-        if (mShowActionIcons) {
-            int[] pickIds = {R.id.attach, R.id.cancel};
-            int[] normalIds = {R.id.setas, R.id.play, R.id.share, R.id.discard};
-            int[] connectIds = isPickIntent() ? pickIds : normalIds;
-            for (int id : connectIds) {
-                View view = mActionIconPanel.findViewById(id);
-                view.setVisibility(View.VISIBLE);
-                view.setOnClickListener(this);
-            }
-        }
+
 
         // Don't show the "delete" icon for SingleImageList.
         if (ImageManager.isSingleImageMode(mSavedUri.toString())) {
-            mActionIconPanel.findViewById(R.id.discard)
-                    .setVisibility(View.GONE);
+
         }
 
         if (slideshow) {
@@ -692,9 +659,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
-            if (mShowActionIcons) {
-                mActionIconPanel.setVisibility(View.VISIBLE);
-            }
+
         }
 
         setupOnScreenControls(findViewById(R.id.rootLayout), mImageView);
@@ -704,10 +669,9 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (isPickIntent()) return;
 
         IImage image = mAllImages.getImageAt(mCurrentPosition);
-        View panel = mActionIconPanel;
 
-            panel.findViewById(R.id.setas).setVisibility(View.VISIBLE);
-            panel.findViewById(R.id.play).setVisibility(View.GONE);
+
+
 
     }
 
@@ -749,7 +713,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
             mImageView.clear();
-            mActionIconPanel.setVisibility(View.GONE);
 
             slideshowPanel.getRootView().requestLayout();
 
@@ -780,12 +743,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 mGetter.cancelCurrent();
             }
 
-            if (mShowActionIcons) {
-                Animation animation = new AlphaAnimation(0F, 1F);
-                animation.setDuration(500);
-                mActionIconPanel.setAnimation(animation);
-                mActionIconPanel.setVisibility(View.VISIBLE);
-            }
+
 
             ImageViewTouchBase dst = mImageView;
             dst.mLastXTouchPos = -1;
@@ -1063,29 +1021,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             case R.id.discard:
                 MenuHelper.deletePhoto(this, mDeletePhotoRunnable);
                 break;
-            case R.id.play:
-                startPlayVideoActivity();
-                break;
-            case R.id.share: {
-                IImage image = mAllImages.getImageAt(mCurrentPosition);
-                if (!MenuHelper.isWhiteListUri(image.fullSizeImageUri())) {
-                    return;
-                }
-                startShareMediaActivity(image);
-                break;
-            }
-            case R.id.setas: {
-                IImage image = mAllImages.getImageAt(mCurrentPosition);
-                Intent intent = Util.createSetAsIntent(image);
-                try {
-                    startActivity(Intent.createChooser(
-                            intent, getText(R.string.setImage)));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(this, R.string.no_way_to_share_video,
-                            Toast.LENGTH_SHORT).show();
-                }
-                break;
-            }
             case R.id.next_image:
                 moveNextOrPrevious(1);
                 break;

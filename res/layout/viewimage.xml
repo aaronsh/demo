@@ -216,55 +216,6 @@
                         android:src="@drawable/btn_camera_arrow_right"
                         android:visibility="invisible" />
 
-                    <com.android.camera.EvenlySpacedLayout
-                        android:id="@+id/action_icon_panel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:visibility="gone" >
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/setas"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_set_as"
-                            android:text="@string/camera_set"
-                            android:visibility="gone" />
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/play"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_camera_play"
-                            android:text="@string/camera_play"
-                            android:visibility="gone" />
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/share"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_share"
-                            android:text="@string/camera_share"
-                            android:visibility="gone" />
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/discard"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_delete"
-                            android:text="@string/camera_toss"
-                            android:visibility="gone" />
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/attach"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_attach"
-                            android:text="@string/camera_attach"
-                            android:visibility="gone" />
-
-                        <com.android.camera.ActionMenuButton
-                            android:id="@+id/cancel"
-                            style="@style/OnscreenActionIcon"
-                            android:drawableTop="@drawable/ic_menu_cancel"
-                            android:text="@string/camera_cancel"
-                            android:visibility="gone" />
-                    </com.android.camera.EvenlySpacedLayout>
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
