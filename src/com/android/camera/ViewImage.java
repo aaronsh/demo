@@ -16,6 +16,7 @@
 
 package com.android.camera;
 
+import dibang.com.Const;
 import dibang.com.R;
 
 import android.app.Activity;
@@ -44,6 +45,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomButtonsController;
 
@@ -587,16 +589,40 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         super.onCreate(instanceState);
 
         Intent intent = getIntent();
-        mFullScreenInNormalMode = intent.getBooleanExtra(
+        mFullScreenInNormalMode = false; /* intent.getBooleanExtra(
                 MediaStore.EXTRA_FULL_SCREEN, true);
+        */
 
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.viewimage);
 
+		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
+		TextView text = (TextView)this.findViewById(R.id.text_title);
+		switch(type){
+		case  Const.UI_TYPE_WEBSITE_DESIGN:
+			text.setText("网站设计");
+			break;
+		case  Const.UI_TYPE_3D_ANIMATION:
+			text.setText("三维动画");
+			break;
+		case  Const.UI_TYPE_EFFECT_SHOW:
+			text.setText("效果图");
+			break;
+		case  Const.UI_TYPE_HOUSE_SHOW:
+			text.setText("户型图");
+			break;
+		case  Const.UI_TYPE_EMAGZIN:
+			text.setText("电子杂志");
+			break;
+		case  Const.UI_TYPE_PARTNER:
+			text.setText("合作伙伴");
+			break;
+		}
+        
 		mSView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
 		
 		mSView.setVerticalScrollBarEnabled(false);
@@ -660,11 +686,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (slideshow) {
             setMode(MODE_SLIDESHOW);
         } else {
+/*        	
             if (mFullScreenInNormalMode) {
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_FULLSCREEN);
             }
-
+*/
         }
 
         setupOnScreenControls(findViewById(R.id.rootLayout), mImageView);

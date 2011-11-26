@@ -121,14 +121,15 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		switch(position){
 		case 0:
 			intent = new Intent(this, GridShowActivity.class);
-			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
+			intent.putExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 			break;
 		case 1:
 			intent = new Intent(this, GridShowActivity.class);
-			intent.putExtra("type", GridShowActivity.TYPE_WEBSITE_DESIGN);
+			intent.putExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 			break;
 		case 2:
             intent = new Intent(this, ViewImage.class);
+			intent.putExtra("type", Const.UI_TYPE_EFFECT_SHOW);
             mParam = allImages(true);
             {
             IImageList mAllImages = ImageManager.makeImageList(getContentResolver(), mParam);
@@ -139,6 +140,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 			break;
 		case 3:
             intent = new Intent(this, ViewImage.class);
+			intent.putExtra("type", Const.UI_TYPE_HOUSE_SHOW);
             mParam = allImages(true);
             IImageList mAllImages = ImageManager.makeImageList(getContentResolver(), mParam);
             IImage image = mAllImages.getImageAt(0);

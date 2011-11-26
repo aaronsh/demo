@@ -12,7 +12,7 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
@@ -26,7 +26,8 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:background="@drawable/common_bg">
+            android:layout_height="match_parent"
+            android:background="@drawable/common_bg" >
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
@@ -42,7 +43,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="#FF0000F0"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
@@ -64,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/btn_left_ind" />
-
+
                     <HorizontalScrollView
                         android:id="@+id/horizontalScrollView1"
                         android:layout_width="wrap_content"
@@ -100,7 +104,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="写字楼" />
-
                         </LinearLayout>
                     </HorizontalScrollView>
 
@@ -194,7 +197,6 @@
                         android:focusable="false"
                         android:src="@drawable/btn_camera_arrow_right"
                         android:visibility="invisible" />
-
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
