@@ -574,7 +574,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (mGetter != null) {
             mGetter.setPosition(pos, cb, mAllImages, mHandler);
         }
-        updateActionIcons();
         if (showControls) showOnScreenControls();
         scheduleDismissOnScreenControls();
     }
@@ -642,15 +641,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         // delete. Although we get read permission (for the images) from
         // applications like MMS, we cannot pass the permission to other
         // activities due to the current framework design.
-        if (!MenuHelper.isWhiteListUri(mSavedUri)) {
-        }
-
-
-
-        // Don't show the "delete" icon for SingleImageList.
-        if (ImageManager.isSingleImageMode(mSavedUri.toString())) {
-
-        }
 
         if (slideshow) {
             setMode(MODE_SLIDESHOW);
@@ -665,15 +655,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         setupOnScreenControls(findViewById(R.id.rootLayout), mImageView);
     }
 
-    private void updateActionIcons() {
-        if (isPickIntent()) return;
-
-        IImage image = mAllImages.getImageAt(mCurrentPosition);
-
-
-
-
-    }
 
     private Animation makeInAnimation(int id) {
         Animation inAnimation = AnimationUtils.loadAnimation(this, id);

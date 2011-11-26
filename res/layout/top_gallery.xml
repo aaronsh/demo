@@ -4,9 +4,9 @@
 
     <Gallery
         android:id="@+id/gallery"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" android:fadingEdge="none"/>
+        android:gravity="center_vertical"
+        android:spacing="1dp" />
 
 </RelativeLayout>

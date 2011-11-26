@@ -19,12 +19,15 @@ public class GalleryImageAdapter extends BaseAdapter {
 		mContext = c;
 		// See res/values/attrs.xml for the <declare-styleable> that defines
 		// Gallery1.
+
+		TypedArray a = c.obtainStyledAttributes(R.styleable.Gallery1);
 /*
-		TypedArray a = obtainStyledAttributes(R.styleable.Gallery1);
 		mGalleryItemBackground = a.getResourceId(
 				R.styleable.Gallery1_android_galleryItemBackground, 0);
-		a.recycle();
 */		
+		mGalleryItemBackground = R.drawable.gallery_item_background;
+		a.recycle();
+	
 	}
 
 	public int getCount() {
