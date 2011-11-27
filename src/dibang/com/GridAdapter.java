@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class GridAdapter extends BaseAdapter {
 	public final static int ITEM_TYPE_IMAGE_ONLY = 1;
 	public final static int ITEM_TYPE_IMAGE_TEXT = 2;
+
 	private List<ResolveInfo> mApps;
 	Context mCntx;
 	private int mScreenWidth = 0;
@@ -54,6 +55,7 @@ public class GridAdapter extends BaseAdapter {
 
 		LinearLayout frm = (LinearLayout) mInflater.inflate(
 				R.layout.grid_item_imgtxt_view, null);
+
 		// new LinearLayout(mCntx);
 		frm.setOrientation(LinearLayout.VERTICAL);
 		i = new ImageView(mCntx);
@@ -61,7 +63,9 @@ public class GridAdapter extends BaseAdapter {
 		i.setLayoutParams(new GridView.LayoutParams(mScreenWidth / 2,
 				ViewGroup.LayoutParams.FILL_PARENT));
 		Drawable icon = mCntx.getResources().getDrawable(
+
 				R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+
 		i.setImageDrawable(icon);
 		int width = mScreenWidth / 2 - 24;
 		int height = (icon.getIntrinsicHeight() * width)
@@ -92,7 +96,10 @@ public class GridAdapter extends BaseAdapter {
 		frm.setOrientation(LinearLayout.VERTICAL);
 		i = new ImageView(mCntx);
 		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-		LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+
+		LayoutParams param = new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.FILL_PARENT,
+
 				ViewGroup.LayoutParams.FILL_PARENT);
 		param.setMargins(3, 3, 3, 3);
 		param.gravity = Gravity.CENTER;
@@ -100,7 +107,7 @@ public class GridAdapter extends BaseAdapter {
 		Drawable icon = mCntx.getResources().getDrawable(
 				R.drawable.grid_img_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
 		i.setImageDrawable(icon);
-		
+
 		frm.addView(i, 0);
 
 		return frm;
@@ -119,6 +126,7 @@ public class GridAdapter extends BaseAdapter {
 			return convertView;
 		}
 
+
 		// return i;
 	}
 
@@ -133,4 +141,6 @@ public class GridAdapter extends BaseAdapter {
 	public final long getItemId(int position) {
 		return position;
 	}
+
+
 }

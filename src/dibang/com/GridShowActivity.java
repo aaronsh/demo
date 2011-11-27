@@ -50,10 +50,11 @@ public class GridShowActivity extends BaseActivity {
 		boolean showTopMenu = this.getIntent().getBooleanExtra("top_menu", true);
 		if( !showTopMenu){
 			Resources res = getResources();
-			text.setBackgroundDrawable(res.getDrawable(R.drawable.top_menu_bg));
+
 			LinearLayout group = (LinearLayout)this.findViewById(R.id.linearLayout1);
 			group.removeView(group.findViewById(R.id.linearLayout4));
 			group.removeView(group.findViewById(R.id.top_menu));
+			group.setBackgroundDrawable(res.getDrawable(R.drawable.top_menu_bg));
 		}
 	
 		
