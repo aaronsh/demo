@@ -52,7 +52,7 @@
                         android:id="@+id/top_menu_latest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableTop="@drawable/top_menu_latest"
+                        android:drawableTop="@drawable/top_btn_zuixin"
                         android:text="最新"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
