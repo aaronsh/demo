@@ -22,9 +22,16 @@
                 android:layout_alignParentTop="true"
                 android:orientation="vertical" >
 
-                <include
-                    android:id="@+id/include1"
-                    layout="@layout/top_home" />
+                <TextView
+                    android:id="@+id/text_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="#FF0000F0"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
                 <include
                     android:id="@+id/include2"
@@ -74,8 +81,7 @@
                             <LinearLayout
                                 android:id="@+id/linearLayout6"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                 >
+                                android:layout_height="wrap_content" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -97,8 +103,8 @@
                                     android:gravity="center_vertical"
                                     android:text="025-83171365"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -126,8 +132,8 @@
                                     android:gravity="center_vertical"
                                     android:text="025-83171375"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -155,8 +161,8 @@
                                     android:gravity="center_vertical"
                                     android:text="13813385566"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -184,8 +190,8 @@
                                     android:gravity="center_vertical"
                                     android:text="njgj001@163.com"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -213,8 +219,8 @@
                                     android:gravity="center_vertical"
                                     android:text="http://www.depcn.com"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip"
-                                    android:textColor="#FF000000" />
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -242,8 +248,8 @@
                                     android:gravity="center_vertical"
                                     android:text="210009"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -271,8 +277,8 @@
                                     android:gravity="center_vertical"
                                     android:text="南京市鼓楼区江东北路388号正泰大厦3单元1618"
                                     android:textAppearance="?android:attr/textAppearanceLarge"
-                                    android:textSize="16dip" 
-                                    android:textColor="#FF000000"/>
+                                    android:textColor="#FF000000"
+                                    android:textSize="16dip" />
                             </LinearLayout>
                         </LinearLayout>
 

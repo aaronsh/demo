@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class ContactUs extends BaseActivity {
 	private ListView listviews;
@@ -28,6 +29,12 @@ public class ContactUs extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.contact_us);
+		
+		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
+		TextView text = (TextView)this.findViewById(R.id.text_title);
+		text.setText("联系我们");
+
+
 		onInitView();
 //		InitView();
 	}
