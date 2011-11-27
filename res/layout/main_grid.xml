@@ -46,14 +46,67 @@
                     android:id="@+id/top_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/top_menu_bg" >
+                    android:background="@drawable/top_menu_bg"
+                    android:weightSum="6.0" >
 
                     <TextView
-                        android:id="@+id/top_menu_latest"
+                        android:id="@+id/top_btn_zuixin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
                         android:drawableTop="@drawable/top_btn_zuixin"
+                        android:gravity="center_horizontal"
                         android:text="最新"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/top_btn_bieshu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:drawableTop="@drawable/top_btn_bieshu"
+                        android:gravity="center_horizontal"
+                        android:text="别墅"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/top_btn_gongyu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:drawableTop="@drawable/top_btn_gongyu"
+                        android:gravity="center_horizontal"
+                        android:text="公寓"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/top_btn_shangye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:drawableTop="@drawable/top_btn_shangye"
+                        android:gravity="center_horizontal"
+                        android:text="商业"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/top_btn_zonghe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:drawableTop="@drawable/top_btn_zonghe"
+                        android:gravity="center_horizontal"
+                        android:text="综合"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/top_btn_qiye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:drawableTop="@drawable/top_btn_qiye"
+                        android:gravity="center_horizontal"
+                        android:text="企业"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
             </LinearLayout>
