@@ -11,10 +11,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 public class GridAdapter extends BaseAdapter {
@@ -44,41 +46,79 @@ public class GridAdapter extends BaseAdapter {
         Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
         mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        mApps = mCntx.getPackageManager().queryIntentActivities(mainIntent, 0);
-    }
-    
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView i=null; 
+		mApps = mCntx.getPackageManager().queryIntentActivities(mainIntent, 0);
+	}
 
-        if (convertView == null) {
+	private View createImageTextView(int position) {
+		ImageView i = null;
 
-        	LinearLayout frm = (LinearLayout)mInflater.inflate(R.layout.grid_item_view, null);
-        			//new LinearLayout(mCntx);
-        	frm.setOrientation(LinearLayout.VERTICAL);
-            i = new ImageView(mCntx);
-            i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            i.setLayoutParams(new GridView.LayoutParams(mScreenWidth/2, ViewGroup.LayoutParams.FILL_PARENT));
-            ResolveInfo info = mApps.get(position);
-            Drawable icon = mCntx.getResources().getDrawable(R.drawable.grid_item_wangzhan);//info.activityInfo.loadIcon(mCntx.getPackageManager());
-            i.setImageDrawable(icon);
-            int width = mScreenWidth/2 - 24;
-            int height = (icon.getIntrinsicHeight()*width)/icon.getIntrinsicWidth();
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-            params.setMargins(3, 3, 3, 3);
-            params.gravity = Gravity.CENTER;
-            i.setLayoutParams(params);
-            LinearLayout container = (LinearLayout)frm.findViewById(R.id.icon_container);
-            container.addView(i, 0);
-  
-            TextView title =(TextView)frm.findViewById(R.id.text);
-            title.setText("弘阳。旭日爱上城");
-            title.setGravity(Gravity.CENTER_HORIZONTAL);
-//            frm.addView(title);
-        	return frm;
-          
-        } else {
-            return convertView;
-        }
+		LinearLayout frm = (LinearLayout) mInflater.inflate(
+				R.layout.grid_item_view, null);
+		// new LinearLayout(mCntx);
+		frm.setOrientation(LinearLayout.VERTICAL);
+		i = new ImageView(mCntx);
+		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		i.setLayoutParams(new GridView.LayoutParams(mScreenWidth / 2,
+				ViewGroup.LayoutParams.FILL_PARENT));
+		Drawable icon = mCntx.getResources().getDrawable(
+				R.drawable.grid_item_wangzhan);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+		i.setImageDrawable(icon);
+		int width = mScreenWidth / 2 - 24;
+		int height = (icon.getIntrinsicHeight() * width)
+				/ icon.getIntrinsicWidth();
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,
+				height);
+		params.setMargins(3, 3, 3, 3);
+		params.gravity = Gravity.CENTER;
+		i.setLayoutParams(params);
+		LinearLayout container = (LinearLayout) frm
+				.findViewById(R.id.icon_container);
+		container.addView(i, 0);
+
+		TextView title = (TextView) frm.findViewById(R.id.text);
+		title.setText("弘阳。旭日爱上城");
+		title.setGravity(Gravity.CENTER_HORIZONTAL);
+		// frm.addView(title);
+		return frm;
+
+	}
+
+	private View buildImageView(int position) {
+		ImageView i = null;
+
+		LinearLayout frm = (LinearLayout) mInflater.inflate(
+				R.layout.grid_item_img_view, null);
+		// new LinearLayout(mCntx);
+		frm.setOrientation(LinearLayout.VERTICAL);
+		i = new ImageView(mCntx);
+		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
+		LayoutParams param = new LinearLayout.LayoutParams(
+				ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.FILL_PARENT);
+		param.setMargins(3, 3, 3, 3);
+		param.gravity = Gravity.CENTER;
+		i.setLayoutParams(param);
+		Drawable icon = mCntx.getResources().getDrawable(
+				R.drawable.grid_img_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+		i.setImageDrawable(icon);
+
+		frm.addView(i, 0);
+
+		return frm;
+	}
+
+	public View getView(int position, View convertView, ViewGroup parent) {
+
+		if (convertView == null) {
+
+			if (mItemType == ITEM_TYPE_IMAGE_TEXT) {
+				return createImageTextView(position);
+			} else {
+				return buildImageView(position);
+			}
+		} else {
+			return convertView;
+		}
 
 //        return i;
     }

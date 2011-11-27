@@ -147,6 +147,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
             intent.putExtra(ViewImage.KEY_IMAGE_LIST, mParam);
             intent.setData(image.fullSizeImageUri());
 			break;
+		case 4:
+			intent = new Intent(this, GridShowActivity.class);
+			intent.putExtra("type", Const.UI_TYPE_EMAGZIN);
+			intent.putExtra("top_menu", false);
+			break;
+		case 5:
+			intent = new Intent(this, GridShowActivity.class);
+			intent.putExtra("type", Const.UI_TYPE_PARTNER);
+			intent.putExtra("top_menu", false);
+			break;
 		}
 		if( intent != null )
 			startActivity(intent);
