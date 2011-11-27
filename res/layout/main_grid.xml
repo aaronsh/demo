@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <FrameLayout
         android:id="@+id/frameLayout1"
@@ -10,7 +11,8 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:background="@drawable/common_bg">
+            android:layout_height="match_parent"
+            android:background="@drawable/common_bg" >
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
@@ -24,31 +26,38 @@
                     android:id="@+id/text_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" android:gravity="center" android:layout_gravity="center" android:background="#00000000" android:textColor="#FF0000F0" android:textStyle="bold" android:textSize="26sp"/>
+                    android:layout_gravity="center"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="#FF0000F0"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" android:background="@drawable/top_divider">
+                    android:background="@drawable/top_divider"
+                    android:orientation="vertical" >
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/top_menu"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:background="@drawable/top_menu_bg">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/top_menu_bg" >
 
                     <TextView
                         android:id="@+id/top_menu_latest"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableTop="@drawable/top_menu_latest"
                         android:text="最新"
-                        android:textAppearance="?android:attr/textAppearanceMedium" android:drawableTop="@drawable/top_menu_latest"/>
-
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
-
             </LinearLayout>
-
+
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
@@ -56,11 +65,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:orientation="horizontal" >
-
+
                 <include
                     android:id="@+id/include3"
                     layout="@layout/bottom_menu" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -69,7 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
-                android:orientation="vertical" android:layout_below="@id/linearLayout1" android:background="#ffd5d5d7">
+                android:layout_below="@id/linearLayout1"
+                android:background="#ffd5d5d7"
+                android:orientation="vertical" >
 
                 <GridView
                     android:id="@+id/grid"
@@ -77,11 +87,8 @@
                     android:layout_height="wrap_content"
                     android:numColumns="2" >
                 </GridView>
-
             </LinearLayout>
-
         </RelativeLayout>
-
     </FrameLayout>
 
 </LinearLayout>
