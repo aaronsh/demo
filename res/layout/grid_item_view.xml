@@ -15,7 +15,6 @@
 -->
 <LinearLayout android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/list_bg"
     android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -28,5 +27,5 @@
     <TextView android:id="@+id/text"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:text="dfadfads" android:gravity="center_horizontal" android:textAppearance="?android:attr/textAppearanceLarge" android:textColor="#ff303030"/>
+        android:layout_height="wrap_content" android:text="dfadfads" android:gravity="center_horizontal" android:textAppearance="?android:attr/textAppearanceSmall" android:textColor="#ff303030"/>
 </LinearLayout>

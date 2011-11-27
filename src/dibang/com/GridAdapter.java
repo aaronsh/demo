@@ -59,7 +59,7 @@ public class GridAdapter extends BaseAdapter {
             i.setScaleType(ImageView.ScaleType.FIT_CENTER);
             i.setLayoutParams(new GridView.LayoutParams(mScreenWidth/2, ViewGroup.LayoutParams.FILL_PARENT));
             ResolveInfo info = mApps.get(position);
-            Drawable icon = info.activityInfo.loadIcon(mCntx.getPackageManager());
+            Drawable icon = mCntx.getResources().getDrawable(R.drawable.grid_item_wangzhan);//info.activityInfo.loadIcon(mCntx.getPackageManager());
             i.setImageDrawable(icon);
             int width = mScreenWidth/2 - 24;
             int height = (icon.getIntrinsicHeight()*width)/icon.getIntrinsicWidth();
@@ -71,7 +71,7 @@ public class GridAdapter extends BaseAdapter {
             container.addView(i, 0);
   
             TextView title =(TextView)frm.findViewById(R.id.text);
-            title.setText("title");
+            title.setText("∫Î—Ù°£–Ò»’∞Æ…œ≥«");
             title.setGravity(Gravity.CENTER_HORIZONTAL);
 //            frm.addView(title);
         	return frm;
