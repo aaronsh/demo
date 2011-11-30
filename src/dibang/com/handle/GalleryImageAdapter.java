@@ -17,14 +17,11 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
-
-
-
 public class GalleryImageAdapter extends BaseAdapter {
 	int mGalleryItemBackground;
 	private boolean WithSdCard = true;
 	private ArrayList<String> mFileList = null;
-	private HashMap<Integer, ImageView > mViewList = new HashMap<Integer, ImageView >(); 
+	private HashMap<Integer, ImageView> mViewList = new HashMap<Integer, ImageView>();
 
 	public GalleryImageAdapter(Context c) {
 		mContext = c;
@@ -32,87 +29,82 @@ public class GalleryImageAdapter extends BaseAdapter {
 		// Gallery1.
 
 		TypedArray a = c.obtainStyledAttributes(R.styleable.Gallery1);
-/*
-		mGalleryItemBackground = a.getResourceId(
-				R.styleable.Gallery1_android_galleryItemBackground, 0);
-*/		
+		/*
+		 * mGalleryItemBackground = a.getResourceId(
+		 * R.styleable.Gallery1_android_galleryItemBackground, 0);
+		 */
 		mGalleryItemBackground = R.drawable.gallery_item_background;
 		a.recycle();
-	
+
 		WithSdCard = IOFile.sdcardExist();
-		if( WithSdCard ){
-		String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-		mFileList = IOFile.getFileList(path);
+		if (WithSdCard) {
+			String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
+			mFileList = IOFile.getFileList(path);
 		}
 	}
 
+	@Override
 	public int getCount() {
-		if( WithSdCard )
+		if (WithSdCard)
 			return mFileList.size();
 		return mImageIds.length;
 	}
 
+	@Override
 	public Object getItem(int position) {
 		return position;
 	}
 
+	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ImageView i = mViewList.get(position);
-		if( i == null ){
-				i = new ImageView(mContext);
+		if (i == null) {
+			i = new ImageView(mContext);
 
-	    if( WithSdCard ){
-	    	Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(position));
-	    	i.setImageBitmap(bmp);
-	    }
-	    else{
-		i.setImageResource(mImageIds[position]);
-	    }
-		i.setScaleType(ImageView.ScaleType.FIT_XY);
-		i.setLayoutParams(new Gallery.LayoutParams(-1, 88));
+			if (WithSdCard) {
+				Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(position));
+				i.setImageBitmap(bmp);
+			} else {
+				i.setImageResource(mImageIds[position]);
+			}
+			i.setScaleType(ImageView.ScaleType.FIT_XY);
+			i.setLayoutParams(new Gallery.LayoutParams(-1, 88));
 
-		// The preferred Gallery item background
-		i.setBackgroundResource(mGalleryItemBackground);
-		
-		mViewList.put(position, i);
-		
+			// The preferred Gallery item background
+			i.setBackgroundResource(mGalleryItemBackground);
+
+			mViewList.put(position, i);
+
 		}
 		return i;
 	}
 
 	private Context mContext;
 
-	private Integer[] mImageIds = {
-			R.drawable.title,
-			R.drawable.logo
-			/*			
-			R.drawable.gallery_photo_2,
-			R.drawable.gallery_photo_3,
-			R.drawable.gallery_photo_4,
-			R.drawable.gallery_photo_5,
-			R.drawable.gallery_photo_6,
-			R.drawable.gallery_photo_7,
-			R.drawable.gallery_photo_8
-*/			
+	private Integer[] mImageIds = { R.drawable.title, R.drawable.logo
+	/*
+	 * R.drawable.gallery_photo_2, R.drawable.gallery_photo_3,
+	 * R.drawable.gallery_photo_4, R.drawable.gallery_photo_5,
+	 * R.drawable.gallery_photo_6, R.drawable.gallery_photo_7,
+	 * R.drawable.gallery_photo_8
+	 */
 	};
 
-	public void reset()
-		{
+	public void reset() {
 		String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
 		mFileList = IOFile.getFileList(path);
 		Set<Integer> keys = mViewList.keySet();
-		for(Integer key:keys )
-		{
+		for (Integer key : keys) {
 			ImageView v = mViewList.get(key);
 			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(key));
 			v.setImageBitmap(bmp);
 			v.invalidate();
 		}
 		notifyDataSetChanged();
-		}
+	}
 }
-
