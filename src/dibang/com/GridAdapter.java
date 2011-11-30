@@ -1,10 +1,17 @@
 package dibang.com;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
+import dibang.com.web.IOFile;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -23,16 +30,18 @@ public class GridAdapter extends BaseAdapter {
 	public final static int ITEM_TYPE_IMAGE_ONLY = 1;
 	public final static int ITEM_TYPE_IMAGE_TEXT = 2;
 
-	private List<ResolveInfo> mApps;
 	Context mCntx;
 	private int mScreenWidth = 0;
 	private int mScreenHeight = 0;
 	int mItemType;
 	LayoutInflater mInflater;
+	
+	private boolean WithSdCard = true;
+	private ArrayList<String> mFileList = null;
+	private HashMap<Integer, ImageView> mViewList = new HashMap<Integer, ImageView>();
 
 	public GridAdapter(Context cntx, int itemType) {
 		mCntx = cntx;
-		loadApps();
 
 		DisplayMetrics dm = new DisplayMetrics();
 		dm = mCntx.getApplicationContext().getResources().getDisplayMetrics();
@@ -41,13 +50,12 @@ public class GridAdapter extends BaseAdapter {
 
 		mInflater = LayoutInflater.from(mCntx);
 		mItemType = itemType;
-	}
-
-	private void loadApps() {
-		Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-		mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-		mApps = mCntx.getPackageManager().queryIntentActivities(mainIntent, 0);
+		
+		WithSdCard = IOFile.sdcardExist();
+		if (WithSdCard) {
+			String path = IOFile.getModuleFolder(Const.FOLDER_partner);
+			mFileList = IOFile.getFileList(path);
+		}
 	}
 
 	private View createImageTextView(int position) {
@@ -99,14 +107,19 @@ public class GridAdapter extends BaseAdapter {
 
 		LayoutParams param = new LinearLayout.LayoutParams(
 				ViewGroup.LayoutParams.FILL_PARENT,
-
 				ViewGroup.LayoutParams.FILL_PARENT);
 		param.setMargins(3, 3, 3, 3);
 		param.gravity = Gravity.CENTER;
 		i.setLayoutParams(param);
+		if(WithSdCard){
+			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(position));
+			i.setImageBitmap(bmp);
+		}
+		else{
 		Drawable icon = mCntx.getResources().getDrawable(
 				R.drawable.grid_img_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
 		i.setImageDrawable(icon);
+		}
 
 		frm.addView(i, 0);
 
@@ -131,15 +144,35 @@ public class GridAdapter extends BaseAdapter {
 	}
 
 	public final int getCount() {
-		return mApps.size();
+		if (WithSdCard)
+			return mFileList.size();
+		return 30;
 	}
 
 	public final Object getItem(int position) {
-		return mApps.get(position);
+		if (WithSdCard)
+			return mFileList.get(position);
+		return null;
 	}
 
 	public final long getItemId(int position) {
 		return position;
+	}
+
+	public void reset() {
+		// TODO Auto-generated method stub
+		String path = IOFile.getModuleFolder(Const.FOLDER_partner);
+		mFileList = IOFile.getFileList(path);
+/*	
+		Set<Integer> keys = mViewList.keySet();
+		for (Integer key : keys) {
+			ImageView v = mViewList.get(key);
+			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(key));
+			v.setImageBitmap(bmp);
+			v.invalidate();
+		}
+*/		
+		notifyDataSetChanged();
 	}
 
 

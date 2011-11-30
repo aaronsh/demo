@@ -10,6 +10,7 @@ import dibang.com.MainActivity;
 import dibang.com.OnWebTaskFinish;
 import dibang.com.R;
 import dibang.com.web.ImageDownloader;
+import dibang.com.web.PartnerDecoder;
 import dibang.com.web.TopGalleryDecoder;
 import dibang.com.web.UrlParamList;
 import dibang.com.web.UserProfileDecoder;
@@ -54,7 +55,8 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public static final int CALLBACK_ID_0 = 0;
 
 	public static final int UPDATE_TASK_TOP_GALLERY = 0;
-	public static final int UPDATE_TASK_MAX = 1;
+	public static final int UPDATE_TASK_PARTNER = 1;
+	public static final int UPDATE_TASK_MAX = 2;
 
 	private static final int UPDATE_MODE_ALL = 0;
 	private static final int UPDATE_MODE_SINGLE = 1;
@@ -214,10 +216,12 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		WebBaseDecoder decoder = null;
 		switch (mCurTask) {
 		case UPDATE_TASK_TOP_GALLERY:
-			decoder = new UserProfileDecoder();
 			url = WebSite.TOP_GALLERY_IMGS;
 			decoder = new TopGalleryDecoder();
-
+			break;
+		case UPDATE_TASK_PARTNER:
+			url = WebSite.PARTNER;
+			decoder = new PartnerDecoder();
 			break;
 		}
 

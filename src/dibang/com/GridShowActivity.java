@@ -8,8 +8,10 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import dibang.com.handle.BaseActivity;
+import dibang.com.handle.WebUpdateNotification;
+import dibang.com.handle.WebUpdateService;
 
-public class GridShowActivity extends BaseActivity {
+public class GridShowActivity extends BaseActivity implements WebUpdateNotification {
 
 	GridAdapter mAdapter = null;
 	GridView mGrid = null;
@@ -44,6 +46,7 @@ public class GridShowActivity extends BaseActivity {
 			text.setText("ºÏ×÷»ï°é");
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY);
 			mGrid.setNumColumns(3);
+			mSM.bindService(WebUpdateService.UPDATE_TASK_PARTNER, this);
 			break;
 		}
 
@@ -63,6 +66,20 @@ public class GridShowActivity extends BaseActivity {
        
         
 		onInitView();
+	}
+		
+	@Override
+	public void onDestroy() {
+		mSM.unbindService();
+		super.onDestroy();
+	}
+	
+	@Override
+	public void onWebUpdateFinish(int UpdateType) {
+		// TODO Auto-generated method stub
+		if( UpdateType == WebUpdateService.UPDATE_TASK_PARTNER ){
+			mAdapter.reset();
+		}
 	}
 
 }

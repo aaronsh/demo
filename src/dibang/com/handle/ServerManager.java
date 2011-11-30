@@ -70,7 +70,8 @@ public class ServerManager implements WebUpdateNotification{
 
 	public void unbindService() {
 		Log.i(TAG, "[SERVICE] Unbind");
-		mCntx.unbindService(mConnection);
+		if( mService != null )
+			mCntx.unbindService(mConnection);
 	}
 
 	public void stopService() {
