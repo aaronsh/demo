@@ -39,7 +39,7 @@ public class GalleryImageAdapter extends BaseAdapter {
 		WithSdCard = IOFile.sdcardExist();
 		if (WithSdCard) {
 			String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-			mFileList = IOFile.getFileList(path);
+			mFileList = IOFile.getFilePathList(path);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class GalleryImageAdapter extends BaseAdapter {
 
 	public void reset() {
 		String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-		mFileList = IOFile.getFileList(path);
+		mFileList = IOFile.getFilePathList(path);
 		Set<Integer> keys = mViewList.keySet();
 		for (Integer key : keys) {
 			ImageView v = mViewList.get(key);

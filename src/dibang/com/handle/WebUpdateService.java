@@ -247,7 +247,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		if (mUpdateState == UPDATE_STATE_UPDATING)
 			return false;
 		mUpdateMode = UPDATE_MODE_ALL;
-		mCurTask = UPDATE_TASK_TOP_GALLERY;
+		mCurTask = UPDATE_TASK_PARTNER;
 		update();
 		return true;
 	}
@@ -280,5 +280,6 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			mUpdateState = UPDATE_STATE_IDLE;
 		}
 	}
+
 
 }

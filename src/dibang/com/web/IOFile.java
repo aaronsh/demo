@@ -126,13 +126,25 @@ public class IOFile {
 		return count;
 	}
 
-	public static ArrayList<String> getFileList(String path) {
+	public static ArrayList<String> getFilePathList(String path) {
 		ArrayList<String> list = new ArrayList<String>();
 		File p = new File(path);
 		File[] files = p.listFiles();
 		if (files != null) {
 			for (File f : files) {
 				list.add(f.getPath());
+			}
+		}
+		return list;
+	}
+
+	public static ArrayList<String> getFileNameList(String path) {
+		ArrayList<String> list = new ArrayList<String>();
+		File p = new File(path);
+		File[] files = p.listFiles();
+		if (files != null) {
+			for (File f : files) {
+				list.add(f.getName());
 			}
 		}
 		return list;

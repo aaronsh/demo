@@ -54,7 +54,7 @@ public class GridAdapter extends BaseAdapter {
 		WithSdCard = IOFile.sdcardExist();
 		if (WithSdCard) {
 			String path = IOFile.getModuleFolder(Const.FOLDER_partner);
-			mFileList = IOFile.getFileList(path);
+			mFileList = IOFile.getFilePathList(path);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class GridAdapter extends BaseAdapter {
 	public void reset() {
 		// TODO Auto-generated method stub
 		String path = IOFile.getModuleFolder(Const.FOLDER_partner);
-		mFileList = IOFile.getFileList(path);
+		mFileList = IOFile.getFilePathList(path);
 /*	
 		Set<Integer> keys = mViewList.keySet();
 		for (Integer key : keys) {
