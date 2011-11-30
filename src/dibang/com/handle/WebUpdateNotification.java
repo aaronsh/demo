@@ -1,5 +1,5 @@
 package dibang.com.handle;
 
 public interface WebUpdateNotification {
-	public void onWebUpdateFinish();
+	public void onWebUpdateFinish(int UpdateType);
 }

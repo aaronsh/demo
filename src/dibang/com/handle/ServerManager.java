@@ -1,6 +1,9 @@
 package dibang.com.handle;
 
 
+import java.util.HashMap;
+import java.util.Set;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -18,14 +21,17 @@ public class ServerManager implements WebUpdateNotification{
 		mCntx = cntx;
 	}
 	private WebUpdateService mService;
-	private WebUpdateNotification mNotifier=null;
+	private HashMap<Integer, WebUpdateNotification> mNotifiers = new HashMap<Integer, WebUpdateNotification>();
 
-	private int mNotificationType = 0;
 
 	private ServiceConnection mConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder service) {
+			Log.v(TAG, "onServiceConnected");
 			mService = ((WebUpdateService.UpdaterBinder)service).getService();
-			mService.setNotifier(mNotificationType, ServerManager.this);
+			Set<Integer> keys = mNotifiers.keySet();
+			for( Integer key:keys ){
+				mService.setNotifier(key, ServerManager.this);				
+			}
 		}
 
 		public void onServiceDisconnected(ComponentName className) {
@@ -38,8 +44,9 @@ public class ServerManager implements WebUpdateNotification{
 
 			switch (msg.what) {
 			default:
-				if( mNotifier != null ){
-					mNotifier.onWebUpdateFinish();
+				WebUpdateNotification notifier = mNotifiers.get(msg.what);
+				if( notifier != null ){
+					notifier.onWebUpdateFinish(msg.what);
 				}
 				super.handleMessage(msg);
 			}
@@ -55,8 +62,7 @@ public class ServerManager implements WebUpdateNotification{
 
 	public void bindService(int type, WebUpdateNotification notifier) {
 		Log.i(TAG, "[SERVICE] Bind");
-		mNotificationType = type;
-		mNotifier = notifier;
+		mNotifiers.put(type, notifier);
 		
 		mCntx.bindService(new Intent(mCntx, 
 				WebUpdateService.class), mConnection, Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
@@ -84,15 +90,17 @@ public class ServerManager implements WebUpdateNotification{
 	
 	public void updateAll()
 	{
+		Log.v(TAG, "updateAll "+mService);
 		if( mService != null ){
 			mService.updateAll();
 		}
 	}
 
-	public void onWebUpdateFinish() {
+	public void onWebUpdateFinish(int updater) {
 		// TODO Auto-generated method stub
+		Log.v(TAG, "onWebUpdateFinish");
 		if(mHandler!=null){
-			mHandler.sendMessage(mHandler.obtainMessage(0, 0, 0));
+			mHandler.sendMessage(mHandler.obtainMessage(updater, 0, 0));
 		}
 	}
 

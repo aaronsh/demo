@@ -9,25 +9,26 @@ import java.net.*;
 import org.apache.http.util.ByteArrayBuffer;
 import org.apache.http.util.EncodingUtils;
 
+import dibang.com.Const;
+
+
+
 //Referenced classes of package COM.Bangso.FunctionUtility:
 //			IOFile, NetworkControl
 
-public class ImageDownloader
-{
+public class ImageDownloader {
 
 	public static final String PIC_CACHE = "FitMissCache";
 
-	public ImageDownloader()
-	{
+	public ImageDownloader() {
 	}
+
 	private static URLConnection urlConnectionFactory(Context cntx, String s)
-		throws IOException
-	{
+			throws IOException {
 		NetworkControl.NetType nettype = NetworkControl.getNetType(cntx);
 		URL url = new URL(s);
 		URLConnection urlconnection;
-		if (nettype != null && nettype.isWap())
-		{
+		if (nettype != null && nettype.isWap()) {
 			java.net.Proxy.Type type = java.net.Proxy.Type.HTTP;
 			String s1 = nettype.getProxy();
 			int i = nettype.getPort();
@@ -35,54 +36,61 @@ public class ImageDownloader
 			Proxy proxy = new Proxy(type, inetsocketaddress);
 			urlconnection = url.openConnection(proxy);
 			urlconnection.connect();
-		} else
-		{
+		} else {
 			urlconnection = url.openConnection();
 			urlconnection.connect();
 		}
 		return urlconnection;
 	}
 
-	public void downFile(String url, String s1, String s2)
-		throws IOException
-	{
-		String s3;
+	public static void downFile(String url, String path, String s2)
+			throws IOException {
+		String img;
 		InputStream inputstream;
 		if (!IOFile.sdcardExist())
 			return;
+		img = IOFile.getFileName(url);
+		StringBuilder b = new StringBuilder();
+		b.append(IOFile.getSdcardPath());
+		b.append("/");
+		b.append(Const.APP_PATH);
+		b.append("/");
+		b.append(path);
+		b.append("/");
+		b.append(img);
+
+		img = b.toString();
+
 		URLConnection urlconnection;
-		if (s2 == null || s2 == "")
-			s3 = IOFile.getFileName(url);
-		else
-			s3 = s2;
-		s1 = (new StringBuilder("/sdcard/")).append(s1).append("/").toString();
 		urlconnection = (new URL(url)).openConnection();
 		urlconnection.connect();
 		inputstream = urlconnection.getInputStream();
 		if (urlconnection.getContentLength() <= 0)
-			throw new RuntimeException("鏃犳硶鑾风煡鏂囦欢澶у皬 ");
+			throw new RuntimeException("无法获知文件大小 ");
 		if (inputstream == null)
-			throw new RuntimeException("鏃犳硶鑾峰彇鏂囦欢");
-		FileOutputStream fileoutputstream;
-		byte abyte0[];
-		String s4 = String.valueOf(s1);
-		String s5 = (new StringBuilder(s4)).append(s3).toString();
-		fileoutputstream = new FileOutputStream(s5);
-		abyte0 = new byte[1024];
-		int size;
-		int offset=0;
-		while(true)
-		{
-			size = inputstream.read(abyte0);
-			if( size == -1 ){
-				break;
+			throw new RuntimeException("无法获取文件");
+		
+		try {
+			IOFile.createFile(img);
+
+			FileOutputStream fileoutputstream = new FileOutputStream(img);
+			byte buf[] = new byte[1024];
+			int size;
+			while (true) {
+				size = inputstream.read(buf);
+				if (size == -1) {
+					break;
+				}
+				fileoutputstream.write(buf, 0, size);
 			}
-			fileoutputstream.write(abyte0, offset, size);
-			offset += size;
+			inputstream.close();
+			fileoutputstream.flush();
+			fileoutputstream.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		inputstream.close();
-		fileoutputstream.close();
 		return;
 	}
-	
+
 }

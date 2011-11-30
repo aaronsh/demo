@@ -12,6 +12,7 @@ import com.android.camera.gallery.IImageList;
 
 import dibang.com.handle.BaseActivity;
 import dibang.com.handle.WebUpdateNotification;
+import dibang.com.handle.WebUpdateService;
 
 
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends BaseActivity implements OnItemClickListener, WebUpdateNotification {
+	private static final String TAG = "MainActivity";
 	private ListView listviews;
 	EfficientAdapter mAdapter;
 
@@ -46,8 +49,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		enableBackBtn();
 		
 		mSM.startService();
-		mSM.bindService(0, this);
-		mSM.updateAll();
+		mSM.bindService(WebUpdateService.UPDATE_TASK_TOP_GALLERY, this);
 	}
 	
 	@Override
@@ -57,7 +59,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		super.onDestroy();
 	}
 	
+	public void onPause() {
+		super.onPause();
+	}
 
+	public void onResume() {
+		super.onResume();
+	}
 
 	private void InitView() {
 		listviews = (ListView) findViewById(R.id.listview);
@@ -176,8 +184,10 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
         }
     }
 
-	public void onWebUpdateFinish() {
+	public void onWebUpdateFinish(int updater) {
 		// TODO Auto-generated method stub
-		
+		Log.v(TAG, "onWebUpdateFinish");
+		if( updater == WebUpdateService.UPDATE_TASK_TOP_GALLERY)
+			onTopGalleryUpdated();
 	}
 }

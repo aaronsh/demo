@@ -27,4 +27,9 @@ public class Const extends BaseActivity {
 	public static final int UI_TYPE_HOUSE_SHOW = 4;
 	public static final int UI_TYPE_EMAGZIN = 5;
 	public static final int UI_TYPE_PARTNER = 6;
+	
+	public static final String FOLDER_top_gallery = "top_gallery";
+	
+	public static final String APP_PATH = "Vision";
+
 }

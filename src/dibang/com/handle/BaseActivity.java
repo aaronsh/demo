@@ -136,4 +136,13 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 			startActivity(intent);
 		}
 	}
+
+	public void onTopGalleryUpdated()
+		{
+		Gallery g = (Gallery) findViewById(R.id.gallery);
+		if( g != null ){
+			GalleryImageAdapter adapter = (GalleryImageAdapter)g.getAdapter();
+			adapter.reset();
+		}
+		}
 }

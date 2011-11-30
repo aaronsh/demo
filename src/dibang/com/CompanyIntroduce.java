@@ -1,6 +1,7 @@
 package dibang.com;
 
 import android.os.Bundle;
+import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -15,12 +16,14 @@ public class CompanyIntroduce extends BaseActivity {
 		InitView();
 	}
 
-	/***
-	 * åˆå§‹åŒ–å¸ƒå±€å±æ€§
-	 */
+
 	private void InitView() {
 		mWebView = (WebView) findViewById(R.id.webview);
-		
+		mWebView.loadUrl("http://www.depcn.com/mb/mabout.html");
+		mWebView.getSettings().setBuiltInZoomControls(true); //ÏÔÊ¾·Å´óËõĞ¡ controler
+		mWebView.getSettings().setSupportZoom(true); //¿ÉÒÔËõ·Å
+		mWebView.getSettings().setDefaultZoom(ZoomDensity.CLOSE);//Ä¬ÈÏËõ·ÅÄ£Ê½
+
 		super.onInitView();
 	}
 }
