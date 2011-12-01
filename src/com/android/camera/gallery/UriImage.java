@@ -27,7 +27,9 @@ import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 class UriImage implements IImage {
@@ -62,8 +64,11 @@ class UriImage implements IImage {
         }
     }
 
-    private ParcelFileDescriptor getPFD() {
+    private FileDescriptor getPFD() {
         try {
+        	java.io.FileInputStream input = new java.io.FileInputStream(mUri.getPath());
+        	return input.getFD();
+/*        	
             if (mUri.getScheme().equals("file")) {
                 String path = mUri.getPath();
                 return ParcelFileDescriptor.open(new File(path),
@@ -71,9 +76,14 @@ class UriImage implements IImage {
             } else {
                 return mContentResolver.openFileDescriptor(mUri, "r");
             }
+*/            
         } catch (FileNotFoundException ex) {
             return null;
-        }
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        return null;
     }
 
     public Bitmap fullSizeBitmap(int minSideLength, int maxNumberOfPixels) {
@@ -90,7 +100,7 @@ class UriImage implements IImage {
     public Bitmap fullSizeBitmap(int minSideLength, int maxNumberOfPixels,
             boolean rotateAsNeeded, boolean useNative) {
         try {
-            ParcelFileDescriptor pfdInput = getPFD();
+            FileDescriptor pfdInput = getPFD();
             Bitmap b = Util.makeBitmap(minSideLength, maxNumberOfPixels,
                     pfdInput, useNative);
             return b;
@@ -126,16 +136,16 @@ class UriImage implements IImage {
     }
 
     private BitmapFactory.Options snifBitmapOptions() {
-        ParcelFileDescriptor input = getPFD();
+        FileDescriptor input = getPFD();
         if (input == null) return null;
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapManager.instance().decodeFileDescriptor(
-                    input.getFileDescriptor(), options);
+                    input, options);
             return options;
         } finally {
-            Util.closeSilently(input);
+//            Util.closeSilently(input);
         }
     }
 

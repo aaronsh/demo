@@ -273,15 +273,16 @@ public class Util {
      * @param uri
      */
     public static Bitmap makeBitmap(int minSideLength, int maxNumOfPixels,
-            Uri uri, ContentResolver cr, boolean useNative) {
+            Uri uri, String filePath, boolean useNative) {
         ParcelFileDescriptor input = null;
         try {
-            input = cr.openFileDescriptor(uri, "r");
+//            input = mDataPath.openFileDescriptor(uri, "r");
+        	java.io.FileInputStream inputs = new java.io.FileInputStream(filePath);
             BitmapFactory.Options options = null;
             if (useNative) {
                 options = createNativeAllocOptions();
             }
-            return makeBitmap(minSideLength, maxNumOfPixels, uri, cr, input,
+            return makeBitmap(minSideLength, maxNumOfPixels, uri, filePath, inputs.getFD(),
                     options);
         } catch (IOException ex) {
             return null;
@@ -290,8 +291,9 @@ public class Util {
         }
     }
 
+   
     public static Bitmap makeBitmap(int minSideLength, int maxNumOfPixels,
-            ParcelFileDescriptor pfd, boolean useNative) {
+    		FileDescriptor pfd, boolean useNative) {
         BitmapFactory.Options options = null;
         if (useNative) {
             options = createNativeAllocOptions();
@@ -301,14 +303,14 @@ public class Util {
     }
 
     public static Bitmap makeBitmap(int minSideLength, int maxNumOfPixels,
-            Uri uri, ContentResolver cr, ParcelFileDescriptor pfd,
+            Uri uri, String filePath, FileDescriptor fileDescriptor,
             BitmapFactory.Options options) {
         try {
-            if (pfd == null) pfd = makeInputStream(uri, cr);
-            if (pfd == null) return null;
+//            if (fileDescriptor == null) fileDescriptor = makeInputStream(uri, filePath);
+            if (fileDescriptor == null) return null;
             if (options == null) options = new BitmapFactory.Options();
 
-            FileDescriptor fd = pfd.getFileDescriptor();
+            FileDescriptor fd = fileDescriptor;
             options.inJustDecodeBounds = true;
             BitmapManager.instance().decodeFileDescriptor(fd, options);
             if (options.mCancel || options.outWidth == -1
@@ -326,7 +328,7 @@ public class Util {
             Log.e(TAG, "Got oom exception ", ex);
             return null;
         } finally {
-            closeSilently(pfd);
+//            closeSilently(fileDescriptor);
         }
     }
 
@@ -435,4 +437,7 @@ public class Util {
 //        options.inNativeAlloc = true;
         return options;
     }
+
+
+
 }

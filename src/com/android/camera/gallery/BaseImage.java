@@ -39,7 +39,7 @@ import java.io.InputStream;
 public abstract class BaseImage implements IImage {
     private static final String TAG = "BaseImage";
     private static final int UNKNOWN_LENGTH = -1;
-    protected ContentResolver mContentResolver;
+//    protected ContentResolver mContentResolver;
 
     // Database field
     protected Uri mUri;
@@ -60,7 +60,7 @@ public abstract class BaseImage implements IImage {
             long id, int index, Uri uri, String dataPath, String mimeType,
             long dateTaken, String title, String displayName) {
         mContainer = container;
-        mContentResolver = cr;
+//        mContentResolver = cr;
         mId = id;
         mIndex = index;
         mUri = uri;
@@ -69,6 +69,7 @@ public abstract class BaseImage implements IImage {
         mDateTaken = dateTaken;
         mTitle = title;
         mDisplayName = displayName;
+        Log.v(TAG, "BaseImage:"+mDataPath);
     }
 
     public String getDataPath() {
@@ -97,7 +98,7 @@ public abstract class BaseImage implements IImage {
         if (url == null) return null;
 
         Bitmap b = Util.makeBitmap(minSideLength, maxNumberOfPixels,
-                url, mContentResolver, useNative);
+                url, mDataPath, useNative);
 
         if (b != null && rotateAsNeeded) {
             b = Util.rotate(b, getDegreesRotated());
@@ -108,7 +109,7 @@ public abstract class BaseImage implements IImage {
 
     public InputStream fullSizeImageData() {
         try {
-            InputStream input = mContentResolver.openInputStream(mUri);
+            InputStream input = new java.io.FileInputStream(mDataPath); 
             return input;
         } catch (IOException ex) {
             return null;
@@ -146,17 +147,21 @@ public abstract class BaseImage implements IImage {
     private void setupDimension() {
         ParcelFileDescriptor input = null;
         try {
-            input = mContentResolver.openFileDescriptor(mUri, "r");
+//            input = mContentResolver.openFileDescriptor(mUri, "r");
+            java.io.FileInputStream inputs = new java.io.FileInputStream(mDataPath); 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapManager.instance().decodeFileDescriptor(
-                    input.getFileDescriptor(), options);
+            		inputs.getFD(), options);
             mWidth = options.outWidth;
             mHeight = options.outHeight;
         } catch (FileNotFoundException ex) {
             mWidth = 0;
             mHeight = 0;
-        } finally {
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
             Util.closeSilently(input);
         }
     }
@@ -175,7 +180,7 @@ public abstract class BaseImage implements IImage {
         Bitmap b = null;
         try {
             long id = mId;
-            b = BitmapManager.instance().getThumbnail(mContentResolver, id,
+            b = BitmapManager.instance().getThumbnail(this.mDataPath, id,
                     Images.Thumbnails.MICRO_KIND, null, false);
         } catch (Throwable ex) {
             Log.e(TAG, "miniThumbBitmap got exception", ex);

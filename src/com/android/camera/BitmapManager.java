@@ -135,7 +135,7 @@ public class BitmapManager {
         }
     }
 
-    public Bitmap getThumbnail(ContentResolver cr, long origId, int kind,
+    public Bitmap getThumbnail(String filePath, long origId, int kind,
             BitmapFactory.Options options, boolean isVideo) {
         Thread t = Thread.currentThread();
         ThreadStatus status = getOrCreateThreadStatus(t);
@@ -149,13 +149,11 @@ public class BitmapManager {
             synchronized (status) {
                 status.mThumbRequesting = true;
             }
-            if (isVideo) {
-                return Video.Thumbnails.getThumbnail(cr, origId, t.getId(),
-                        kind, null);
-            } else {
-                return Images.Thumbnails.getThumbnail(cr, origId, t.getId(),
-                        kind, null);
-            }
+
+            return null;
+//                return Images.Thumbnails.getThumbnail(filePath, origId, t.getId(),
+                        //kind, null);
+   
         } finally {
             synchronized (status) {
                 status.mThumbRequesting = false;

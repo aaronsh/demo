@@ -61,7 +61,7 @@ public class Image extends BaseImage implements IImage {
         mRotation = degrees;
         ContentValues values = new ContentValues();
         values.put(ImageColumns.ORIENTATION, mRotation);
-        mContentResolver.update(mUri, values, null, null);
+//        mContentResolver.update(mUri, values, null, null);
 
         //TODO: Consider invalidate the cursor in container
         // ((BaseImageList) getContainer()).invalidateCursor();
@@ -153,9 +153,10 @@ public class Image extends BaseImage implements IImage {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inDither = false;
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+/*
         bitmap = BitmapManager.instance().getThumbnail(mContentResolver, mId,
                 Images.Thumbnails.MINI_KIND, options, false);
-
+*/
         if (bitmap != null && rotateAsNeeded) {
             bitmap = Util.rotate(bitmap, getDegreesRotated());
         }
