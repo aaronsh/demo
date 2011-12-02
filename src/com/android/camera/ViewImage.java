@@ -238,6 +238,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (mZoomButtonsController != null) {
             mZoomButtonsController.setVisible(false);
         }
+		mImages.close();
+		mImages = null;
         super.onDestroy();
     }
 
@@ -588,16 +590,6 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         scheduleDismissOnScreenControls();
     }
 
-    void testDb()
-    {
-    	String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-    	ArrayList<String> list = IOFile.getFilePathList(path);
-    	if( mImages != null ){
-    		for( String file:list ){
-    			mImages.insert("", file, "");
-    		}
-    	}
-    }
     @Override
     public void onCreate(Bundle instanceState) {
         super.onCreate(instanceState);
@@ -624,13 +616,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 			text.setText("三维动画");
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
-			mImages = new EffectImageDb(this);
-			testDb();
+			mImages = new ImageDb(this, ImageDb.TBL_EFFECT_SHOW);
 			text.setText("效果图");
 			break;
 		case  Const.UI_TYPE_HOUSE_SHOW:
-			mImages = new HouseImageDb(this);
-			testDb();
+			mImages = new ImageDb(this, ImageDb.TBL_HOUSE_SHOW);
 			text.setText("户型图");
 			break;
 		case  Const.UI_TYPE_EMAGZIN:

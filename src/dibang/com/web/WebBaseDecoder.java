@@ -26,7 +26,7 @@ public class WebBaseDecoder {
 	private static final String TAG = "WebBaseDecoder";
 	
 	private int mDecodeMethod;
-	private String mDecodeWhich;
+	protected String mDecodeWhich;
 	private UrlParamList mUrlParams=null;
 	
 	public WebBaseDecoder(int method, String which){
@@ -116,7 +116,7 @@ public class WebBaseDecoder {
 	
 	protected void test(Elements list)  throws Exception{
 		if( list == null || list.size()==0 ){
-			throw new Exception("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½");
+			throw new Exception("ÎÞ·¨Âú×ã²éÑ¯Ìõ¼þ");
 		}
 	}
 	

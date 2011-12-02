@@ -11,6 +11,7 @@ import dibang.com.OnWebTaskFinish;
 import dibang.com.R;
 import dibang.com.web.ImageDownloader;
 import dibang.com.web.PartnerDecoder;
+import dibang.com.web.RenderingDecoder;
 import dibang.com.web.TopGalleryDecoder;
 import dibang.com.web.UrlParamList;
 import dibang.com.web.UserProfileDecoder;
@@ -56,7 +57,9 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 
 	public static final int UPDATE_TASK_TOP_GALLERY = 0;
 	public static final int UPDATE_TASK_PARTNER = 1;
-	public static final int UPDATE_TASK_MAX = 2;
+	public static final int UPDATE_TASK_EFFECT = 2;
+	public static final int UPDATE_TASK_HOUSE = 3;
+	public static final int UPDATE_TASK_MAX = 4;
 
 	private static final int UPDATE_MODE_ALL = 0;
 	private static final int UPDATE_MODE_SINGLE = 1;
@@ -222,6 +225,16 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		case UPDATE_TASK_PARTNER:
 			url = WebSite.PARTNER;
 			decoder = new PartnerDecoder();
+			break;
+		case UPDATE_TASK_EFFECT:
+			url = WebSite.EFFECT;
+			decoder = new RenderingDecoder();
+			((RenderingDecoder)decoder).setDecoder(this, RenderingDecoder.DECODER_TYPE_EFFECT_SHOW);
+			break;
+		case UPDATE_TASK_HOUSE:
+			url = WebSite.HOUSE;
+			decoder = new RenderingDecoder();
+			((RenderingDecoder)decoder).setDecoder(this, RenderingDecoder.DECODER_TYPE_HOUSE_SHOW);
 			break;
 		}
 

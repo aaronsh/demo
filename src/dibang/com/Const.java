@@ -30,6 +30,8 @@ public class Const extends BaseActivity {
 	
 	public static final String FOLDER_top_gallery = "top_gallery";
 	public static final String FOLDER_partner = "partner";
+	public static final String FOLDER_effect_show = "effect_show";
+	public static final String FOLDER_house_show = "house_show";
 	
 	public static final String APP_PATH = "Vision";
 
