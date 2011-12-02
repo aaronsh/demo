@@ -21,6 +21,8 @@ import android.net.Uri;
 
 import java.util.HashMap;
 
+import com.android.camera.ImageDb;
+
 /**
  * An implementation of interface <code>IImageList</code> which contains only
  * one image.
@@ -74,4 +76,10 @@ public class SingleImageList implements IImageList {
         mSingleImage = null;
         mUri = null;
     }
+
+	@Override
+	public IImage getImageForDb(ImageDb mImages) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

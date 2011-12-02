@@ -18,6 +18,7 @@ package com.android.camera.gallery;
 
 import android.net.Uri;
 
+import com.android.camera.ImageDb;
 import com.android.camera.ImageManager;
 import com.android.camera.Util;
 
@@ -160,8 +161,8 @@ public class ImageListUber implements IImageList {
 
     public IImage getImageForUri(Uri uri) {
         for (IImageList sublist : mSubList) {
-            IImage image = sublist.getImageForUri(uri);
-            if (image != null) return image;
+//            IImage image = sublist.getImageForUri(uri);
+//            if (image != null) return image;
         }
         return null;
     }
@@ -292,4 +293,10 @@ public class ImageListUber implements IImageList {
             mSubList[i].close();
         }
     }
+
+	@Override
+	public IImage getImageForDb(ImageDb mImages) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

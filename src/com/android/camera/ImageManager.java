@@ -278,18 +278,18 @@ public class ImageManager {
 	}
 
 	// This is the factory function to create an image list.
-	public static IImageList makeImageList(ContentResolver cr,
+	public static IImageList makeImageList(
 			ImageListParam param) {
 
 		int sort = param.mSort;
 		String bucketId = param.mBucketId;
 		// use this code to merge videos and stills into the same list
-		return new ImageList(cr, STORAGE_URI, sort, bucketId);
+		return new ImageList( STORAGE_URI, sort, bucketId);
 
 	}
 
 	// This is a convenience function to create an image list from a Uri.
-	public static IImageList makeImageList(ContentResolver cr, Uri uri, int sort) {
+	public static IImageList makeImageList( Uri uri, int sort) {
 		String uriString = (uri != null) ? uri.toString() : "";
 
 		// TODO: we need to figure out whether we're viewing
@@ -297,16 +297,16 @@ public class ImageManager {
 		// for content://drm somewhere??
 
 		if (uriString.startsWith("content://drm")) {
-			return makeImageList(cr, DataLocation.ALL, INCLUDE_DRM_IMAGES,
+			return makeImageList( DataLocation.ALL, INCLUDE_DRM_IMAGES,
 					sort, null);
 		} else if (uriString.startsWith("content://media/external/video")) {
-			return makeImageList(cr, DataLocation.EXTERNAL, INCLUDE_VIDEOS,
+			return makeImageList( DataLocation.EXTERNAL, INCLUDE_VIDEOS,
 					sort, null);
 		} else if (isSingleImageMode(uriString)) {
-			return makeSingleImageList(cr, uri);
+			return makeSingleImageList( uri);
 		} else {
 			String bucketId = uri.getQueryParameter("bucketId");
-			return makeImageList(cr, DataLocation.ALL, INCLUDE_IMAGES, sort,
+			return makeImageList(DataLocation.ALL, INCLUDE_IMAGES, sort,
 					bucketId);
 		}
 	}
@@ -346,11 +346,6 @@ public class ImageManager {
 		}
 
 		@Override
-		public IImage getImageForUri(Uri uri) {
-			return null;
-		}
-
-		@Override
 		public boolean removeImage(IImage image) {
 			return false;
 		}
@@ -363,6 +358,12 @@ public class ImageManager {
 		@Override
 		public int getImageIndex(IImage image) {
 			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public IImage getImageForDb(ImageDb mImages) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 
@@ -388,19 +389,19 @@ public class ImageManager {
 		return param;
 	}
 
-	public static IImageList makeImageList(ContentResolver cr,
+	public static IImageList makeImageList(
 			DataLocation location, int inclusion, int sort, String bucketId) {
 		ImageListParam param = getImageListParam(location, inclusion, sort,
 				bucketId);
-		return makeImageList(cr, param);
+		return makeImageList( param);
 	}
 
 	public static IImageList makeEmptyImageList() {
-		return makeImageList(null, getEmptyImageListParam());
+		return makeImageList( getEmptyImageListParam());
 	}
 
-	public static IImageList makeSingleImageList(ContentResolver cr, Uri uri) {
-		return makeImageList(cr, getSingleImageListParam(uri));
+	public static IImageList makeSingleImageList( Uri uri) {
+		return makeImageList( getSingleImageListParam(uri));
 	}
 
 	private static boolean checkFsWritable() {

@@ -140,20 +140,16 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 			intent.putExtra("type", Const.UI_TYPE_EFFECT_SHOW);
             mParam = allImages(true);
             {
-            IImageList mAllImages = ImageManager.makeImageList(getContentResolver(), mParam);
-            IImage image = mAllImages.getImageAt(0);
             intent.putExtra(ViewImage.KEY_IMAGE_LIST, mParam);
-            intent.setData(image.fullSizeImageUri());
+//            intent.setData(image.fullSizeImageUri());
             }
 			break;
 		case 3:
             intent = new Intent(this, ViewImage.class);
 			intent.putExtra("type", Const.UI_TYPE_HOUSE_SHOW);
             mParam = allImages(true);
-            IImageList mAllImages = ImageManager.makeImageList(getContentResolver(), mParam);
-            IImage image = mAllImages.getImageAt(0);
             intent.putExtra(ViewImage.KEY_IMAGE_LIST, mParam);
-            intent.setData(image.fullSizeImageUri());
+//            intent.setData(image.fullSizeImageUri());
 			break;
 		case 4:
 			intent = new Intent(this, GridShowActivity.class);

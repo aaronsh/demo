@@ -20,6 +20,8 @@ import android.net.Uri;
 
 import java.util.HashMap;
 
+import com.android.camera.ImageDb;
+
 //
 // ImageList and Image classes have one-to-one correspondence.
 // The class hierarchy (* = abstract class):
@@ -69,10 +71,10 @@ public interface IImageList {
     /**
      * Returns the image with a particular Uri.
      *
-     * @param uri
+     * @param mImages
      * @return      the image with a particular Uri. null if not found.
      */
-    public IImage getImageForUri(Uri uri);
+    public IImage getImageForDb(ImageDb mImages);
 
     /**
      *

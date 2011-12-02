@@ -68,15 +68,7 @@ class UriImage implements IImage {
         try {
         	java.io.FileInputStream input = new java.io.FileInputStream(mUri.getPath());
         	return input.getFD();
-/*        	
-            if (mUri.getScheme().equals("file")) {
-                String path = mUri.getPath();
-                return ParcelFileDescriptor.open(new File(path),
-                        ParcelFileDescriptor.MODE_READ_ONLY);
-            } else {
-                return mContentResolver.openFileDescriptor(mUri, "r");
-            }
-*/            
+           
         } catch (FileNotFoundException ex) {
             return null;
         } catch (IOException e) {

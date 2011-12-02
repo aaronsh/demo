@@ -39,7 +39,6 @@ import java.io.InputStream;
 public abstract class BaseImage implements IImage {
     private static final String TAG = "BaseImage";
     private static final int UNKNOWN_LENGTH = -1;
-//    protected ContentResolver mContentResolver;
 
     // Database field
     protected Uri mUri;
@@ -56,11 +55,9 @@ public abstract class BaseImage implements IImage {
     private int mWidth = UNKNOWN_LENGTH;
     private int mHeight = UNKNOWN_LENGTH;
 
-    protected BaseImage(BaseImageList container, ContentResolver cr,
-            long id, int index, Uri uri, String dataPath, String mimeType,
+    protected BaseImage(BaseImageList container,             long id, int index, Uri uri, String dataPath, String mimeType,
             long dateTaken, String title, String displayName) {
         mContainer = container;
-//        mContentResolver = cr;
         mId = id;
         mIndex = index;
         mUri = uri;
@@ -94,11 +91,11 @@ public abstract class BaseImage implements IImage {
 
     public Bitmap fullSizeBitmap(int minSideLength, int maxNumberOfPixels,
             boolean rotateAsNeeded, boolean useNative) {
-        Uri url = mContainer.contentUri(mId);
-        if (url == null) return null;
+//        Uri url = mContainer.contentUri(mId);
+//        if (url == null) return null;
 
         Bitmap b = Util.makeBitmap(minSideLength, maxNumberOfPixels,
-                url, mDataPath, useNative);
+                mDataPath, useNative);
 
         if (b != null && rotateAsNeeded) {
             b = Util.rotate(b, getDegreesRotated());
@@ -147,7 +144,6 @@ public abstract class BaseImage implements IImage {
     private void setupDimension() {
         ParcelFileDescriptor input = null;
         try {
-//            input = mContentResolver.openFileDescriptor(mUri, "r");
             java.io.FileInputStream inputs = new java.io.FileInputStream(mDataPath); 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;

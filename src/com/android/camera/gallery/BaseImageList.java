@@ -16,6 +16,7 @@
 
 package com.android.camera.gallery;
 
+import com.android.camera.ImageDb;
 import com.android.camera.ImageManager;
 import com.android.camera.Util;
 
@@ -37,20 +38,22 @@ public abstract class BaseImageList implements IImageList {
     private final LruCache<Integer, BaseImage> mCache =
             new LruCache<Integer, BaseImage>(CACHE_CAPACITY);
 
-    protected ContentResolver mContentResolver;
+//    protected ContentResolver mContentResolver;
     protected int mSort;
 
     protected Uri mBaseUri;
     protected Cursor mCursor;
     protected String mBucketId;
     protected boolean mCursorDeactivated = false;
+    
+    protected ImageDb mImageDb = null;
 
-    public BaseImageList(ContentResolver resolver, Uri uri, int sort,
+    public BaseImageList(Uri uri, int sort,
             String bucketId) {
         mSort = sort;
         mBaseUri = uri;
         mBucketId = bucketId;
-        mContentResolver = resolver;
+//        mContentResolver = resolver;
         mCursor = createCursor();
 
         if (mCursor == null) {
@@ -63,14 +66,29 @@ public abstract class BaseImageList implements IImageList {
         mCache.clear();
     }
 
-    public void close() {
+    public BaseImageList(ImageDb mImages) {
+		// TODO Auto-generated constructor stub
+    	mImageDb = mImages;
+        mCursor = createCursor();
+
+        if (mCursor == null) {
+            Log.w(TAG, "createCursor returns null.");
+        }
+
+        // TODO: We need to clear the cache because we may "reopen" the image
+        // list. After we implement the image list state, we can remove this
+        // kind of usage.
+        mCache.clear();
+	}
+
+	public void close() {
         try {
             invalidateCursor();
         } catch (IllegalStateException e) {
             // IllegalStateException may be thrown if the cursor is stale.
             Log.e(TAG, "Caught exception while deactivating cursor.", e);
         }
-        mContentResolver = null;
+//        mContentResolver = null;
         if (mCursor != null) {
             mCursor.close();
             mCursor = null;
@@ -131,6 +149,7 @@ public abstract class BaseImageList implements IImageList {
     }
 
     public boolean removeImage(IImage image) {
+/*    	
         // TODO: need to delete the thumbnails as well
         if (mContentResolver.delete(image.fullSizeImageUri(), null, null) > 0) {
             ((BaseImage) image).onRemove();
@@ -140,6 +159,8 @@ public abstract class BaseImageList implements IImageList {
         } else {
             return false;
         }
+*/ 
+    	return false;
     }
 
     public boolean removeImageAt(int i) {

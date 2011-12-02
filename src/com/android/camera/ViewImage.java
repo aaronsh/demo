@@ -18,6 +18,7 @@ package com.android.camera;
 
 import dibang.com.Const;
 import dibang.com.R;
+import dibang.com.web.IOFile;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,8 +52,10 @@ import android.widget.ZoomButtonsController;
 
 import com.android.camera.gallery.IImage;
 import com.android.camera.gallery.IImageList;
+import com.android.camera.gallery.ImageList;
 
 
+import java.util.ArrayList;
 import java.util.Random;
 
 // This activity can display a whole picture and navigate them in a specific
@@ -71,9 +74,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     private static final String TAG = "ViewImage";
 
     private ImageGetter mGetter;
-    private Uri mSavedUri;
+//    private Uri mSavedUri;
     boolean mPaused = true;
     private boolean mShowControls = true;
+    private ImageDb mImages = null;
 
     // Choices for what adjacents to load.
     private static final int[] sOrderAdjacents = new int[] {0, 1, -1};
@@ -584,6 +588,16 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         scheduleDismissOnScreenControls();
     }
 
+    void testDb()
+    {
+    	String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
+    	ArrayList<String> list = IOFile.getFilePathList(path);
+    	if( mImages != null ){
+    		for( String file:list ){
+    			mImages.insert("", file, "");
+    		}
+    	}
+    }
     @Override
     public void onCreate(Bundle instanceState) {
         super.onCreate(instanceState);
@@ -610,9 +624,13 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 			text.setText("三维动画");
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
+			mImages = new EffectImageDb(this);
+			testDb();
 			text.setText("效果图");
 			break;
 		case  Const.UI_TYPE_HOUSE_SHOW:
+			mImages = new HouseImageDb(this);
+			testDb();
 			text.setText("户型图");
 			break;
 		case  Const.UI_TYPE_EMAGZIN:
@@ -670,12 +688,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
         boolean slideshow;
         if (instanceState != null) {
-            mSavedUri = instanceState.getParcelable(STATE_URI);
+//            mSavedUri = instanceState.getParcelable(STATE_URI);
             slideshow = instanceState.getBoolean(STATE_SLIDESHOW, false);
             mShowControls = instanceState.getBoolean(STATE_SHOW_CONTROLS, true);
         } else {
-            mSavedUri = getIntent().getData();
-            slideshow = intent.getBooleanExtra(EXTRA_SLIDESHOW, false);
+//            mSavedUri = getIntent().getData();
+            slideshow = intent.getBooleanExtra(EXTRA_SLIDESHOW, true);
         }
 
         // We only show action icons for URIs that we know we can share and
@@ -915,26 +933,17 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         int sort = sortOrder.equals("ascending")
                 ? ImageManager.SORT_ASCENDING
                 : ImageManager.SORT_DESCENDING;
-        return ImageManager.makeImageList(getContentResolver(), uri, sort);
+        return ImageManager.makeImageList(uri, sort);
     }
 
     private boolean init(Uri uri) {
-        if (uri == null) return false;
-        mAllImages = (mParam == null)
-                ? buildImageListFromUri(uri)
-                : ImageManager.makeImageList(getContentResolver(), mParam);
-        IImage image = mAllImages.getImageForUri(uri);
+//        if (uri == null) return false;
+        mAllImages = new ImageList( mImages );
+        mCurrentPosition  = 0;
+        IImage image = mAllImages.getImageAt(mCurrentPosition);
         if (image == null) return false;
-        mCurrentPosition = mAllImages.getImageIndex(image);
         mLastSlideShowImage = mCurrentPosition;
         return true;
-    }
-
-    private Uri getCurrentUri() {
-        if (mAllImages.getCount() == 0) return null;
-        IImage image = mAllImages.getImageAt(mCurrentPosition);
-        if (image == null) return null;
-        return image.fullSizeImageUri();
     }
 
     @Override
@@ -950,8 +959,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         super.onStart();
         mPaused = false;
 
-        if (!init(mSavedUri)) {
-            Log.w(TAG, "init failed: " + mSavedUri);
+        if (!init(null)) {
+//            Log.w(TAG, "init failed: " + mSavedUri);
             finish();
             return;
         }
@@ -997,7 +1006,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         mHandler.removeAllGetterCallbacks();
 
         if (mAllImages != null) {
-            mSavedUri = getCurrentUri();
+//            mSavedUri = getCurrentUri();
             mAllImages.close();
             mAllImages = null;
         }
@@ -1077,10 +1086,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 if (resultCode == RESULT_OK) {
                     // The CropImage activity passes back the Uri of the
                     // cropped image as the Action rather than the Data.
-                    mSavedUri = Uri.parse(data.getAction());
+//                    mSavedUri = Uri.parse(data.getAction());
 
                     // if onStart() runs before, then set the returned
                     // image as currentImage.
+/*                	
                     if (mAllImages != null) {
                         IImage image = mAllImages.getImageForUri(mSavedUri);
                         // image could be null if SD card is removed.
@@ -1091,6 +1101,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                             setImage(mCurrentPosition, false);
                         }
                     }
+*/                    
                 }
                 break;
         }

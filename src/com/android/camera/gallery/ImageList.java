@@ -23,6 +23,8 @@ import android.provider.MediaStore.Images.Media;
 
 import java.util.HashMap;
 
+import com.android.camera.ImageDb;
+
 /**
  * Represents an ordered collection of Image objects. Provides an API to add
  * and remove an image.
@@ -36,6 +38,7 @@ public class ImageList extends BaseImageList implements IImageList {
             new String[] { "image/jpeg", "image/png", "image/gif","image/x-ms-bmp" ,"image/vnd.wap.wbmp" };
 
     public HashMap<String, String> getBucketIds() {
+/*    	
         Uri uri = mBaseUri.buildUpon()
                 .appendQueryParameter("distinct", "true").build();
         Cursor cursor = Media.query(
@@ -53,17 +56,24 @@ public class ImageList extends BaseImageList implements IImageList {
         } finally {
             cursor.close();
         }
+*/    
+    	return null;
     }
 
     /**
      * ImageList constructor.
      */
-    public ImageList(ContentResolver resolver, Uri imageUri,
+    public ImageList(Uri imageUri,
             int sort, String bucketId) {
-        super(resolver, imageUri, sort, bucketId);
+        super( imageUri, sort, bucketId);
     }
 
-    private static final String WHERE_CLAUSE =
+    public ImageList(ImageDb mImages) {
+		// TODO Auto-generated constructor stub
+    	super(mImages);
+	}
+
+	private static final String WHERE_CLAUSE =
             "(" + Media.MIME_TYPE + " in (?, ?, ?, ? ,?))";
     private static final String WHERE_CLAUSE_WITH_BUCKET_ID =
             WHERE_CLAUSE + " AND " + Media.BUCKET_ID + " = ?";
@@ -86,10 +96,14 @@ public class ImageList extends BaseImageList implements IImageList {
 
     @Override
     protected Cursor createCursor() {
-        Cursor c = Media.query(
+    	Cursor c = mImageDb.query();
+  /*
+    	Cursor c = Media.query(
                 mContentResolver, mBaseUri, IMAGE_PROJECTION,
                 whereClause(), whereClauseArgs(), sortOrder());
         return c;
+*/
+    	return c;
     }
 
     static final String[] IMAGE_PROJECTION = new String[] {
@@ -118,8 +132,9 @@ public class ImageList extends BaseImageList implements IImageList {
 
     @Override
     protected BaseImage loadImageFromCursor(Cursor cursor) {
-        long id = cursor.getLong(INDEX_ID);
-        String dataPath = cursor.getString(INDEX_DATA_PATH);
+        long id = cursor.getLong(ImageDb.COL_INDEX_ID);
+        String dataPath = cursor.getString(ImageDb.COL_INDEX_PATH);
+/*        
         long dateTaken = cursor.getLong(INDEX_DATE_TAKEN);
         if (dateTaken == 0) {
             dateTaken = cursor.getLong(INDEX_DATE_MODIFIED) * 1000;
@@ -131,8 +146,16 @@ public class ImageList extends BaseImageList implements IImageList {
         if (title == null || title.length() == 0) {
             title = dataPath;
         }
-        return new Image(this, mContentResolver, id, cursor.getPosition(),
-                contentUri(id), dataPath, mimeType, dateTaken, title,
-                orientation);
+*/        
+        return new Image(this, id, cursor.getPosition(),
+               null, dataPath, "", 0, "",
+                0);
     }
+
+	@Override
+	public IImage getImageForDb(ImageDb mImages) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
