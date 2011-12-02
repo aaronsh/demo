@@ -693,7 +693,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             mShowControls = instanceState.getBoolean(STATE_SHOW_CONTROLS, true);
         } else {
 //            mSavedUri = getIntent().getData();
-            slideshow = intent.getBooleanExtra(EXTRA_SLIDESHOW, true);
+            slideshow = intent.getBooleanExtra(EXTRA_SLIDESHOW, false);
         }
 
         // We only show action icons for URIs that we know we can share and
