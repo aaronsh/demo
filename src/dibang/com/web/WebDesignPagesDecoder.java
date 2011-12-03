@@ -1,0 +1,124 @@
+package dibang.com.web;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import com.android.camera.ImageDb;
+
+import dibang.com.Const;
+
+import android.content.Context;
+import android.util.Log;
+
+public class WebDesignPagesDecoder extends WebBaseDecoder {
+
+	private static final String TAG = "WebDesignPagesDecoder";
+	private static final String BASE_URL = "http://www.depcn.com/";
+
+	int mPages = 0;
+
+	@Override
+	protected LinkedList<Object> decodeDocument(Document doc) throws Exception {
+		Elements list = doc.select("span[class=current]");
+		test(list);
+		mPages = getPageCount(list.first());
+		LinkedList<Object> links = decodePageContent(doc);
+		for (int page = 1; page < mPages; page++) {
+
+			String wholeUrl = String.format("%s?page=%d", mDecodeWhich, page);
+			Log.v(TAG, "decoding:"+wholeUrl);
+			doc = Jsoup.connect(wholeUrl).get();
+			LinkedList<Object> more = decodePageContent(doc);
+			links.addAll(more);
+		}
+
+		return links;
+	}
+
+	private LinkedList<Object> decodePageContent(Document doc) {
+		Elements list = doc.select("div[id=box]");
+		try {
+			test(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LinkedList<Object> links = new LinkedList<Object>();
+		for (Element e : list) {
+			HtmlHyperLink l = getImageLine(e);
+			if (l != null)
+				links.add(l);
+		}
+		return links;
+	}
+
+	private HtmlHyperLink getImageLine(Element e) {
+		// TODO Auto-generated method stub
+		HtmlHyperLink link = new HtmlHyperLink();
+		Elements list = e.getElementsByAttributeValue("class", "pic");
+		if( list == null || list.size() != 1 ){
+			return null;
+		}
+		Element a = list.first();
+		a = a.child(0);
+		link.Link = a.attr("href");
+		a = a.child(0);
+		link.Image = BASE_URL + a.attr("src");
+		list = e.getElementsByAttributeValue("class", "showtitle");
+		if( list == null || list.size() != 1 ){
+			return null;
+		}
+		a = list.first();
+		link.Name = a.text();
+		
+		return link;
+	}
+
+	private int getPageCount(Element e) {
+		// TODO Auto-generated method stub
+		int pages = 0;
+		while (e != null) {
+			String text = e.text();
+			try {
+				int index = Integer.valueOf(text);
+				if (index > pages)
+					pages = index;
+			} catch (NumberFormatException ex) {
+				ex.printStackTrace();
+			}
+			e = e.nextElementSibling();
+		}
+		Log.v(TAG, "pages:" + pages);
+		return pages;
+	}
+
+	private void decodeImages(Element e, ArrayList<HtmlHyperLink> images) {
+		// TODO Auto-generated method stub
+		Element a = e.child(0);
+		String Name = a.text();
+		String Link = a.attr("href");
+
+		RenderingImageDecoder decoder = new RenderingImageDecoder();
+		String url = mDecodeWhich + Link;
+		decoder.init(WebBaseDecoder.DECODE_URL_GET, url, null);
+		decoder.setImageClass(Name);
+		try {
+			LinkedList<Object> list = decoder.decode();
+			for (Object o : list) {
+				images.add((HtmlHyperLink) o);
+			}
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+		return;
+	}
+}

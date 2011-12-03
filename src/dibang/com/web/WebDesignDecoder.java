@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.android.camera.DesignCaseDb;
 import com.android.camera.ImageDb;
 
 import dibang.com.Const;
@@ -18,96 +19,93 @@ import dibang.com.Const;
 import android.content.Context;
 import android.util.Log;
 
-public class RenderingDecoder extends WebBaseDecoder {
-	public static final int DECODER_TYPE_EFFECT_SHOW = 0;
-	public static final int DECODER_TYPE_HOUSE_SHOW = 1;
-	
-	private static final String TAG = "RenderingDecoder";
-	
-	private int mDecoderType = DECODER_TYPE_EFFECT_SHOW;
+public class WebDesignDecoder extends WebBaseDecoder {
+
+	private String[] Pages = { "http://www.depcn.com/work.asp",
+			"http://www.depcn.com/bieshu.asp",
+			"http://www.depcn.com/gongyu.asp",
+			"http://www.depcn.com/shangye.asp",
+			"http://www.depcn.com/zonghe.asp", "http://www.depcn.com/qiye.asp" };
+	private String[] Classes = { Const.WEB_PAGE_CLASS_ZUIXIN,
+			Const.WEB_PAGE_CLASS_BIESHU, Const.WEB_PAGE_CLASS_GONGYU,
+			Const.WEB_PAGE_CLASS_SHANGYE, Const.WEB_PAGE_CLASS_ZONGHE,
+			Const.WEB_PAGE_CLASS_QIYE };
+
+	private static final String TAG = "WebDesignDecoder";
+
 	private Context mCntx;
-	
-	public void setDecoder(Context cntx, int type)
-	{
+
+	public void setDecoder(Context cntx) {
 		mCntx = cntx;
-		mDecoderType = type;
 	}
 
 	@Override
-	protected LinkedList<Object> decodeDocument(Document doc) throws Exception {
-		Elements list = doc.select("div");
-		test(list);
+	public LinkedList<Object> decodeUrlGet(String url) throws Exception {
+		Log.v(TAG, "decodeUrlGet start");
+		int size = Pages.length;
 		ArrayList<HtmlHyperLink> links = new ArrayList<HtmlHyperLink>();
-		for (Element e : list) {
-			String attr = e.attr("class");
-			if( attr.startsWith("leibie")){
-				decodeImages(e, links);
-			}
+		for (int i = 0; i < size; i++) {
+			decodePages(Pages[i], Classes[i], links);
 		}
-		
 		syncImage(links);
-
+		Log.v(TAG, "decodeUrlGet end");
 		return null;
 	}
 
-	private void decodeImages(Element e, ArrayList<HtmlHyperLink> images) {
+	private void decodePages(String webBase, String text,
+			ArrayList<HtmlHyperLink> images) {
 		// TODO Auto-generated method stub
-		Element a = e.child(0);
-		String Name = a.text();
-		String Link = a.attr("href");
-		
-		RenderingImageDecoder decoder = new RenderingImageDecoder();
-		String url = mDecodeWhich + Link;
-		decoder.init(WebBaseDecoder.DECODE_URL_GET, url, null);
-		decoder.setImageClass(Name);
+
+		WebDesignPagesDecoder decoder = new WebDesignPagesDecoder();
+		decoder.init(WebBaseDecoder.DECODE_URL_GET, webBase, null);
 		try {
 			LinkedList<Object> list = decoder.decode();
-			for(Object o:list ){
-				images.add((HtmlHyperLink)o);
+			for (Object o : list) {
+				HtmlHyperLink link = (HtmlHyperLink) o;
+				link.Extra = text;
+				images.add(link);
 			}
 		} catch (Exception ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
-		return ;
+		return;
 	}
 
 	private void syncImage(ArrayList<HtmlHyperLink> links) {
 		System.out.print("syncImage");
 		String path = null;
-		String tbl = null;
-		
-		if(mDecoderType == DECODER_TYPE_EFFECT_SHOW){
-			path = Const.FOLDER_effect_show;
-			tbl = ImageDb.TBL_EFFECT_SHOW;
-		}
-		else{
-			path = Const.FOLDER_house_show;
-			tbl = ImageDb.TBL_HOUSE_SHOW;
-		}
-		ImageDb db = new ImageDb(mCntx, tbl);
+
+		path = Const.FOLDER_web_design;
+
+		DesignCaseDb db = new DesignCaseDb(mCntx, DesignCaseDb.TBL_WEB_CASES);
 		db.clear();
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
 		int imgSize = links.size();
 		int fileSize = files.size();
-		for (int i=0; i<imgSize; i++) {
-			HtmlHyperLink img = links.get(i);
-			for (int j=0; j<fileSize; j++) {
-				String file = files.get(j);
+		boolean rmFile = false;
+		for (int j = 0; j < fileSize; j++) {
+			String file = files.get(j);
+			rmFile = false;
+			for (int i = 0; i < imgSize; i++) {
+				HtmlHyperLink img = links.get(i);
 				if (img.Image.endsWith(file)) {
 					StringBuilder b = new StringBuilder(folder);
 					b.append("/");
 					b.append(file);
-					db.insert(img.Extra, b.toString(), img.Link);
+					db.insert(img.Extra, b.toString(), img.Link, img.Name);
 					links.remove(i);
-					files.remove(j);
 					i--;
 					imgSize--;
-					fileSize--;
-					break;
+					rmFile = true;
 				}
+			}
+			if( rmFile ){
+				files.remove(j);
+				j--;
+				fileSize--;
 			}
 
 		}
@@ -120,14 +118,14 @@ public class RenderingDecoder extends WebBaseDecoder {
 		System.out.print(links.toString());
 		// download images
 		for (HtmlHyperLink img : links) {
-			Log.v(TAG, "download "+img);
+			Log.v(TAG, "download " + img);
 			StringBuilder b = new StringBuilder(folder);
 			b.append("/");
-			b.append(IOFile.getFileName(img.Image));
-			db.insert(img.Extra, b.toString(), img.Link);
+			b.append(IOFile.getFileName(img.Link));
+			db.insert(img.Extra, b.toString(), img.Link, img.Name);
 			try {
-				ImageDownloader.downFile(img.Image, path,
-						null);
+				ImageDownloader.downFile(img.Image, path, null);
+				Log.v(TAG, "down img "+img.Image);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -151,7 +149,7 @@ public class RenderingDecoder extends WebBaseDecoder {
 		b.append(file);
 
 		img = b.toString();
-		Log.v(TAG, "delete "+img);
+		Log.v(TAG, "delete " + img);
 		File f = new File(img);
 		f.delete();
 	}

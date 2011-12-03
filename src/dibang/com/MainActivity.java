@@ -133,7 +133,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 			break;
 		case 1:
 			intent = new Intent(this, GridShowActivity.class);
-			intent.putExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
+			intent.putExtra("type", Const.UI_TYPE_3D_ANIMATION);
 			break;
 		case 2:
             intent = new Intent(this, ViewImage.class);

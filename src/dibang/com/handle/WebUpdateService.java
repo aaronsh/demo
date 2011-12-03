@@ -17,6 +17,7 @@ import dibang.com.web.UrlParamList;
 import dibang.com.web.UserProfileDecoder;
 import dibang.com.web.WebBaseDecoder;
 import dibang.com.web.WebDecodeTask;
+import dibang.com.web.WebDesignDecoder;
 import dibang.com.web.WebSite;
 
 import android.app.Notification;
@@ -59,7 +60,8 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public static final int UPDATE_TASK_PARTNER = 1;
 	public static final int UPDATE_TASK_EFFECT = 2;
 	public static final int UPDATE_TASK_HOUSE = 3;
-	public static final int UPDATE_TASK_MAX = 4;
+	public static final int UPDATE_TASK_WEB_DESIGN = 4;
+	public static final int UPDATE_TASK_MAX = 5;
 
 	private static final int UPDATE_MODE_ALL = 0;
 	private static final int UPDATE_MODE_SINGLE = 1;
@@ -235,6 +237,11 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			url = WebSite.HOUSE;
 			decoder = new RenderingDecoder();
 			((RenderingDecoder)decoder).setDecoder(this, RenderingDecoder.DECODER_TYPE_HOUSE_SHOW);
+			break;
+		case UPDATE_TASK_WEB_DESIGN:
+			url = "";
+			decoder = new WebDesignDecoder();
+			((WebDesignDecoder)decoder).setDecoder(this);
 			break;
 		}
 

@@ -32,7 +32,16 @@ public class Const extends BaseActivity {
 	public static final String FOLDER_partner = "partner";
 	public static final String FOLDER_effect_show = "effect_show";
 	public static final String FOLDER_house_show = "house_show";
-	
+	public static final String FOLDER_web_design = "web_design";
+
 	public static final String APP_PATH = "Vision";
+	
+	
+	public static final String WEB_PAGE_CLASS_ZUIXIN="zuixin";
+	public static final String WEB_PAGE_CLASS_BIESHU="bieshu";
+	public static final String WEB_PAGE_CLASS_GONGYU="gongyu";
+	public static final String WEB_PAGE_CLASS_SHANGYE="shangye";
+	public static final String WEB_PAGE_CLASS_ZONGHE="zonghe";
+	public static final String WEB_PAGE_CLASS_QIYE="qiye";
 
 }

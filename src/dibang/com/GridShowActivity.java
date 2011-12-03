@@ -2,7 +2,10 @@ package dibang.com;
 
 
 
+import com.android.camera.DesignCaseDb;
+
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -15,6 +18,8 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 
 	GridAdapter mAdapter = null;
 	GridView mGrid = null;
+	DesignCaseDb mDb = null;
+	Cursor mCursor = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,11 +31,13 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT);
+			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_WEB_CASES);
+			mCursor = mDb.query();
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			break;
 		case  Const.UI_TYPE_3D_ANIMATION:
 			text.setText("三维动画");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT);
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, null);
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			text.setText("效果图");
@@ -40,11 +47,11 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			break;
 		case  Const.UI_TYPE_EMAGZIN:
 			text.setText("电子杂志");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT);
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, null);
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("合作伙伴");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY);
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, null);
 			mGrid.setNumColumns(3);
 			mSM.bindService(WebUpdateService.UPDATE_TASK_PARTNER, this);
 			break;
@@ -70,6 +77,11 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		
 	@Override
 	public void onDestroy() {
+		if( mCursor != null )
+			mCursor.close();
+		if( mDb != null ){
+			mDb.close();
+		}
 		mSM.unbindService();
 		super.onDestroy();
 	}

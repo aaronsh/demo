@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import com.android.camera.DesignCaseDb;
+
 import dibang.com.web.IOFile;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -35,13 +38,15 @@ public class GridAdapter extends BaseAdapter {
 	private int mScreenHeight = 0;
 	int mItemType;
 	LayoutInflater mInflater;
+	Cursor mCursor=null;
 	
 	private boolean WithSdCard = true;
 	private ArrayList<String> mFileList = null;
 	private HashMap<Integer, ImageView> mViewList = new HashMap<Integer, ImageView>();
 
-	public GridAdapter(Context cntx, int itemType) {
+	public GridAdapter(Context cntx, int itemType, Cursor cursor) {
 		mCntx = cntx;
+		mCursor = cursor;
 
 		DisplayMetrics dm = new DisplayMetrics();
 		dm = mCntx.getApplicationContext().getResources().getDisplayMetrics();
@@ -60,6 +65,7 @@ public class GridAdapter extends BaseAdapter {
 
 	private View createImageTextView(int position) {
 		ImageView i = null;
+		String title = "弘阳。旭日爱上城";
 
 		LinearLayout frm = (LinearLayout) mInflater.inflate(
 				R.layout.grid_item_imgtxt_view, null);
@@ -70,14 +76,30 @@ public class GridAdapter extends BaseAdapter {
 		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
 		i.setLayoutParams(new GridView.LayoutParams(mScreenWidth / 2,
 				ViewGroup.LayoutParams.FILL_PARENT));
-		Drawable icon = mCntx.getResources().getDrawable(
+		int width = 0;
+		int height = 0;
+		if( mCursor != null ){
+			mCursor.moveToPosition(position);
+			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
+			Bitmap bmp = BitmapFactory.decodeFile(pathName);
+			i.setImageBitmap(bmp);
+			width = mScreenWidth / 2 - 24;
+			height = (bmp.getHeight() * width)
+					/ bmp.getWidth();
+			
+			title = mCursor.getString(DesignCaseDb.COL_INDEX_TEXT);
+		}
+		else{
+			Drawable icon = mCntx.getResources().getDrawable(
 
-				R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+					R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
 
-		i.setImageDrawable(icon);
-		int width = mScreenWidth / 2 - 24;
-		int height = (icon.getIntrinsicHeight() * width)
-				/ icon.getIntrinsicWidth();
+			i.setImageDrawable(icon);
+			
+			width = mScreenWidth / 2 - 24;
+			height = (icon.getIntrinsicHeight() * width)
+					/ icon.getIntrinsicWidth();
+		}
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,
 				height);
 		params.setMargins(3, 3, 3, 3);
@@ -87,9 +109,9 @@ public class GridAdapter extends BaseAdapter {
 				.findViewById(R.id.icon_container);
 		container.addView(i, 0);
 
-		TextView title = (TextView) frm.findViewById(R.id.text);
-		title.setText("弘阳。旭日爱上城");
-		title.setGravity(Gravity.CENTER_HORIZONTAL);
+		TextView titleView = (TextView) frm.findViewById(R.id.text);
+		titleView.setText(title);
+		titleView.setGravity(Gravity.CENTER_HORIZONTAL);
 		// frm.addView(title);
 		return frm;
 
@@ -144,6 +166,8 @@ public class GridAdapter extends BaseAdapter {
 	}
 
 	public final int getCount() {
+		if( mCursor != null )
+			return mCursor.getCount();
 		if (WithSdCard)
 			return mFileList.size();
 		return 30;
