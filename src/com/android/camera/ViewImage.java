@@ -204,12 +204,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         // zoomButtonControls will not able to show up. So delay it until the
         // view has attached to window.
 
-        updateNextPrevControls();
+//        updateNextPrevControls();
 
         IImage image = mAllImages.getImageAt(mCurrentPosition);
 
             updateZoomButtonsEnabled();
-            mZoomButtonsController.setVisible(true);
+//            mZoomButtonsController.setVisible(true);
 
 
 

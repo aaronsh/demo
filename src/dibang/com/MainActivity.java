@@ -134,6 +134,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		case 1:
 			intent = new Intent(this, GridShowActivity.class);
 			intent.putExtra("type", Const.UI_TYPE_3D_ANIMATION);
+			intent.putExtra("top_menu", false);
 			break;
 		case 2:
             intent = new Intent(this, ViewImage.class);
