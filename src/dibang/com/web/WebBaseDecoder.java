@@ -102,6 +102,17 @@ public class WebBaseDecoder {
 		return list;
 	}
 	
+	protected Element firstChild(Element element, String tag)
+	{
+		Elements children = element.children();
+		for(Element e:children){
+			if( tag.compareTo(e.tagName()) == 0){
+				return e;
+			}
+		}
+		return null;
+	}
+	
 	protected String getText(Elements elements, String attr,  String val) throws Exception{
 		String text = "";
 		for (Element src : elements) {

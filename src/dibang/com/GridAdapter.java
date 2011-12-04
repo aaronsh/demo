@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import android.widget.TextView;
 public class GridAdapter extends BaseAdapter {
 	public final static int ITEM_TYPE_IMAGE_ONLY = 1;
 	public final static int ITEM_TYPE_IMAGE_TEXT = 2;
+	private static final String TAG = "GridAdapter";
 
 	Context mCntx;
 	private int mScreenWidth = 0;
@@ -42,7 +44,7 @@ public class GridAdapter extends BaseAdapter {
 	
 	private boolean WithSdCard = true;
 	private ArrayList<String> mFileList = null;
-	private HashMap<Integer, ImageView> mViewList = new HashMap<Integer, ImageView>();
+	private HashMap<Integer, View> mViewList = new HashMap<Integer, View>();
 
 	public GridAdapter(Context cntx, int itemType, Cursor cursor) {
 		mCntx = cntx;
@@ -80,6 +82,8 @@ public class GridAdapter extends BaseAdapter {
 		int height = 0;
 		if( mCursor != null ){
 			mCursor.moveToPosition(position);
+//			mCursor.moveToNext();
+			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
 			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
 			Bitmap bmp = BitmapFactory.decodeFile(pathName);
 			i.setImageBitmap(bmp);
@@ -150,16 +154,19 @@ public class GridAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		if (convertView == null) {
+		Log.v(TAG, "getView("+position+")");
+		View v = mViewList.get(position);
+		if (v == null) {
 
 			if (mItemType == ITEM_TYPE_IMAGE_TEXT) {
-				return createImageTextView(position);
+				v = createImageTextView(position);
 			} else {
-				return buildImageView(position);
+				v = buildImageView(position);
 			}
-		} else {
-			return convertView;
-		}
+			mViewList.put(position, v);
+		} 
+		
+		return v;
 
 
 		// return i;
@@ -196,7 +203,7 @@ public class GridAdapter extends BaseAdapter {
 			v.invalidate();
 		}
 */		
-		notifyDataSetChanged();
+//		notifyDataSetChanged();
 	}
 
 

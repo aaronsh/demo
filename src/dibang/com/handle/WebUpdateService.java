@@ -9,6 +9,8 @@ import java.util.TimerTask;
 import dibang.com.MainActivity;
 import dibang.com.OnWebTaskFinish;
 import dibang.com.R;
+import dibang.com.web.AniDesignDecoder;
+import dibang.com.web.EbookDecoder;
 import dibang.com.web.ImageDownloader;
 import dibang.com.web.PartnerDecoder;
 import dibang.com.web.RenderingDecoder;
@@ -58,10 +60,12 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 
 	public static final int UPDATE_TASK_TOP_GALLERY = 0;
 	public static final int UPDATE_TASK_PARTNER = 1;
-	public static final int UPDATE_TASK_EFFECT = 2;
+	public static final int UPDATE_TASK_EFFECT = 6;
 	public static final int UPDATE_TASK_HOUSE = 3;
 	public static final int UPDATE_TASK_WEB_DESIGN = 4;
-	public static final int UPDATE_TASK_MAX = 5;
+	public static final int UPDATE_TASK_ANI_DESIGN = 5;
+	public static final int UPDATE_TASK_EBOOK_DESIGN = 2;
+	public static final int UPDATE_TASK_MAX = 7;
 
 	private static final int UPDATE_MODE_ALL = 0;
 	private static final int UPDATE_MODE_SINGLE = 1;
@@ -242,6 +246,18 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			url = "";
 			decoder = new WebDesignDecoder();
 			((WebDesignDecoder)decoder).setDecoder(this);
+			break;
+			
+		case UPDATE_TASK_ANI_DESIGN:
+			url = WebSite.ANI_DESIGN;
+			decoder = new AniDesignDecoder();
+			((AniDesignDecoder)decoder).setDecoder(this);
+			break;
+			
+		case UPDATE_TASK_EBOOK_DESIGN:
+			url = WebSite.EBOOK_DESIGN;
+			decoder = new EbookDecoder();
+			((EbookDecoder)decoder).setDecoder(this);
 			break;
 		}
 

@@ -33,6 +33,8 @@ public class Const extends BaseActivity {
 	public static final String FOLDER_effect_show = "effect_show";
 	public static final String FOLDER_house_show = "house_show";
 	public static final String FOLDER_web_design = "web_design";
+	public static final String FOLDER_ani_design = "ani_design";
+	public static final String FOLDER_ebook_design = "ebook_design";
 
 	public static final String APP_PATH = "Vision";
 	

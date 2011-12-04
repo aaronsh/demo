@@ -27,11 +27,9 @@ public class WebDesignPagesDecoder extends WebBaseDecoder {
 
 	@Override
 	protected LinkedList<Object> decodeDocument(Document doc) throws Exception {
-		Elements list = doc.select("span[class=current]");
-		test(list);
-		mPages = getPageCount(list.first());
+		mPages = getPageCount(doc);
 		LinkedList<Object> links = decodePageContent(doc);
-		for (int page = 1; page < mPages; page++) {
+		for (int page = 2; page <= mPages; page++) {
 
 			String wholeUrl = String.format("%s?page=%d", mDecodeWhich, page);
 			Log.v(TAG, "decoding:"+wholeUrl);
@@ -82,9 +80,14 @@ public class WebDesignPagesDecoder extends WebBaseDecoder {
 		return link;
 	}
 
-	private int getPageCount(Element e) {
+	private int getPageCount(Document doc) {
 		// TODO Auto-generated method stub
+		Elements list = doc.select("span[class=current]");
+		if( list == null || list.size() != 1 ){
+			return 0;
+		}
 		int pages = 0;
+		Element e = list.first();
 		while (e != null) {
 			String text = e.text();
 			try {
@@ -98,27 +101,5 @@ public class WebDesignPagesDecoder extends WebBaseDecoder {
 		}
 		Log.v(TAG, "pages:" + pages);
 		return pages;
-	}
-
-	private void decodeImages(Element e, ArrayList<HtmlHyperLink> images) {
-		// TODO Auto-generated method stub
-		Element a = e.child(0);
-		String Name = a.text();
-		String Link = a.attr("href");
-
-		RenderingImageDecoder decoder = new RenderingImageDecoder();
-		String url = mDecodeWhich + Link;
-		decoder.init(WebBaseDecoder.DECODE_URL_GET, url, null);
-		decoder.setImageClass(Name);
-		try {
-			LinkedList<Object> list = decoder.decode();
-			for (Object o : list) {
-				images.add((HtmlHyperLink) o);
-			}
-		} catch (Exception ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-		return;
 	}
 }

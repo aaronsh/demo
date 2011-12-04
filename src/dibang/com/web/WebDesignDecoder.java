@@ -140,11 +140,7 @@ public class WebDesignDecoder extends WebBaseDecoder {
 		if (!IOFile.sdcardExist())
 			return;
 		StringBuilder b = new StringBuilder();
-		b.append(IOFile.getSdcardPath());
-		b.append("/");
-		b.append(Const.APP_PATH);
-		b.append("/");
-		b.append(Const.FOLDER_partner);
+		b.append(IOFile.getModuleFolder(Const.FOLDER_web_design));
 		b.append("/");
 		b.append(file);
 

@@ -37,7 +37,9 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			break;
 		case  Const.UI_TYPE_3D_ANIMATION:
 			text.setText("三维动画");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, null);
+			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_ANI_CASES);
+			mCursor = mDb.query();
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			text.setText("效果图");
@@ -47,7 +49,9 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			break;
 		case  Const.UI_TYPE_EMAGZIN:
 			text.setText("电子杂志");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, null);
+			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_EBOOK_CASES);
+			mCursor = mDb.query();
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("合作伙伴");

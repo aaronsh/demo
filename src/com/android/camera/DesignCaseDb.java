@@ -19,8 +19,11 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	public static final int COL_INDEX_TEXT = 4;
 	
 	public static final String TBL_WEB_CASES = "web_cases";
+	public static final String TBL_ANI_CASES = "ani_cases";
+	public static final String TBL_EBOOK_CASES = "ebook_cases";
 	
-	protected static final int DATABASE_VERSION = 1;
+	
+	protected static final int DATABASE_VERSION = 2;
 	private static final String DB_NAME = "designcases.db";
 
 
@@ -54,6 +57,14 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		b.append(TBL_WEB_CASES);
 		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
 		db.execSQL(b.toString());
+		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+		b.append(TBL_ANI_CASES);
+		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		db.execSQL(b.toString());
+		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+		b.append(TBL_EBOOK_CASES);
+		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		db.execSQL(b.toString());
 	}
 	
 	public void onOpen (SQLiteDatabase db){
@@ -64,6 +75,7 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	
 	public void insert(String imgClass, String path, String link, String name)
 	{
+//		Log.v(TAG, "add "+imgClass+","+name+","+path);
 		ContentValues values = new ContentValues();
 
 		values.put(Key_class, imgClass);
@@ -86,9 +98,9 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 				se.printStackTrace();
 			}
 */
-		String sql = "drop table " + TBL_NAME;
+		String sql = "delete from \"" + TBL_NAME + "\"";
 		mDB.execSQL(sql);
-		onCreate(mDB);
+//		onCreate(mDB);
 	}
 
 
@@ -127,5 +139,5 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		}
 
 	}
-	
+		
 }

@@ -114,7 +114,7 @@ public class RenderingDecoder extends WebBaseDecoder {
 
 		// remove useless pictures
 		for (String file : files) {
-			deleteFile(file);
+			deleteFile(file, folder);
 		}
 
 		System.out.print(links.toString());
@@ -136,17 +136,13 @@ public class RenderingDecoder extends WebBaseDecoder {
 		db.close();
 	}
 
-	private void deleteFile(String file) {
+	private void deleteFile(String file, String folder) {
 		// TODO Auto-generated method stub
 		String img;
 		if (!IOFile.sdcardExist())
 			return;
 		StringBuilder b = new StringBuilder();
-		b.append(IOFile.getSdcardPath());
-		b.append("/");
-		b.append(Const.APP_PATH);
-		b.append("/");
-		b.append(Const.FOLDER_partner);
+		b.append(folder);
 		b.append("/");
 		b.append(file);
 
