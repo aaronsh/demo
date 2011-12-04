@@ -83,6 +83,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     boolean mPaused = true;
     private boolean mShowControls = true;
     private ImageDb mImages = null;
+    private Cursor mCursor = null;
+    private String mFilter = null;
 
     // Choices for what adjacents to load.
     private static final int[] sOrderAdjacents = new int[] {0, 1, -1};
@@ -243,6 +245,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (mZoomButtonsController != null) {
             mZoomButtonsController.setVisible(false);
         }
+		if( mCursor != null )
+			mCursor.close();
 		mImages.close();
 		mImages = null;
         super.onDestroy();
@@ -720,7 +724,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     	ArrayList<String> cat = new ArrayList<String>();
     	while(!c.isAfterLast()){
     		String key = c.getString(ImageDb.COL_INDEX_CLASS); 
-    		Log.v(TAG, "setTopButton:"+key);
+
     		Iterator<String> it = cat.iterator();
     		boolean existed = false;
     		while(it.hasNext()){
@@ -746,10 +750,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     		btn.setOnClickListener(this);
     		btn.setId(R.id.button1);
     		container.addView(btn);
-    	Log.v(TAG, "test query");
-    	c = mImages.query(kwd);
-    	c.close();
     	}
+		mFilter = cat.get(0);
 	}
 
 	private Animation makeInAnimation(int id) {
@@ -993,6 +995,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
+		initStartImageShow();
+    }
+
+	private void initStartImageShow()
+		{
         mPaused = false;
 
         if (!init(null)) {
@@ -1021,8 +1028,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         } else {  // MODE_NORMAL
             setImage(mCurrentPosition, mShowControls);
             mShowControls = false;
-        }
-    }
+        }		}
 
     @Override
     public void onStop() {
@@ -1103,6 +1109,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 break;   
             case R.id.button1:
             	Log.v(TAG, "user click "+v.getTag());
+				mFilter = (String)v.getTag();
+				initStartImageShow();
             	break;
         }
 
