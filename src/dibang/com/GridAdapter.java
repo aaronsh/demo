@@ -115,7 +115,7 @@ public class GridAdapter extends BaseAdapter {
 
 		TextView titleView = (TextView) frm.findViewById(R.id.text);
 		titleView.setText(title);
-		titleView.setGravity(Gravity.CENTER_HORIZONTAL);
+		titleView.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM);
 		// frm.addView(title);
 		return frm;
 

@@ -28,10 +28,10 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 
 
 	private static final String Key_id = "_id";
-	private static final String Key_class = "class";
-	private static final String Key_path = "path";
-	private static final String Key_link = "link";
-	private static final String Key_name = "name";
+	private static final String Key_class = "_class";
+	private static final String Key_path = "_path";
+	private static final String Key_link = "_link";
+	private static final String Key_name = "_name";
 	private static final String TAG = "DesignCaseDb";
 
 	private String TBL_NAME = null;
@@ -53,21 +53,33 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		mDB = db;
+		StringBuilder cols = new StringBuilder("(");
+		cols.append(Key_id);
+		cols.append(" integer primary key autoincrement, ");
+		cols.append(Key_class);
+		cols.append(" text, ");
+		cols.append(Key_path);
+		cols.append(" text, ");
+		cols.append(Key_link);
+		cols.append(" text, ");
+		cols.append(Key_name);
+		cols.append(" text)");
+		
 		StringBuilder b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
 		b.append(TBL_WEB_CASES);
-		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		b.append(cols);
 		db.execSQL(b.toString());
 		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
 		b.append(TBL_ANI_CASES);
-		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		b.append(cols);
 		db.execSQL(b.toString());
 		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
 		b.append(TBL_EBOOK_CASES);
-		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		b.append(cols);
 		db.execSQL(b.toString());
 		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
 		b.append(TBL_PARTNER);
-		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		b.append(cols);
 		db.execSQL(b.toString());
 	}
 	
@@ -114,7 +126,22 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		return c;
 	}
 
-
+	public Cursor query(String caseClass) {
+		obtainWritableDatabase();
+		String[] cols = {Key_id, Key_class, Key_path, Key_link, Key_name};
+		StringBuilder b = new StringBuilder(Key_class);
+		b.append("=\"");
+		b.append(caseClass);
+		b.append("\"");
+		Cursor c = mDB.query(TBL_NAME, cols, b.toString(), null, null, null, null);
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			Log.v(TAG, c.getString(COL_INDEX_CLASS));
+			c.moveToNext();
+		}
+		return c;
+	}
+	
 	public void del(int id) {
 		obtainWritableDatabase();
 		mDB.delete(TBL_NAME, "_id=?", new String[] { String.valueOf(id) });

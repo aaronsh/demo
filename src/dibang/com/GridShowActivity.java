@@ -4,9 +4,13 @@ package dibang.com;
 
 import com.android.camera.DesignCaseDb;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,8 +18,9 @@ import dibang.com.handle.BaseActivity;
 import dibang.com.handle.WebUpdateNotification;
 import dibang.com.handle.WebUpdateService;
 
-public class GridShowActivity extends BaseActivity implements WebUpdateNotification {
+public class GridShowActivity extends BaseActivity implements WebUpdateNotification, OnClickListener  {
 
+	private static final String TAG = "GridShowActivity";
 	GridAdapter mAdapter = null;
 	GridView mGrid = null;
 	DesignCaseDb mDb = null;
@@ -32,7 +37,8 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("Õ¯’æ…Ëº∆");
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_WEB_CASES);
-			mCursor = mDb.query();
+			mCursor = mDb.query(Const.WEB_PAGE_CLASS_ZUIXIN);
+			Log.v(TAG, "get "+mCursor.getCount() + " from db");
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			break;
 		case  Const.UI_TYPE_3D_ANIMATION:
@@ -70,6 +76,9 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			group.removeView(group.findViewById(R.id.top_menu));
 			group.setBackgroundDrawable(res.getDrawable(R.drawable.top_menu_bg));
 		}
+		else{
+			registTopButtonEvent();
+		}
 	
 		
 
@@ -77,6 +86,16 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
        
         
 		onInitView();
+	}
+	
+	private void registTopButtonEvent()
+	{
+		int[] ids = {R.id.top_btn_zuixin, R.id.top_btn_bieshu, R.id.top_btn_gongyu, R.id.top_btn_shangye, R.id.top_btn_zonghe, R.id.top_btn_qiye};
+		for( int id:ids){
+		TextView v = (TextView)findViewById(id);
+		v.setClickable(true);
+		v.setOnClickListener(this);
+		}
 	}
 		
 	@Override
@@ -95,6 +114,44 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		// TODO Auto-generated method stub
 		if( UpdateType == WebUpdateService.UPDATE_TASK_PARTNER ){
 			mAdapter.reset();
+		}
+	}
+
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		Intent intent = null;
+		String filter = null;
+		switch (v.getId()) {
+		case R.id.top_btn_zuixin:
+			filter = Const.WEB_PAGE_CLASS_ZUIXIN;
+			break;
+		case R.id.top_btn_bieshu:
+			filter = Const.WEB_PAGE_CLASS_BIESHU;
+			break;
+		case R.id.top_btn_gongyu:
+			filter = Const.WEB_PAGE_CLASS_GONGYU;
+			break;
+		case R.id.top_btn_shangye:
+			filter = Const.WEB_PAGE_CLASS_SHANGYE;
+			break;
+		case R.id.top_btn_zonghe:
+			filter = Const.WEB_PAGE_CLASS_ZONGHE;
+			break;
+		case R.id.top_btn_qiye:
+			filter = Const.WEB_PAGE_CLASS_QIYE;
+			break;
+		default:
+			break;
+		}
+
+		if (filter != null) {
+			if( mCursor != null ){
+				mCursor.close();
+			}
+			mCursor = mDb.query(filter);
+			Log.v(TAG, "get "+mCursor.getCount() + " from db");
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
+			 mGrid.setAdapter(mAdapter);
 		}
 	}
 
