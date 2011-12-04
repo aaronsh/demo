@@ -46,7 +46,6 @@ public abstract class BaseImageList implements IImageList {
     protected String mBucketId;
     protected boolean mCursorDeactivated = false;
     
-    protected ImageDb mImageDb = null;
 
     public BaseImageList(Uri uri, int sort,
             String bucketId) {
@@ -54,7 +53,7 @@ public abstract class BaseImageList implements IImageList {
         mBaseUri = uri;
         mBucketId = bucketId;
 //        mContentResolver = resolver;
-        mCursor = createCursor();
+      
 
         if (mCursor == null) {
             Log.w(TAG, "createCursor returns null.");
@@ -66,10 +65,9 @@ public abstract class BaseImageList implements IImageList {
         mCache.clear();
     }
 
-    public BaseImageList(ImageDb mImages) {
+    public BaseImageList(Cursor images) {
 		// TODO Auto-generated constructor stub
-    	mImageDb = mImages;
-        mCursor = createCursor();
+        mCursor = images;
 
         if (mCursor == null) {
             Log.w(TAG, "createCursor returns null.");
@@ -168,7 +166,7 @@ public abstract class BaseImageList implements IImageList {
         return removeImage(getImageAt(i));
     }
 
-    protected abstract Cursor createCursor();
+
 
     protected abstract BaseImage loadImageFromCursor(Cursor cursor);
 

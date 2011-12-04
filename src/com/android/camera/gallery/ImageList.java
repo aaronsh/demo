@@ -68,9 +68,9 @@ public class ImageList extends BaseImageList implements IImageList {
         super( imageUri, sort, bucketId);
     }
 
-    public ImageList(ImageDb mImages) {
+    public ImageList(Cursor Images) {
 		// TODO Auto-generated constructor stub
-    	super(mImages);
+    	super(Images);
 	}
 
 	private static final String WHERE_CLAUSE =
@@ -94,17 +94,6 @@ public class ImageList extends BaseImageList implements IImageList {
         return ACCEPTABLE_IMAGE_TYPES;
     }
 
-    @Override
-    protected Cursor createCursor() {
-    	Cursor c = mImageDb.query();
-  /*
-    	Cursor c = Media.query(
-                mContentResolver, mBaseUri, IMAGE_PROJECTION,
-                whereClause(), whereClauseArgs(), sortOrder());
-        return c;
-*/
-    	return c;
-    }
 
     static final String[] IMAGE_PROJECTION = new String[] {
             Media._ID,

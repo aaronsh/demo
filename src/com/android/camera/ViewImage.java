@@ -976,7 +976,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
     private boolean init(Uri uri) {
 //        if (uri == null) return false;
-        mAllImages = new ImageList( mImages );
+    	if( mCursor != null )
+    		mCursor.close();
+    	mCursor = mImages.query(mFilter);
+        mAllImages = new ImageList( mCursor );
         mCurrentPosition  = 0;
         IImage image = mAllImages.getImageAt(mCurrentPosition);
         if (image == null) return false;
