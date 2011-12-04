@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -44,8 +46,10 @@ import android.view.View.OnTouchListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomButtonsController;
@@ -56,6 +60,7 @@ import com.android.camera.gallery.ImageList;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 // This activity can display a whole picture and navigate them in a specific
@@ -635,6 +640,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		
 		mSView.setVerticalScrollBarEnabled(false);
 		mSView.setHorizontalScrollBarEnabled(false);
+		
+		setTopButton();
 
 		ImageButton btn = (ImageButton)findViewById(R.id.btn_prev);
 		btn.setOnClickListener(this);
@@ -706,7 +713,46 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
 
-    private Animation makeInAnimation(int id) {
+    private void setTopButton() {
+		// TODO Auto-generated method stub
+    	Cursor c = mImages.query();
+    	c.moveToFirst();
+    	ArrayList<String> cat = new ArrayList<String>();
+    	while(!c.isAfterLast()){
+    		String key = c.getString(ImageDb.COL_INDEX_CLASS); 
+    		Log.v(TAG, "setTopButton:"+key);
+    		Iterator<String> it = cat.iterator();
+    		boolean existed = false;
+    		while(it.hasNext()){
+    			if( key.compareTo(it.next()) == 0 ){
+    				existed = true;
+    				break;
+    			}
+    		}
+    		if( !existed ){
+    			cat.add(key);
+    		}
+    		c.moveToNext();
+    	}
+    	c.close();
+    	
+    	LinearLayout container = (LinearLayout)findViewById(R.id.button_container);
+    	container.removeAllViews();
+
+    	for(String kwd:cat){
+    		Button btn = new Button(this);
+    		btn.setText(kwd);
+    		btn.setTag(kwd);
+    		btn.setOnClickListener(this);
+    		btn.setId(R.id.button1);
+    		container.addView(btn);
+    	Log.v(TAG, "test query");
+    	c = mImages.query(kwd);
+    	c.close();
+    	}
+	}
+
+	private Animation makeInAnimation(int id) {
         Animation inAnimation = AnimationUtils.loadAnimation(this, id);
         return inAnimation;
     }
@@ -1054,7 +1100,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 break;
             case R.id.btn_next:
             	mSView.scrollBy(40, 0);
-                break;                
+                break;   
+            case R.id.button1:
+            	Log.v(TAG, "user click "+v.getTag());
+            	break;
         }
 
 		Log.v(TAG, "GalleryShowActivity onClick");

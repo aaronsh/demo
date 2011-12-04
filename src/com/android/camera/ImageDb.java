@@ -100,7 +100,21 @@ public class ImageDb extends SQLiteOpenHelper {
 		return c;
 	}
 
-
+	public Cursor query(String caseClass) {
+		obtainWritableDatabase();
+		String[] cols = {Key_id, Key_class, Key_path, Key_link};
+		StringBuilder b = new StringBuilder(Key_class);
+		b.append("=\"");
+		b.append(caseClass);
+		b.append("\"");
+		Cursor c = mDB.query(TBL_NAME, cols, b.toString(), null, null, null, null);
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			Log.v(TAG, c.getString(COL_INDEX_CLASS));
+			c.moveToNext();
+		}
+		return c;
+	}
 	public void del(int id) {
 		obtainWritableDatabase();
 		mDB.delete(TBL_NAME, "_id=?", new String[] { String.valueOf(id) });
