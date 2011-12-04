@@ -16,6 +16,7 @@ import org.jsoup.select.Elements;
 
 
 
+import android.content.Context;
 import android.util.Log;
 
 public class WebBaseDecoder {
@@ -28,12 +29,18 @@ public class WebBaseDecoder {
 	private int mDecodeMethod;
 	protected String mDecodeWhich;
 	private UrlParamList mUrlParams=null;
+	protected Context mCntx;
 	
 	public WebBaseDecoder(int method, String which){
 		mDecodeMethod = method;
 		mDecodeWhich = which;
 	}
 	public WebBaseDecoder(){
+	}
+	
+	public WebBaseDecoder(Context cntx)
+	{
+		mCntx = cntx;
 	}
 	
 	public void init(int method, String which, UrlParamList params)

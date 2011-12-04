@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
@@ -33,10 +34,12 @@ public class WebDesignDecoder extends WebBaseDecoder {
 
 	private static final String TAG = "WebDesignDecoder";
 
-	private Context mCntx;
 
-	public void setDecoder(Context cntx) {
-		mCntx = cntx;
+
+
+	public WebDesignDecoder(Context cntx) {
+		// TODO Auto-generated constructor stub
+		super(cntx);
 	}
 
 	@Override
@@ -83,29 +86,25 @@ public class WebDesignDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		int imgSize = links.size();
-		int fileSize = files.size();
 		boolean rmFile = false;
-		for (int j = 0; j < fileSize; j++) {
-			String file = files.get(j);
+		Iterator<String> itFile = files.iterator();
+		while(itFile.hasNext()){
+			String file = itFile.next();
 			rmFile = false;
-			for (int i = 0; i < imgSize; i++) {
-				HtmlHyperLink img = links.get(i);
+			Iterator<HtmlHyperLink> itImg = links.iterator();
+			while(itImg.hasNext()){
+				HtmlHyperLink img = itImg.next(); 
 				if (img.Image.endsWith(file)) {
 					StringBuilder b = new StringBuilder(folder);
 					b.append("/");
 					b.append(file);
 					db.insert(img.Extra, b.toString(), img.Link, img.Name);
-					links.remove(i);
-					i--;
-					imgSize--;
+					itImg.remove();
 					rmFile = true;
 				}
 			}
 			if( rmFile ){
-				files.remove(j);
-				j--;
-				fileSize--;
+				itFile.remove();
 			}
 
 		}

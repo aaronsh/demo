@@ -26,11 +26,13 @@ public class EbookDecoder extends WebBaseDecoder {
 	
 	private static final String BASE_URL = "http://www.depcn.com/";
 
-	private Context mCntx;
 	int mPages = 0;
 
-	public void setDecoder(Context cntx) {
-		mCntx = cntx;
+
+
+	public EbookDecoder(Context cntx) {
+		// TODO Auto-generated constructor stub
+		super(cntx);
 	}
 
 	@Override
@@ -115,7 +117,7 @@ public class EbookDecoder extends WebBaseDecoder {
 				if (index > pages)
 					pages = index;
 			} catch (NumberFormatException ex) {
-				ex.printStackTrace();
+//				ex.printStackTrace();
 			}
 			e = e.nextElementSibling();
 		}

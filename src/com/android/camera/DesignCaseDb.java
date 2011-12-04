@@ -21,9 +21,9 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	public static final String TBL_WEB_CASES = "web_cases";
 	public static final String TBL_ANI_CASES = "ani_cases";
 	public static final String TBL_EBOOK_CASES = "ebook_cases";
+	public static final String TBL_PARTNER = "partner";
 	
-	
-	protected static final int DATABASE_VERSION = 2;
+	protected static final int DATABASE_VERSION = 3;
 	private static final String DB_NAME = "designcases.db";
 
 
@@ -63,6 +63,10 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		db.execSQL(b.toString());
 		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
 		b.append(TBL_EBOOK_CASES);
+		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
+		db.execSQL(b.toString());
+		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+		b.append(TBL_PARTNER);
 		b.append("(_id integer primary key autoincrement, class text, path text, link text, name text)");
 		db.execSQL(b.toString());
 	}

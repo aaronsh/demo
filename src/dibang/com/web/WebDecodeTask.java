@@ -34,7 +34,8 @@ public class WebDecodeTask extends AsyncTask<Object, Void, Void>
 		}
 		catch (Exception e)
 		{
-			System.out.print(e);
+			e.printStackTrace();
+			//System.out.print(e);
 			mError = e.getMessage();
 		}
 		return null;

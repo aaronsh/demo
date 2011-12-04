@@ -226,38 +226,35 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		switch (mCurTask) {
 		case UPDATE_TASK_TOP_GALLERY:
 			url = WebSite.TOP_GALLERY_IMGS;
-			decoder = new TopGalleryDecoder();
+			decoder = new TopGalleryDecoder(this);
 			break;
 		case UPDATE_TASK_PARTNER:
 			url = WebSite.PARTNER;
-			decoder = new PartnerDecoder();
+			decoder = new PartnerDecoder(this);
 			break;
 		case UPDATE_TASK_EFFECT:
 			url = WebSite.EFFECT;
-			decoder = new RenderingDecoder();
-			((RenderingDecoder)decoder).setDecoder(this, RenderingDecoder.DECODER_TYPE_EFFECT_SHOW);
+			decoder = new RenderingDecoder(this);
+			((RenderingDecoder)decoder).setDecoderType(RenderingDecoder.DECODER_TYPE_EFFECT_SHOW);
 			break;
 		case UPDATE_TASK_HOUSE:
 			url = WebSite.HOUSE;
-			decoder = new RenderingDecoder();
-			((RenderingDecoder)decoder).setDecoder(this, RenderingDecoder.DECODER_TYPE_HOUSE_SHOW);
+			decoder = new RenderingDecoder(this);
+			((RenderingDecoder)decoder).setDecoderType( RenderingDecoder.DECODER_TYPE_HOUSE_SHOW);
 			break;
 		case UPDATE_TASK_WEB_DESIGN:
 			url = "";
-			decoder = new WebDesignDecoder();
-			((WebDesignDecoder)decoder).setDecoder(this);
+			decoder = new WebDesignDecoder(this);
 			break;
 			
 		case UPDATE_TASK_ANI_DESIGN:
 			url = WebSite.ANI_DESIGN;
-			decoder = new AniDesignDecoder();
-			((AniDesignDecoder)decoder).setDecoder(this);
+			decoder = new AniDesignDecoder(this);
 			break;
 			
 		case UPDATE_TASK_EBOOK_DESIGN:
 			url = WebSite.EBOOK_DESIGN;
-			decoder = new EbookDecoder();
-			((EbookDecoder)decoder).setDecoder(this);
+			decoder = new EbookDecoder(this);
 			break;
 		}
 
@@ -283,7 +280,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		if (mUpdateState == UPDATE_STATE_UPDATING)
 			return false;
 		mUpdateMode = UPDATE_MODE_ALL;
-		mCurTask = UPDATE_TASK_PARTNER;
+		mCurTask = UPDATE_TASK_TOP_GALLERY;
 		update();
 		return true;
 	}

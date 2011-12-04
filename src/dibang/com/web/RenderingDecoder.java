@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.jsoup.Jsoup;
@@ -25,11 +26,14 @@ public class RenderingDecoder extends WebBaseDecoder {
 	private static final String TAG = "RenderingDecoder";
 	
 	private int mDecoderType = DECODER_TYPE_EFFECT_SHOW;
-	private Context mCntx;
 	
-	public void setDecoder(Context cntx, int type)
+	public RenderingDecoder(Context cntx) {
+		// TODO Auto-generated constructor stub
+		super(cntx);
+	}
+
+	public void setDecoderType( int type)
 	{
-		mCntx = cntx;
 		mDecoderType = type;
 	}
 
@@ -90,22 +94,19 @@ public class RenderingDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		int imgSize = links.size();
-		int fileSize = files.size();
-		for (int i=0; i<imgSize; i++) {
-			HtmlHyperLink img = links.get(i);
-			for (int j=0; j<fileSize; j++) {
-				String file = files.get(j);
+		Iterator<HtmlHyperLink> itImg = links.iterator();
+		while(itImg.hasNext()){
+			HtmlHyperLink img = itImg.next();
+			Iterator<String> itFile = files.iterator();
+			while( itFile.hasNext() ){
+				String file = itFile.next();
 				if (img.Image.endsWith(file)) {
 					StringBuilder b = new StringBuilder(folder);
 					b.append("/");
 					b.append(file);
 					db.insert(img.Extra, b.toString(), img.Link);
-					links.remove(i);
-					files.remove(j);
-					i--;
-					imgSize--;
-					fileSize--;
+					itFile.remove();
+					itImg.remove();
 					break;
 				}
 			}

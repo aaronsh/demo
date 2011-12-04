@@ -51,6 +51,7 @@ public class RenderingImageDecoder extends WebBaseDecoder {
 		link.Extra = mImageClass;
 		link.Image = b.toString();
 		link.Link = "";
+		link.Name = "";
 		return link;
 	}
 

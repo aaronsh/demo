@@ -95,7 +95,7 @@ public class WebDesignPagesDecoder extends WebBaseDecoder {
 				if (index > pages)
 					pages = index;
 			} catch (NumberFormatException ex) {
-				ex.printStackTrace();
+//				ex.printStackTrace();
 			}
 			e = e.nextElementSibling();
 		}
