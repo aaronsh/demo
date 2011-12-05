@@ -204,7 +204,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	private void showNotification() {
 		CharSequence text = getText(R.string.app_name);
 		Notification notification = new Notification(
-				R.drawable.ic_btn_actionmenu_attach_pressed, null,
+				R.drawable.icon, null,
 				System.currentTimeMillis());
 		notification.flags = Notification.FLAG_NO_CLEAR
 				| Notification.FLAG_ONGOING_EVENT;
