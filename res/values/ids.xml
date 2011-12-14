@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public type="layout" name="bottom_menu" id="0x7f030003" />
-    <public type="layout" name="top_gallery" id="0x7f030004" />
-    <public type="layout" name="top_home" id="0x7f030005" />
+    <public type="layout" name="bottom_menu" id="0x17f030003" />
+    <public type="layout" name="top_gallery" id="0x17f030004" />
+    <public type="layout" name="top_home" id="0x17f030005" />
 </resources>
