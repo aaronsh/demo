@@ -61,8 +61,10 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("ºÏ×÷»ï°é");
-			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, null);
-			mGrid.setNumColumns(3);
+			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_ANI_CASES);
+			mCursor = mDb.query();
+			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, mCursor);
+//			mGrid.setNumColumns(3);
 			mSM.bindService(WebUpdateService.UPDATE_TASK_PARTNER, this);
 			break;
 		}

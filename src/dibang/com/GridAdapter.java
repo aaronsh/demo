@@ -125,31 +125,51 @@ public class GridAdapter extends BaseAdapter {
 		ImageView i = null;
 
 		LinearLayout frm = (LinearLayout) mInflater.inflate(
-				R.layout.grid_item_img_view, null);
+				R.layout.grid_item_imgtxt_view, null);
+
 		// new LinearLayout(mCntx);
 		frm.setOrientation(LinearLayout.VERTICAL);
 		i = new ImageView(mCntx);
 		i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-
-		LayoutParams param = new LinearLayout.LayoutParams(
-				ViewGroup.LayoutParams.FILL_PARENT,
-				ViewGroup.LayoutParams.FILL_PARENT);
-		param.setMargins(3, 3, 3, 3);
-		param.gravity = Gravity.CENTER;
-		i.setLayoutParams(param);
-		if(WithSdCard){
-			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(position));
+		i.setLayoutParams(new GridView.LayoutParams(mScreenWidth / 2,
+				ViewGroup.LayoutParams.FILL_PARENT));
+		int width = 0;
+		int height = 0;
+		if( mCursor != null ){
+			mCursor.moveToPosition(position);
+//			mCursor.moveToNext();
+			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_PATH));
+			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
+			Bitmap bmp = BitmapFactory.decodeFile(pathName);
 			i.setImageBitmap(bmp);
+			width = mScreenWidth / 2 - 24;
+			height = (bmp.getHeight() * width)
+					/ bmp.getWidth();
 		}
 		else{
-		Drawable icon = mCntx.getResources().getDrawable(
-				R.drawable.grid_img_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
-		i.setImageDrawable(icon);
+			Drawable icon = mCntx.getResources().getDrawable(
+
+					R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+
+			i.setImageDrawable(icon);
+			
+			width = mScreenWidth / 2 - 24;
+			height = (icon.getIntrinsicHeight() * width)
+					/ icon.getIntrinsicWidth();
 		}
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,
+				height);
+		params.setMargins(3, 3, 3, 3);
+		params.gravity = Gravity.CENTER;
+		i.setLayoutParams(params);
+		LinearLayout container = (LinearLayout) frm
+				.findViewById(R.id.icon_container);
+		container.addView(i, 0);
 
-		frm.addView(i, 0);
-
+		TextView titleView = (TextView) frm.findViewById(R.id.text);
+		frm.removeView(titleView);
 		return frm;
+
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
