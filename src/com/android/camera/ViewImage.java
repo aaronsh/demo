@@ -621,6 +621,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
+		text.setTextColor(Color.rgb(12, 74, 128));
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("Õ¯’æ…Ëº∆");
