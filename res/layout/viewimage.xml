@@ -62,12 +62,12 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/top_menu_bg" >
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/btn_prev"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:src="@drawable/btn_left_ind" />
+                        android:src="@drawable/btn_left_ind" android:layout_centerVertical="true"/>
 
                     <HorizontalScrollView
                         android:id="@+id/horizontalScrollView1"
@@ -87,33 +87,26 @@
                             android:scrollbarAlwaysDrawVerticalTrack="false"
                             android:scrollbars="none" >
 
-                            <Button
-                                android:id="@+id/button1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="别墅" />
 
-                            <Button
-                                android:id="@+id/button2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="公寓" />
-
-                            <Button
-                                android:id="@+id/button3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="写字楼" />
                         </LinearLayout>
                     </HorizontalScrollView>
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/btn_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/btn_right_ind" />
+                        android:src="@drawable/btn_right_ind" android:layout_centerVertical="true"/>
                 </RelativeLayout>
+
+                                <LinearLayout
+            
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_bar"
+                    android:orientation="vertical" >
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout

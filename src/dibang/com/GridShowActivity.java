@@ -7,6 +7,7 @@ import com.android.camera.DesignCaseDb;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
         
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
+		text.setTextColor(Color.rgb(12, 74, 128));
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
@@ -61,7 +63,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("合作伙伴");
-			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_ANI_CASES);
+			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_PARTNER);
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, mCursor);
 //			mGrid.setNumColumns(3);

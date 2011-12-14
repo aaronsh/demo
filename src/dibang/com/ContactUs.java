@@ -12,6 +12,7 @@ import dibang.com.handle.BaseActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ContactUs extends BaseActivity {
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
 		text.setText("联系我们");
+		text.setTextColor(Color.rgb(12, 74, 128));
 
 
 		onInitView();

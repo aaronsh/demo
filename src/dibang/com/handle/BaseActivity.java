@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -47,37 +48,38 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		}
 
 		// set bottom menu
-		ImageButton btn = (ImageButton) findViewById(R.id.bottom_menu_home);
+		ImageView btn = (ImageView) findViewById(R.id.bottom_menu_home);
+		if (btn != null)
+			btn.setOnClickListener(this);
+		btn.setBackgroundResource(R.drawable.bottom_btn_bg);
+		
+		btn = (ImageView) findViewById(R.id.bottom_menu_company);
 		if (btn != null)
 			btn.setOnClickListener(this);
 		
-		btn = (ImageButton) findViewById(R.id.bottom_menu_company);
+		btn = (ImageView) findViewById(R.id.bottom_menu_contact_us);
 		if (btn != null)
 			btn.setOnClickListener(this);
 		
-		btn = (ImageButton) findViewById(R.id.bottom_menu_contact_us);
+		btn = (ImageView) findViewById(R.id.bottom_menu_weibo);
 		if (btn != null)
 			btn.setOnClickListener(this);
 		
-		btn = (ImageButton) findViewById(R.id.bottom_menu_weibo);
-		if (btn != null)
-			btn.setOnClickListener(this);
-		
-		btn = (ImageButton) findViewById(R.id.bottom_menu_refresh);
+		btn = (ImageView) findViewById(R.id.bottom_menu_refresh);
 		if (btn != null)
 			btn.setOnClickListener(this);
 
-		btn = (ImageButton) findViewById(R.id.bottom_menu_back);
+		btn = (ImageView) findViewById(R.id.bottom_menu_back);
 		if (btn != null)
 			btn.setOnClickListener(this);
 	}
 	
 	public void enableBackBtn(){
-		ImageButton btn = (ImageButton) findViewById(R.id.bottom_menu_back);
+		ImageView btn = (ImageView) findViewById(R.id.bottom_menu_back);
 		if (btn != null)
 			btn.setVisibility(View.VISIBLE);
 		
-		btn = (ImageButton) findViewById(R.id.bottom_menu_refresh);
+		btn = (ImageView) findViewById(R.id.bottom_menu_refresh);
 		if (btn != null)
 			btn.setVisibility(View.GONE);
 	}

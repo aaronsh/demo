@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,6 +34,7 @@ import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +51,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -141,6 +144,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     private ScaleGestureDetector mScaleGestureDetector;
 
 	HorizontalScrollView mSView;
+	ArrayList<View> mTopButtons;
 
     // The image view displayed for normal mode.
     private ImageViewTouch mImageView;
@@ -647,9 +651,9 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		
 		setTopButton();
 
-		ImageButton btn = (ImageButton)findViewById(R.id.btn_prev);
+		ImageView btn = (ImageView)findViewById(R.id.btn_prev);
 		btn.setOnClickListener(this);
-		btn = (ImageButton)findViewById(R.id.btn_next);
+		btn = (ImageView)findViewById(R.id.btn_next);
 		btn.setOnClickListener(this);
 		onInitView();
 
@@ -743,15 +747,37 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     	LinearLayout container = (LinearLayout)findViewById(R.id.button_container);
     	container.removeAllViews();
 
+    	mTopButtons = new ArrayList<View>();
     	for(String kwd:cat){
-    		Button btn = new Button(this);
+    		TextView btn = new TextView(this);
     		btn.setText(kwd);
     		btn.setTag(kwd);
     		btn.setOnClickListener(this);
     		btn.setId(R.id.button1);
+    		btn.setTextSize(20);
+    		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+    				LinearLayout.LayoutParams.WRAP_CONTENT);
+    		params.setMargins(3, 3, 3, 3);
+    		params.gravity = Gravity.CENTER;
+    		btn.setLayoutParams(params);
     		container.addView(btn);
+    		mTopButtons.add(btn);
     	}
-		mFilter = cat.get(0);
+    	if( mTopButtons.size() > 0 )
+    	onClickTopButton(mTopButtons.get(0));
+	}
+
+	private void onClickTopButton(View textView) {
+		// TODO Auto-generated method stub
+		for( View v:mTopButtons ){
+			if( v == textView ){
+				mFilter =(String)v.getTag();
+				v.setBackgroundResource(R.drawable.top_menu_txt_btn_selected);
+			}
+			else{
+				v.setBackgroundColor(Color.argb(0, 0, 0, 0));		
+			}
+		}
 	}
 
 	private Animation makeInAnimation(int id) {
@@ -1112,7 +1138,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 break;   
             case R.id.button1:
             	Log.v(TAG, "user click "+v.getTag());
-				mFilter = (String)v.getTag();
+				onClickTopButton(v);
 				initStartImageShow();
             	break;
         }
