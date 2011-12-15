@@ -26,6 +26,10 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
+            android:name="DialogActivity"
+            android:theme="@style/QuitConfirmDlgTheme" >
+        </activity>
+        <activity
             android:name="ContactUs"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"

@@ -96,9 +96,9 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 	{
 		int[] ids = {R.id.top_btn_zuixin, R.id.top_btn_bieshu, R.id.top_btn_gongyu, R.id.top_btn_shangye, R.id.top_btn_zonghe, R.id.top_btn_qiye};
 		for( int id:ids){
-		TextView v = (TextView)findViewById(id);
-		v.setClickable(true);
-		v.setOnClickListener(this);
+			TextView v = (TextView)findViewById(id);
+			v.setClickable(true);
+			v.setOnClickListener(this);
 		}
 	}
 		

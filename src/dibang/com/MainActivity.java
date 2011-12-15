@@ -16,6 +16,8 @@ import dibang.com.handle.WebUpdateService;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -65,6 +67,15 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 
 	public void onResume() {
 		super.onResume();
+	}
+	
+	public void onBackPressed(){
+		Intent intent = new Intent(this, DialogActivity.class);
+		intent.putExtra("type", Const.UI_TYPE_PARTNER);
+		intent.putExtra("top_menu", false);
+		this.startActivityForResult(intent, 1);
+
+		//super.onBackPressed();
 	}
 
 	private void InitView() {
@@ -187,4 +198,23 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		if( updater == WebUpdateService.UPDATE_TASK_TOP_GALLERY)
 			onTopGalleryUpdated();
 	}
+	
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+
+		if (requestCode == 1 && data != null) {
+			// handle the reqeust from pedometer
+
+			int btn = data.getIntExtra(DialogActivity.KEY_CLICKED_BTN, R.id.button_ok);
+			if( btn == R.id.button_ok){
+				finish();
+			}
+		}
+	}
+
+
+
 }
