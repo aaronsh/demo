@@ -73,7 +73,7 @@ public class GalleryImageAdapter extends BaseAdapter {
 				i.setImageResource(mImageIds[position]);
 			}
 			i.setScaleType(ImageView.ScaleType.FIT_XY);
-			i.setLayoutParams(new Gallery.LayoutParams(-1, 88));
+			i.setLayoutParams(new Gallery.LayoutParams(Gallery.LayoutParams.FILL_PARENT, Gallery.LayoutParams.WRAP_CONTENT));
 
 			// The preferred Gallery item background
 			i.setBackgroundResource(mGalleryItemBackground);
@@ -106,5 +106,6 @@ public class GalleryImageAdapter extends BaseAdapter {
 			v.invalidate();
 		}
 		notifyDataSetChanged();
+		
 	}
 }

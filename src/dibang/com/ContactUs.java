@@ -37,7 +37,7 @@ public class ContactUs extends BaseActivity {
 		text.setTextColor(Color.rgb(12, 74, 128));
 
 
-		onInitView();
+		onInitView(BaseActivity.PAGE_TYPE_CONTACT);
 //		InitView();
 	}
 

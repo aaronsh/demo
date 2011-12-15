@@ -24,6 +24,6 @@ public class CompanyIntroduce extends BaseActivity {
 		mWebView.getSettings().setSupportZoom(true); //可以缩放
 		mWebView.getSettings().setDefaultZoom(ZoomDensity.CLOSE);//默认缩放模式
 
-		super.onInitView();
+		super.onInitView(BaseActivity.PAGE_TYPE_ABOUT);
 	}
 }

@@ -6,6 +6,7 @@ import dibang.com.MainActivity;
 import dibang.com.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,12 +23,24 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class BaseActivity extends Activity implements OnItemClickListener,
 		OnClickListener {
+	protected final static int PAGE_TYPE_HOME = 0;
+	protected final static int PAGE_TYPE_ABOUT = 1;
+	protected final static int PAGE_TYPE_CONTACT = 2;
+	protected final static int PAGE_TYPE_WEIBO = 3;
+	protected final static int PAGE_TYPE_REFRESH = 4;
+	protected final static int PAGE_TYPE_BACK = 5;
+
 	private static final String TAG = "BaseActivity";
 	protected BaseHandler mBaseHandler = null;
 	protected BottomMenuHandler mBottomMenu = null;
 	protected TopMenuHandler mTopMenu = null;
 	protected ServerManager mSM = null;
+	private final static int[] ButtonIds = { R.id.bottom_menu_home,
+			R.id.bottom_menu_company, R.id.bottom_menu_contact_us,
+			R.id.bottom_menu_weibo, R.id.bottom_menu_refresh,
+			R.id.bottom_menu_back };
 
+	private int mPageType;
 
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
@@ -36,7 +49,7 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		Log.v(TAG, "create " + this.getClass().toString());
 	}
 
-	public void onInitView() {
+	public void onInitView(int type) {
 		// Reference the Gallery view
 		Gallery g = (Gallery) findViewById(R.id.gallery);
 		if (g != null) {
@@ -48,40 +61,37 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		}
 
 		// set bottom menu
-		ImageView btn = (ImageView) findViewById(R.id.bottom_menu_home);
-		if (btn != null)
-			btn.setOnClickListener(this);
-		btn.setBackgroundResource(R.drawable.bottom_btn_bg);
-		
-		btn = (ImageView) findViewById(R.id.bottom_menu_company);
-		if (btn != null)
-			btn.setOnClickListener(this);
-		
-		btn = (ImageView) findViewById(R.id.bottom_menu_contact_us);
-		if (btn != null)
-			btn.setOnClickListener(this);
-		
-		btn = (ImageView) findViewById(R.id.bottom_menu_weibo);
-		if (btn != null)
-			btn.setOnClickListener(this);
-		
-		btn = (ImageView) findViewById(R.id.bottom_menu_refresh);
-		if (btn != null)
-			btn.setOnClickListener(this);
-
-		btn = (ImageView) findViewById(R.id.bottom_menu_back);
-		if (btn != null)
-			btn.setOnClickListener(this);
+		for (int index : ButtonIds) {
+			ImageView btn = (ImageView) findViewById(index);
+			if (btn != null)
+				btn.setOnClickListener(this);
+		}
+		setPageType(type);
 	}
-	
-	public void enableBackBtn(){
+
+	public void setPageType(int type) {
+		mPageType = type;
+		int count = ButtonIds.length;
+		for (int index = 0; index < count; index++) {
+			ImageView btn = (ImageView) findViewById(ButtonIds[index]);
+			if (btn != null) {
+				if (index == type) {
+					btn.setBackgroundResource(R.drawable.bottom_btn_bg);
+				} else {
+					btn.setBackgroundColor(Color.TRANSPARENT);
+				}
+			}
+		}
+	}
+
+	public void enableBackBtn() {
 		ImageView btn = (ImageView) findViewById(R.id.bottom_menu_back);
 		if (btn != null)
-			btn.setVisibility(View.VISIBLE);
-		
+			btn.setVisibility(View.GONE);
+
 		btn = (ImageView) findViewById(R.id.bottom_menu_refresh);
 		if (btn != null)
-			btn.setVisibility(View.GONE);
+			btn.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -139,12 +149,11 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		}
 	}
 
-	public void onTopGalleryUpdated()
-		{
+	public void onTopGalleryUpdated() {
 		Gallery g = (Gallery) findViewById(R.id.gallery);
-		if( g != null ){
-			GalleryImageAdapter adapter = (GalleryImageAdapter)g.getAdapter();
+		if (g != null) {
+			GalleryImageAdapter adapter = (GalleryImageAdapter) g.getAdapter();
 			adapter.reset();
 		}
-		}
+	}
 }

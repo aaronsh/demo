@@ -38,7 +38,7 @@ public class GalleryShowActivity extends BaseActivity implements OnClickListener
 		mBtnNext = (ImageButton)findViewById(R.id.btn_next);
 		mBtnPrev.setOnClickListener(this);
 		mBtnNext.setOnClickListener(this);
-		onInitView();
+		onInitView(BaseActivity.PAGE_TYPE_HOME);
 	}
 	
 	public void onClick(View v) {

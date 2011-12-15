@@ -92,6 +92,7 @@ public class GridAdapter extends BaseAdapter {
 					/ bmp.getWidth();
 			
 			title = mCursor.getString(DesignCaseDb.COL_INDEX_TEXT);
+			frm.setTag(mCursor.getString(DesignCaseDb.COL_INDEX_LINK));
 		}
 		else{
 			Drawable icon = mCntx.getResources().getDrawable(

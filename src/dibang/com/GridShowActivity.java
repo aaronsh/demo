@@ -8,18 +8,22 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import dibang.com.handle.BaseActivity;
 import dibang.com.handle.WebUpdateNotification;
 import dibang.com.handle.WebUpdateService;
 
-public class GridShowActivity extends BaseActivity implements WebUpdateNotification, OnClickListener  {
+public class GridShowActivity extends BaseActivity implements WebUpdateNotification, OnClickListener, OnItemClickListener  {
 
 	private static final String TAG = "GridShowActivity";
 	GridAdapter mAdapter = null;
@@ -87,9 +91,10 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		
 
         mGrid.setAdapter(mAdapter);
+        mGrid.setOnItemClickListener(this);
        
         
-		onInitView();
+		onInitView(BaseActivity.PAGE_TYPE_HOME);
 	}
 	
 	private void registTopButtonEvent()
@@ -158,5 +163,18 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			 mGrid.setAdapter(mAdapter);
 		}
 	}
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		Log.v(TAG, "onItemClick:"+arg1.getTag());
+		String link = (String)arg1.getTag();
+		if( link != null && link.length() > 0 && link.startsWith("http://") ){
+			Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+			it.setClassName("com.Android.browser", "com.android.browser.BrowserActivity");
+			startActivity(it);
+		}
 
+
+		Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+	}
 }

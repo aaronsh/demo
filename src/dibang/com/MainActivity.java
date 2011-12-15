@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		InitView();
-		enableBackBtn();
+//		enableBackBtn();
 		
 		mSM.startService();
 		mSM.bindService(WebUpdateService.UPDATE_TASK_TOP_GALLERY, this);
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 		
 		listviews.setOnItemClickListener(this);
 		
-		super.onInitView();
+		super.onInitView(BaseActivity.PAGE_TYPE_HOME);
 	}
 
 	private List<Map<String, Object>> getData() {

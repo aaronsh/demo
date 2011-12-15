@@ -18,6 +18,7 @@ package com.android.camera;
 
 import dibang.com.Const;
 import dibang.com.R;
+import dibang.com.handle.BaseActivity;
 import dibang.com.web.IOFile;
 
 import android.app.Activity;
@@ -656,7 +657,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		btn.setOnClickListener(this);
 		btn = (ImageView)findViewById(R.id.btn_next);
 		btn.setOnClickListener(this);
-		onInitView();
+		onInitView(BaseActivity.PAGE_TYPE_HOME);
 
         mImageView = (ImageViewTouch) findViewById(R.id.image);
         mImageView.setEnableTrackballScroll(true);
