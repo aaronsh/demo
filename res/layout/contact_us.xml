@@ -81,7 +81,9 @@
                             <LinearLayout
                                 android:id="@+id/item_phone"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5.0dip"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -107,10 +109,20 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_fax"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -136,10 +148,20 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_mobile"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -165,10 +187,20 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_email"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -194,10 +226,20 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_website"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -223,10 +265,20 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_postcode"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
@@ -252,10 +304,21 @@
                                     android:textSize="16dip" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="0.5dip"
+                                android:layout_marginBottom="5.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="5.0dip"
+                                android:background="#ffdddddd" />
+
                             <LinearLayout
                                 android:id="@+id/item_address"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5.0dip"
+                                android:background="@android:drawable/list_selector_background" >
 
                                 <TextView
                                     android:id="@+id/textView1"
