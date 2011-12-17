@@ -2,6 +2,7 @@ package dibang.com.handle;
 
 import dibang.com.CompanyIntroduce;
 import dibang.com.ContactUs;
+import dibang.com.DialogActivity;
 import dibang.com.MainActivity;
 import dibang.com.R;
 import android.app.Activity;
@@ -21,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class BaseActivity extends Activity implements OnItemClickListener,
-		OnClickListener {
+public abstract class BaseActivity extends Activity implements OnItemClickListener,
+		OnClickListener, WebUpdateNotification {
 	protected final static int PAGE_TYPE_HOME = 0;
 	protected final static int PAGE_TYPE_ABOUT = 1;
 	protected final static int PAGE_TYPE_CONTACT = 2;
@@ -41,12 +42,26 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 			R.id.bottom_menu_back };
 
 	private int mPageType;
+	private int mUpdateEvent=0xFF;
 
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 
-		mSM = new ServerManager(this);
+		mSM = ServerManager.getInstance(this);
 		Log.v(TAG, "create " + this.getClass().toString());
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+	
+	public void registUpdateEvent(int event)
+	{
+		mUpdateEvent = event;
+		if( event != 0xFF ){
+			mSM.registerEvent(mUpdateEvent, this);
+		}
 	}
 
 	public void onInitView(int type) {
@@ -87,11 +102,11 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 	public void enableBackBtn() {
 		ImageView btn = (ImageView) findViewById(R.id.bottom_menu_back);
 		if (btn != null)
-			btn.setVisibility(View.GONE);
+			btn.setVisibility(View.VISIBLE);
 
 		btn = (ImageView) findViewById(R.id.bottom_menu_refresh);
 		if (btn != null)
-			btn.setVisibility(View.VISIBLE);
+			btn.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -121,6 +136,7 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		Intent intent = null;
+		boolean wantResult = false;
 		switch (v.getId()) {
 		case R.id.bottom_menu_home:
 			intent = new Intent(this, MainActivity.class);
@@ -134,6 +150,12 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		case R.id.bottom_menu_weibo:
 			break;
 		case R.id.bottom_menu_refresh:
+			if( mUpdateEvent != 0xFF ){
+			intent = new Intent(this, DialogActivity.class);
+			intent.putExtra(DialogActivity.KEY_DIALOG_TYPE, DialogActivity.DIALOG_TYPE_UPDATING);
+			intent.putExtra(DialogActivity.KEY_WATCH_EVENT, mUpdateEvent);
+			wantResult = true;
+			}
 			break;
 		case R.id.bottom_menu_back:
 			finish();
@@ -143,9 +165,14 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 		}
 
 		if (intent != null) {
-			intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
-					| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			startActivity(intent);
+			if( wantResult == true){
+				startActivityForResult(intent, DialogActivity.ACTION_WAITING_FOR_UPDATING);
+			}
+			else{
+				intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT
+						| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivity(intent);
+			}
 		}
 	}
 
@@ -156,4 +183,26 @@ public class BaseActivity extends Activity implements OnItemClickListener,
 			adapter.reset();
 		}
 	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		Log.v(TAG, "onActivityResult");
+		if (requestCode == DialogActivity.ACTION_WAITING_FOR_UPDATING) {
+			// handle the reqeust from pedometer
+			onSyncFinished();
+			if( mUpdateEvent != 0xFF ){
+				mSM.registerEvent(mUpdateEvent, this);
+			}
+		}
+	}
+	
+	protected abstract void onSyncFinished();
+
+	@Override
+	public void onWebUpdateFinish(int UpdateType) {
+		// TODO Auto-generated method stub
+		onSyncFinished();
+	}	
 }

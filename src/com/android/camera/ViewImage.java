@@ -19,6 +19,7 @@ package com.android.camera;
 import dibang.com.Const;
 import dibang.com.R;
 import dibang.com.handle.BaseActivity;
+import dibang.com.handle.WebUpdateService;
 import dibang.com.web.IOFile;
 
 import android.app.Activity;
@@ -623,6 +624,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
 		text.setTextColor(Color.rgb(12, 74, 128));
+		int UpdateEVent = 0xFF;
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
@@ -633,10 +635,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			mImages = new ImageDb(this, ImageDb.TBL_EFFECT_SHOW);
 			text.setText("效果图");
+			UpdateEVent = WebUpdateService.UPDATE_TASK_EFFECT;
 			break;
 		case  Const.UI_TYPE_HOUSE_SHOW:
 			mImages = new ImageDb(this, ImageDb.TBL_HOUSE_SHOW);
 			text.setText("户型图");
+			UpdateEVent = WebUpdateService.UPDATE_TASK_HOUSE;
 			break;
 		case  Const.UI_TYPE_EMAGZIN:
 			text.setText("电子杂志");
@@ -645,6 +649,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 			text.setText("合作伙伴");
 			break;
 		}
+		registUpdateEvent(UpdateEVent);
         
 		mSView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
 		
@@ -1145,6 +1150,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             	break;
         }
 
+		super.onClick(v);
 		Log.v(TAG, "GalleryShowActivity onClick");
     }
 

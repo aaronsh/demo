@@ -26,4 +26,11 @@ public class CompanyIntroduce extends BaseActivity {
 
 		super.onInitView(BaseActivity.PAGE_TYPE_ABOUT);
 	}
+
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
+	}
 }

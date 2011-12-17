@@ -135,4 +135,10 @@ public class ContactUs extends BaseActivity {
 		list.add(map);
 		return list;
 	}
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
+	}
 }

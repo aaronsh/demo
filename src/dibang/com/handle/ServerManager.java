@@ -16,12 +16,21 @@ import android.util.Log;
 public class ServerManager implements WebUpdateNotification{
 	private static final String TAG = "ServerManager";
 	private Context mCntx;
+	private static ServerManager mIns = null;
 
 	ServerManager(Context cntx){
 		mCntx = cntx;
 	}
-	private WebUpdateService mService;
-	private HashMap<Integer, WebUpdateNotification> mNotifiers = new HashMap<Integer, WebUpdateNotification>();
+
+	public static ServerManager getInstance(Context cntx){
+		if( mIns == null ){
+			mIns = new ServerManager(cntx);
+		}
+		return mIns;
+	}
+	
+	private static WebUpdateService mService;
+	private static HashMap<Integer, WebUpdateNotification> mNotifiers = new HashMap<Integer, WebUpdateNotification>();
 
 
 	private ServiceConnection mConnection = new ServiceConnection() {
@@ -59,10 +68,21 @@ public class ServerManager implements WebUpdateNotification{
 		mCntx.startService(new Intent(mCntx,
 				WebUpdateService.class));
 	}
+	
+	public void registerEvent(int event, WebUpdateNotification notifier){
+		WebUpdateNotification old = mNotifiers.get(event);
+		if( old != null ){
+			mNotifiers.remove(event);
+		}
+		mNotifiers.put(event, notifier);
+		if( mService != null ){
+			mService.setNotifier(event, ServerManager.this);				
+		}
+		Log.v(TAG, "event:"+event+",obj:"+mNotifiers.get(event));
+	}
 
-	public void bindService(int type, WebUpdateNotification notifier) {
+	public void bindService() {
 		Log.i(TAG, "[SERVICE] Bind");
-		mNotifiers.put(type, notifier);
 		
 		mCntx.bindService(new Intent(mCntx, 
 				WebUpdateService.class), mConnection, Context.BIND_AUTO_CREATE + Context.BIND_DEBUG_UNBIND);
@@ -82,11 +102,12 @@ public class ServerManager implements WebUpdateNotification{
 				WebUpdateService.class));
 	}
 
-	public void updateWeb(int update)
+	public boolean updateWeb(int update)
 	{
 		if( mService != null ){
-			mService.updateWeb(update);
+			return mService.updateWeb(update);
 		}
+		return false;
 	}
 	
 	public void updateAll()

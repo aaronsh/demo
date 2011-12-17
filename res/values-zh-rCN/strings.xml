@@ -151,4 +151,5 @@
     <string name="multiselect_delete" msgid="9113461994546744603">"删除"</string>
     <string name="multiselect_cancel" msgid="5969428692864002165">"取消"</string>
     <string name="delete_images_message" msgid="4504926868037899430">"正在删除图片，请稍候..."</string>
+    <string name="updating_from_web">"正在更新..."</string>
 </resources>

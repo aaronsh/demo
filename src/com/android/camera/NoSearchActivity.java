@@ -24,4 +24,10 @@ public class NoSearchActivity extends  BaseActivity {
     public boolean onSearchRequested() {
         return false;
     }
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
+	}
 }

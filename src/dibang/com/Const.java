@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class Const extends BaseActivity {
+public class Const {
 	public static final int UI_TYPE_WEBSITE_DESIGN = 1;
 	public static final int UI_TYPE_3D_ANIMATION = 2;
 	public static final int UI_TYPE_EFFECT_SHOW = 3;

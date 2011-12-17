@@ -65,7 +65,7 @@ public class MonitoredActivity extends NoSearchActivity {
     }
 
     @Override
-    protected void onDestroy() {
+	protected void onDestroy() {
         super.onDestroy();
         for (LifeCycleListener listener : mListeners) {
             listener.onActivityDestroyed(this);

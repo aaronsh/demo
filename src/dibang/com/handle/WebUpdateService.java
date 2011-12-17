@@ -33,6 +33,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Binder;
@@ -78,6 +79,13 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	private int mCurTask;
 
 	private static final String TAG = "WebUpdateService";
+
+	private static final String PREFERENCE_KEY_TIME_STAMP = "last_udpate_time";
+
+	private static final long TWO_DAYS = 60*1000;//2*24*60*60*1000;
+
+	private static final int MSG_TIMER = 0xFFFF;
+
 	private SharedPreferences mSettings;
 
 	private SharedPreferences mState;
@@ -86,6 +94,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	private HashMap<Integer, WebUpdateNotification> mNotifications = new HashMap<Integer, WebUpdateNotification>();
 
 	private NotificationManager mNM;
+	private long mTimeStamp;
 
 	/**
 	 * Receives messages from activity.
@@ -100,6 +109,9 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			// TODO Auto-generated method stub
 			Log.v(TAG, "handleMessage" + msg.what);
 			switch (msg.what) {
+			case MSG_TIMER:
+				schedule();
+				break;
 			default:
 				WebUpdateNotification notifier = mNotifications.get(msg.what);
 				if (notifier != null) {
@@ -129,7 +141,6 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		super.onCreate();
 
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		showNotification();
 
 		// Load settings
 		mSettings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -138,27 +149,17 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		// Start voice
 		reloadSettings();
 
-		task = new TimerTask() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Message message = new Message();
-				// message.what = UPDATE_TASK_AUTO;
-				// handler.sendMessage(message);
-			}
-		};
-
 		// Tell the user we started.
 		Toast.makeText(this, getText(R.string.app_name), Toast.LENGTH_SHORT)
 				.show();
-		updateAll();
+		
 	}
 
 	@Override
 	public void onStart(Intent intent, int startId) {
 		Log.i(TAG, "[SERVICE] onStart");
 		// timer.schedule(task, 1000, 1000);
-
+		schedule();
 		super.onStart(intent, startId);
 	}
 
@@ -191,7 +192,26 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 
 	public void reloadSettings() {
 		mSettings = PreferenceManager.getDefaultSharedPreferences(this);
+		mTimeStamp = mSettings.getLong(PREFERENCE_KEY_TIME_STAMP, 0);
 
+	}
+	private void saveSettings(){
+		Editor editor = mSettings.edit();
+		editor.putLong(PREFERENCE_KEY_TIME_STAMP, mTimeStamp);
+		editor.commit();
+	}
+	
+	private void schedule(){
+		long diff = System.currentTimeMillis() - mTimeStamp;
+		if( diff >= TWO_DAYS ){
+			//Run update task
+			if( updateAll() == false){
+				handler.sendEmptyMessageDelayed(MSG_TIMER, TWO_DAYS);
+			}
+		}
+		else{
+			handler.sendEmptyMessageDelayed(MSG_TIMER, (TWO_DAYS-diff));
+		}
 	}
 
 	public void resetValues() {
@@ -214,10 +234,15 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 		pedometerIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 				pedometerIntent, 0);
-		notification.setLatestEventInfo(this, text, getText(R.string.app_name),
+		notification.setLatestEventInfo(this, text, getText(R.string.updating_from_web),
 				contentIntent);
 
 		mNM.notify(R.string.app_name, notification);
+	
+	}
+	
+	private void clearNotification(){
+		mNM.cancel(R.string.app_name);
 	}
 
 	private void update() {
@@ -270,6 +295,9 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public boolean updateWeb(int type) {
 		if (mUpdateState == UPDATE_STATE_UPDATING)
 			return false;
+		
+		showNotification();
+
 		mUpdateMode = UPDATE_MODE_SINGLE;
 		mCurTask = type;
 		update();
@@ -279,6 +307,9 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public boolean updateAll() {
 		if (mUpdateState == UPDATE_STATE_UPDATING)
 			return false;
+		
+		showNotification();
+
 		mUpdateMode = UPDATE_MODE_ALL;
 		mCurTask = UPDATE_TASK_TOP_GALLERY;
 		update();
@@ -288,6 +319,10 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 	public void setNotifier(int type, WebUpdateNotification notifier) {
 		// TODO Auto-generated method stub
 		Log.v(TAG, "setNotifier " + type);
+		WebUpdateNotification old = mNotifications.get(type);
+		if( old != null ){
+			mNotifications.remove(type);
+		}
 		mNotifications.put(type, notifier);
 		mCurTask = type;
 	}
@@ -307,10 +342,18 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 				update();
 			} else {
 				mUpdateState = UPDATE_STATE_IDLE;
+				clearNotification();
+				mTimeStamp = System.currentTimeMillis();
+				saveSettings();
+				schedule();
 			}
 
 		} else {
 			mUpdateState = UPDATE_STATE_IDLE;
+			clearNotification();
+			mTimeStamp = System.currentTimeMillis();
+			saveSettings();
+			schedule();
 		}
 	}
 

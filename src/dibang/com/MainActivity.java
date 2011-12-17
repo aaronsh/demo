@@ -51,14 +51,15 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 //		enableBackBtn();
 		
 		mSM.startService();
-		mSM.bindService(WebUpdateService.UPDATE_TASK_TOP_GALLERY, this);
+		mSM.bindService();
+		registUpdateEvent(WebUpdateService.UPDATE_TASK_TOP_GALLERY);
 	}
 	
 	@Override
 	public void onDestroy() {
+		super.onDestroy();
 		mSM.unbindService();
 		mSM.stopService();
-		super.onDestroy();
 	}
 	
 	public void onPause() {
@@ -71,9 +72,8 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 	
 	public void onBackPressed(){
 		Intent intent = new Intent(this, DialogActivity.class);
-		intent.putExtra("type", Const.UI_TYPE_PARTNER);
-		intent.putExtra("top_menu", false);
-		this.startActivityForResult(intent, 1);
+		intent.putExtra(DialogActivity.KEY_DIALOG_TYPE, DialogActivity.DIALOG_TYPE_QUIT_CNFM);
+		this.startActivityForResult(intent, DialogActivity.ACTION_GET_USER_SELECTION);
 
 		//super.onBackPressed();
 	}
@@ -205,7 +205,7 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 
-		if (requestCode == 1 && data != null) {
+		if (requestCode == DialogActivity.ACTION_GET_USER_SELECTION && data != null) {
 			// handle the reqeust from pedometer
 
 			int btn = data.getIntExtra(DialogActivity.KEY_CLICKED_BTN, R.id.button_ok);
@@ -213,6 +213,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 				finish();
 			}
 		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

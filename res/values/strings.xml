@@ -388,4 +388,5 @@
 
     <!-- The messsage shown on progress dialog when deleting images -->
     <string name="delete_images_message">Deleting images, please wait\u2026</string>
+    <string name="updating_from_web">"Updating..."</string>
 </resources>

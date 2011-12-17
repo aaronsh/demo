@@ -52,5 +52,11 @@ public class GalleryShowActivity extends BaseActivity implements OnClickListener
 		}
 		Log.v(TAG, "GalleryShowActivity onClick");
 		
+	}
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
 	}	
 }

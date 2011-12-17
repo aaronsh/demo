@@ -39,6 +39,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
 		text.setTextColor(Color.rgb(12, 74, 128));
+		int UpdateEVent = 0xFF;
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
@@ -46,12 +47,14 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mCursor = mDb.query(Const.WEB_PAGE_CLASS_ZUIXIN);
 			Log.v(TAG, "get "+mCursor.getCount() + " from db");
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
+			UpdateEVent = WebUpdateService.UPDATE_TASK_WEB_DESIGN;
 			break;
 		case  Const.UI_TYPE_3D_ANIMATION:
 			text.setText("三维动画");
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_ANI_CASES);
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
+			UpdateEVent = WebUpdateService.UPDATE_TASK_ANI_DESIGN;
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			text.setText("效果图");
@@ -64,6 +67,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_EBOOK_CASES);
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
+			UpdateEVent = WebUpdateService.UPDATE_TASK_EBOOK_DESIGN;
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("合作伙伴");
@@ -71,7 +75,8 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, mCursor);
 //			mGrid.setNumColumns(3);
-			mSM.bindService(WebUpdateService.UPDATE_TASK_PARTNER, this);
+			mSM.registerEvent(WebUpdateService.UPDATE_TASK_PARTNER, this);
+			UpdateEVent = WebUpdateService.UPDATE_TASK_PARTNER;
 			break;
 		}
 
@@ -95,6 +100,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
        
         
 		onInitView(BaseActivity.PAGE_TYPE_HOME);
+		registUpdateEvent(UpdateEVent);
 	}
 	
 	private void registTopButtonEvent()
@@ -114,7 +120,6 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		if( mDb != null ){
 			mDb.close();
 		}
-		mSM.unbindService();
 		super.onDestroy();
 	}
 	
@@ -162,6 +167,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			 mGrid.setAdapter(mAdapter);
 		}
+		super.onClick(v);
 	}
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long id) {
@@ -176,5 +182,11 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 
 
 		Toast.makeText(this, "" + position, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	protected void onSyncFinished() {
+		// TODO Auto-generated method stub
+		
 	}
 }
