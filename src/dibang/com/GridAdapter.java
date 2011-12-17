@@ -41,6 +41,7 @@ public class GridAdapter extends BaseAdapter {
 	int mItemType;
 	LayoutInflater mInflater;
 	Cursor mCursor=null;
+	int mCursorCount = 0;
 	
 	private boolean WithSdCard = true;
 	private ArrayList<String> mFileList = null;
@@ -49,6 +50,7 @@ public class GridAdapter extends BaseAdapter {
 	public GridAdapter(Context cntx, int itemType, Cursor cursor) {
 		mCntx = cntx;
 		mCursor = cursor;
+		mCursorCount = mCursor.getCount();
 
 		DisplayMetrics dm = new DisplayMetrics();
 		dm = mCntx.getApplicationContext().getResources().getDisplayMetrics();
@@ -81,7 +83,7 @@ public class GridAdapter extends BaseAdapter {
 		int width = 0;
 		int height = 0;
 		if( mCursor != null ){
-			mCursor.moveToPosition(position);
+			mCursor.moveToPosition(mCursorCount - position - 1);
 //			mCursor.moveToNext();
 			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
 			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
@@ -137,7 +139,7 @@ public class GridAdapter extends BaseAdapter {
 		int width = 0;
 		int height = 0;
 		if( mCursor != null ){
-			mCursor.moveToPosition(position);
+			mCursor.moveToPosition(mCursorCount - position - 1);
 //			mCursor.moveToNext();
 			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_PATH));
 			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
@@ -195,7 +197,7 @@ public class GridAdapter extends BaseAdapter {
 
 	public final int getCount() {
 		if( mCursor != null )
-			return mCursor.getCount();
+			return mCursorCount;
 		if (WithSdCard)
 			return mFileList.size();
 		return 30;
@@ -211,20 +213,12 @@ public class GridAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public void reset() {
-		// TODO Auto-generated method stub
-		String path = IOFile.getModuleFolder(Const.FOLDER_partner);
-		mFileList = IOFile.getFilePathList(path);
-/*	
-		Set<Integer> keys = mViewList.keySet();
-		for (Integer key : keys) {
-			ImageView v = mViewList.get(key);
-			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(key));
-			v.setImageBitmap(bmp);
-			v.invalidate();
-		}
-*/		
-//		notifyDataSetChanged();
+	public void reset(Cursor cursor) {
+		mCursor = cursor;
+		mCursorCount = mCursor.getCount();
+		mViewList.clear();
+		notifyDataSetInvalidated();
+		notifyDataSetChanged();
 	}
 
 

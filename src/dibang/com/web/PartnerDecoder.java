@@ -55,28 +55,29 @@ public class PartnerDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(Const.FOLDER_partner);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		boolean rmFile = false;
-		Iterator<String> iterator = files.iterator();
-		while(iterator.hasNext()){
-			String file = iterator.next();
-			rmFile = false;
-			Iterator<HtmlHyperLink> it = links.iterator();
-			while(it.hasNext()){
-				HtmlHyperLink img = it.next();
-				if (img.Image.endsWith(file)) {
-					StringBuilder b = new StringBuilder(folder);
-					b.append("/");
-					b.append(file);
-					db.insert(img.Extra, b.toString(), img.Link, img.Name);
-					it.remove();
-					rmFile = true;
+		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
+			boolean rmFile = false;
+			Iterator<String> iterator = files.iterator();
+			while(iterator.hasNext()){
+				String file = iterator.next();
+				rmFile = false;
+				Iterator<HtmlHyperLink> it = links.iterator();
+				while(it.hasNext()){
+					HtmlHyperLink img = it.next();
+					if (img.Image.endsWith(file)) {
+						StringBuilder b = new StringBuilder(folder);
+						b.append("/");
+						b.append(file);
+						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						it.remove();
+						rmFile = true;
+					}
+				}
+				if( rmFile ){
+					iterator.remove();
 				}
 			}
-			if( rmFile ){
-				iterator.remove();
-			}
 		}
-		db.close();
 		
 				// remove useless pictures
 		for (String file : files) {
@@ -88,6 +89,11 @@ public class PartnerDecoder extends WebBaseDecoder {
 		for (HtmlHyperLink img : links) {
 			Log.v(TAG, "download "+img.Image);
 			try {
+				String file = IOFile.getFileName(img.Image);
+				StringBuilder b = new StringBuilder(folder);
+				b.append("/");
+				b.append(file);
+				db.insert(img.Extra, b.toString(), img.Link, img.Name);
 				ImageDownloader.downFile(img.Image, Const.FOLDER_partner,
 						null);
 			} catch (IOException e) {
@@ -95,6 +101,7 @@ public class PartnerDecoder extends WebBaseDecoder {
 				e.printStackTrace();
 			}
 		}
+		db.close();
 	}
 
 	private void deleteFile(String file, String folder) {

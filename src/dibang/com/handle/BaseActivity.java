@@ -43,9 +43,11 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 
 	private int mPageType;
 	private int mUpdateEvent=0xFF;
+	private GalleryImageAdapter mTopAdapter = null;
 
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
+		mTopAdapter = null;
 
 		mSM = ServerManager.getInstance(this);
 		Log.v(TAG, "create " + this.getClass().toString());
@@ -53,6 +55,9 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 	
 	@Override
 	protected void onDestroy() {
+		if( mTopAdapter != null ){
+			mTopAdapter.close();
+		}
 		super.onDestroy();
 	}
 	
@@ -69,7 +74,8 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 		Gallery g = (Gallery) findViewById(R.id.gallery);
 		if (g != null) {
 			// Set the adapter to our custom adapter (below)
-			g.setAdapter(new GalleryImageAdapter(this));
+			mTopAdapter = new GalleryImageAdapter(this);
+			g.setAdapter(mTopAdapter);
 
 			// Set a item click listener, and just Toast the clicked position
 			g.setOnItemClickListener(this);
@@ -190,19 +196,21 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 		// TODO Auto-generated method stub
 		Log.v(TAG, "onActivityResult");
 		if (requestCode == DialogActivity.ACTION_WAITING_FOR_UPDATING) {
-			// handle the reqeust from pedometer
-			onSyncFinished();
-			if( mUpdateEvent != 0xFF ){
-				mSM.registerEvent(mUpdateEvent, this);
+			if( resultCode == DialogActivity.RESULT_OK ){
+				int event = data.getIntExtra(DialogActivity.KEY_WATCH_EVENT, 0xFF);
+				onSyncFinished(event);
+				if( mUpdateEvent != 0xFF ){
+					mSM.registerEvent(mUpdateEvent, this);
+				}
 			}
 		}
 	}
 	
-	protected abstract void onSyncFinished();
+	protected abstract void onSyncFinished(int UpdateType);
 
 	@Override
 	public void onWebUpdateFinish(int UpdateType) {
 		// TODO Auto-generated method stub
-		onSyncFinished();
+		onSyncFinished(UpdateType);
 	}	
 }

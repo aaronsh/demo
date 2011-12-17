@@ -147,6 +147,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
 	HorizontalScrollView mSView;
 	ArrayList<View> mTopButtons;
+	int mUpdateEvent = 0xFF;
 
     // The image view displayed for normal mode.
     private ImageViewTouch mImageView;
@@ -624,7 +625,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
 		text.setTextColor(Color.rgb(12, 74, 128));
-		int UpdateEVent = 0xFF;
+
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
@@ -635,12 +636,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			mImages = new ImageDb(this, ImageDb.TBL_EFFECT_SHOW);
 			text.setText("效果图");
-			UpdateEVent = WebUpdateService.UPDATE_TASK_EFFECT;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_EFFECT;
 			break;
 		case  Const.UI_TYPE_HOUSE_SHOW:
 			mImages = new ImageDb(this, ImageDb.TBL_HOUSE_SHOW);
 			text.setText("户型图");
-			UpdateEVent = WebUpdateService.UPDATE_TASK_HOUSE;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_HOUSE;
 			break;
 		case  Const.UI_TYPE_EMAGZIN:
 			text.setText("电子杂志");
@@ -649,7 +650,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 			text.setText("合作伙伴");
 			break;
 		}
-		registUpdateEvent(UpdateEVent);
+		registUpdateEvent(mUpdateEvent);
         
 		mSView = (HorizontalScrollView)findViewById(R.id.horizontalScrollView1);
 		
@@ -1162,34 +1163,17 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-            Intent data) {
-        switch (requestCode) {
-            case MenuHelper.RESULT_COMMON_MENU_CROP:
-                if (resultCode == RESULT_OK) {
-                    // The CropImage activity passes back the Uri of the
-                    // cropped image as the Action rather than the Data.
-//                    mSavedUri = Uri.parse(data.getAction());
 
-                    // if onStart() runs before, then set the returned
-                    // image as currentImage.
-/*                	
-                    if (mAllImages != null) {
-                        IImage image = mAllImages.getImageForUri(mSavedUri);
-                        // image could be null if SD card is removed.
-                        if (image == null) {
-                            finish();
-                        } else {
-                            mCurrentPosition = mAllImages.getImageIndex(image);
-                            setImage(mCurrentPosition, false);
-                        }
-                    }
-*/                    
-                }
-                break;
-        }
-    }
+	@Override
+	protected void onSyncFinished(int UpdateType) {
+		// TODO Auto-generated method stub
+		if( mUpdateEvent == UpdateType && mImages != null ){
+			setTopButton();
+			if( mFilter != null && mFilter.length() > 0 ){
+				initStartImageShow();
+			}
+		}
+	}
 }
 
 class ImageViewTouch extends ImageViewTouchBase {

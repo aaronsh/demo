@@ -15,6 +15,7 @@ import dibang.com.web.ImageDownloader;
 import dibang.com.web.PartnerDecoder;
 import dibang.com.web.RenderingDecoder;
 import dibang.com.web.TopGalleryDecoder;
+import dibang.com.web.UpdateMode;
 import dibang.com.web.UrlParamList;
 import dibang.com.web.UserProfileDecoder;
 import dibang.com.web.WebBaseDecoder;
@@ -297,7 +298,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			return false;
 		
 		showNotification();
-
+		UpdateMode.setUpdateMode(UpdateMode.FULL_UPDATE_MODE);
 		mUpdateMode = UPDATE_MODE_SINGLE;
 		mCurTask = type;
 		update();
@@ -309,7 +310,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 			return false;
 		
 		showNotification();
-
+		UpdateMode.setUpdateMode(UpdateMode.FAST_UPDATE_MODE);
 		mUpdateMode = UPDATE_MODE_ALL;
 		mCurTask = UPDATE_TASK_TOP_GALLERY;
 		update();

@@ -23,13 +23,15 @@ import dibang.com.handle.BaseActivity;
 import dibang.com.handle.WebUpdateNotification;
 import dibang.com.handle.WebUpdateService;
 
-public class GridShowActivity extends BaseActivity implements WebUpdateNotification, OnClickListener, OnItemClickListener  {
+public class GridShowActivity extends BaseActivity implements OnClickListener, OnItemClickListener  {
 
 	private static final String TAG = "GridShowActivity";
 	GridAdapter mAdapter = null;
 	GridView mGrid = null;
 	DesignCaseDb mDb = null;
 	Cursor mCursor = null;
+	int mUpdateEvent;
+	private String mFilter = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,22 +41,23 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		int type = this.getIntent().getIntExtra("type", Const.UI_TYPE_WEBSITE_DESIGN);
 		TextView text = (TextView)this.findViewById(R.id.text_title);
 		text.setTextColor(Color.rgb(12, 74, 128));
-		int UpdateEVent = 0xFF;
+		mUpdateEvent = 0xFF;
 		switch(type){
 		case  Const.UI_TYPE_WEBSITE_DESIGN:
 			text.setText("网站设计");
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_WEB_CASES);
-			mCursor = mDb.query(Const.WEB_PAGE_CLASS_ZUIXIN);
+			mFilter = Const.WEB_PAGE_CLASS_ZUIXIN;
+			mCursor = mDb.query(mFilter);
 			Log.v(TAG, "get "+mCursor.getCount() + " from db");
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
-			UpdateEVent = WebUpdateService.UPDATE_TASK_WEB_DESIGN;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_WEB_DESIGN;
 			break;
 		case  Const.UI_TYPE_3D_ANIMATION:
 			text.setText("三维动画");
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_ANI_CASES);
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
-			UpdateEVent = WebUpdateService.UPDATE_TASK_ANI_DESIGN;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_ANI_DESIGN;
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
 			text.setText("效果图");
@@ -67,7 +70,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mDb = new DesignCaseDb(this, DesignCaseDb.TBL_EBOOK_CASES);
 			mCursor = mDb.query();
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
-			UpdateEVent = WebUpdateService.UPDATE_TASK_EBOOK_DESIGN;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_EBOOK_DESIGN;
 			break;
 		case  Const.UI_TYPE_PARTNER:
 			text.setText("合作伙伴");
@@ -76,7 +79,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_ONLY, mCursor);
 //			mGrid.setNumColumns(3);
 			mSM.registerEvent(WebUpdateService.UPDATE_TASK_PARTNER, this);
-			UpdateEVent = WebUpdateService.UPDATE_TASK_PARTNER;
+			mUpdateEvent = WebUpdateService.UPDATE_TASK_PARTNER;
 			break;
 		}
 
@@ -100,7 +103,7 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
        
         
 		onInitView(BaseActivity.PAGE_TYPE_HOME);
-		registUpdateEvent(UpdateEVent);
+		registUpdateEvent(mUpdateEvent);
 	}
 	
 	private void registTopButtonEvent()
@@ -123,46 +126,39 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 		super.onDestroy();
 	}
 	
-	@Override
-	public void onWebUpdateFinish(int UpdateType) {
-		// TODO Auto-generated method stub
-		if( UpdateType == WebUpdateService.UPDATE_TASK_PARTNER ){
-			mAdapter.reset();
-		}
-	}
 
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		Intent intent = null;
-		String filter = null;
+
 		switch (v.getId()) {
 		case R.id.top_btn_zuixin:
-			filter = Const.WEB_PAGE_CLASS_ZUIXIN;
+			mFilter = Const.WEB_PAGE_CLASS_ZUIXIN;
 			break;
 		case R.id.top_btn_bieshu:
-			filter = Const.WEB_PAGE_CLASS_BIESHU;
+			mFilter = Const.WEB_PAGE_CLASS_BIESHU;
 			break;
 		case R.id.top_btn_gongyu:
-			filter = Const.WEB_PAGE_CLASS_GONGYU;
+			mFilter = Const.WEB_PAGE_CLASS_GONGYU;
 			break;
 		case R.id.top_btn_shangye:
-			filter = Const.WEB_PAGE_CLASS_SHANGYE;
+			mFilter = Const.WEB_PAGE_CLASS_SHANGYE;
 			break;
 		case R.id.top_btn_zonghe:
-			filter = Const.WEB_PAGE_CLASS_ZONGHE;
+			mFilter = Const.WEB_PAGE_CLASS_ZONGHE;
 			break;
 		case R.id.top_btn_qiye:
-			filter = Const.WEB_PAGE_CLASS_QIYE;
+			mFilter = Const.WEB_PAGE_CLASS_QIYE;
 			break;
 		default:
 			break;
 		}
 
-		if (filter != null) {
+		if (mFilter != null) {
 			if( mCursor != null ){
 				mCursor.close();
 			}
-			mCursor = mDb.query(filter);
+			mCursor = mDb.query(mFilter);
 			Log.v(TAG, "get "+mCursor.getCount() + " from db");
 			mAdapter = new GridAdapter(this, GridAdapter.ITEM_TYPE_IMAGE_TEXT, mCursor);
 			 mGrid.setAdapter(mAdapter);
@@ -185,8 +181,17 @@ public class GridShowActivity extends BaseActivity implements WebUpdateNotificat
 	}
 
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
-		
+		if( mUpdateEvent == UpdateType ){
+			mCursor.close();
+			if( mFilter != null && mFilter.length()>0 ){
+				mCursor = mDb.query(mFilter);
+			}
+			else{
+				mCursor = mDb.query();
+			}
+			mAdapter.reset(mCursor);
+		}
 	}
 }

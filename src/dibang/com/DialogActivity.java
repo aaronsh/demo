@@ -43,6 +43,9 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 	public final static String KEY_DIALOG_TYPE = "dialog_type";
 	public final static String KEY_WATCH_EVENT = "event";
 	public final static String KEY_CLICKED_BTN = "btn";
+	
+	public final static int RESULT_OK = 1;
+	public final static int RESULT_FAIL = 0;
 
 	public final static int DIALOG_TYPE_QUIT_CNFM = 0;
 	public final static int DIALOG_TYPE_UPDATING = 1;
@@ -52,6 +55,7 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 	private static final String TAG = "DialogActivity";
 
 	private int mDialogType = DIALOG_TYPE_QUIT_CNFM;
+	private int mWatchEvent;
 
 	/**
 	 * Initialization of the Activity after it is first created. Must at least
@@ -75,12 +79,13 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 			btn.setOnClickListener(this);
 		} else {
 			setContentView(R.layout.updating_dlg);
-			int event = intent.getIntExtra(KEY_WATCH_EVENT, 0xff);
-			mSM.registerEvent(event, this);
-			boolean work =  mSM.updateWeb(event);
+			mWatchEvent = intent.getIntExtra(KEY_WATCH_EVENT, 0xff);
+			mSM.registerEvent(mWatchEvent, this);
+			boolean work =  mSM.updateWeb(mWatchEvent);
 			if( work == false ){
 				Toast.makeText(this, "正在更新，无法追加新的更新任务", Toast.LENGTH_LONG)
 				.show();
+				setResult(RESULT_FAIL, null);
 				finish();
 			}
 		}
@@ -97,12 +102,12 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 		if (v.getId() == R.id.button_ok) {
 			intent = new Intent();
 			intent.putExtra(KEY_CLICKED_BTN, R.id.button_ok);
-			setResult(ACTION_GET_USER_SELECTION, intent);
+			setResult(RESULT_OK, intent);
 			finish();
 		} else if (v.getId() == R.id.button_cancel) {
 			intent = new Intent();
 			intent.putExtra(KEY_CLICKED_BTN, R.id.button_cancel);
-			setResult(ACTION_GET_USER_SELECTION, intent);
+			setResult(RESULT_OK, intent);
 			finish();
 		}
 	}
@@ -110,11 +115,13 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 	public void onWebUpdateFinish(int UpdateType) {
 		// TODO Auto-generated method stub
 		Log.v(TAG, "onWebUpdateFinish");
-		setResult(ACTION_WAITING_FOR_UPDATING, null);
+		Intent intent = new Intent();
+		intent.putExtra(KEY_WATCH_EVENT, mWatchEvent);
+		setResult(RESULT_OK, intent);
 		finish();
 	}
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.android.camera.DesignCaseDb;
+
 import dibang.com.Const;
 import dibang.com.R;
 import dibang.com.web.IOFile;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -22,8 +25,10 @@ public class GalleryImageAdapter extends BaseAdapter {
 	private static final String TAG = "GalleryImageAdapter";
 	int mGalleryItemBackground;
 	private boolean WithSdCard = true;
-	private ArrayList<String> mFileList = null;
 	private HashMap<Integer, ImageView> mViewList = new HashMap<Integer, ImageView>();
+	DesignCaseDb mDb = null;
+	Cursor mCursor = null;
+	int mCursorCount = 0;
 
 	public GalleryImageAdapter(Context c) {
 		mContext = c;
@@ -38,17 +43,15 @@ public class GalleryImageAdapter extends BaseAdapter {
 		mGalleryItemBackground = R.drawable.gallery_item_background;
 		a.recycle();
 
-		WithSdCard = IOFile.sdcardExist();
-		if (WithSdCard) {
-			String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-			mFileList = IOFile.getFilePathList(path);
-		}
+		mDb = new DesignCaseDb(c, DesignCaseDb.TBL_TOP_GALLERY);
+		mCursor = mDb.query();
+		mCursorCount = mCursor.getCount();
 	}
 
 	@Override
 	public int getCount() {
-		if (WithSdCard)
-			return mFileList.size();
+		if( mCursorCount > 0 )
+			return mCursorCount;
 		return mImageIds.length;
 	}
 
@@ -67,9 +70,11 @@ public class GalleryImageAdapter extends BaseAdapter {
 		ImageView i = mViewList.get(position);
 		if (i == null) {
 			i = new ImageView(mContext);
-
-			if (WithSdCard) {
-				Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(position));
+			if( mCursorCount > 0 ){
+				mCursor.moveToPosition(mCursorCount - position - 1);
+				Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
+				String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
+				Bitmap bmp = BitmapFactory.decodeFile(pathName);
 				i.setImageBitmap(bmp);
 			} else {
 				i.setImageResource(mImageIds[position]);
@@ -88,28 +93,31 @@ public class GalleryImageAdapter extends BaseAdapter {
 
 	private Context mContext;
 
-	private Integer[] mImageIds = { R.drawable.title, R.drawable.logo
-	/*
-	 * R.drawable.gallery_photo_2, R.drawable.gallery_photo_3,
-	 * R.drawable.gallery_photo_4, R.drawable.gallery_photo_5,
-	 * R.drawable.gallery_photo_6, R.drawable.gallery_photo_7,
-	 * R.drawable.gallery_photo_8
-	 */
-	};
+	private Integer[] mImageIds = { R.drawable.title, R.drawable.logo	};
 
 	public void reset() {
 		Log.v(TAG, "reset gallery");
-/*		
-		String path = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
-		mFileList = IOFile.getFilePathList(path);
-		Set<Integer> keys = mViewList.keySet();
-		for (Integer key : keys) {
-			ImageView v = mViewList.get(key);
-			Bitmap bmp = BitmapFactory.decodeFile(mFileList.get(key));
+		mCursor.close();
+		mCursor = mDb.query();
+		int prevCount = mCursorCount;
+		mCursorCount = mCursor.getCount();
+		for(int i=0; i<mCursorCount && i<mViewList.size(); i++){
+			ImageView v = mViewList.get(i);
+			mCursor.moveToPosition(mCursorCount - i - 1 );
+			Log.v(TAG, "position:"+i+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
+			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
+			Log.v(TAG, "reset:"+pathName);
+			Bitmap bmp = BitmapFactory.decodeFile(pathName);
 			v.setImageBitmap(bmp);
 			v.invalidate();
 		}
-		notifyDataSetChanged();
-*/		
+		if(mCursorCount != prevCount){
+			notifyDataSetChanged();
+		}
+	}
+
+	public void close(){
+		mCursor.close();
+		mDb.close();
 	}
 }

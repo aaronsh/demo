@@ -29,7 +29,7 @@ public class CompanyIntroduce extends BaseActivity {
 
 
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
 		
 	}

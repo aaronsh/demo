@@ -86,27 +86,30 @@ public class WebDesignDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		boolean rmFile = false;
-		Iterator<String> itFile = files.iterator();
-		while(itFile.hasNext()){
-			String file = itFile.next();
-			rmFile = false;
-			Iterator<HtmlHyperLink> itImg = links.iterator();
-			while(itImg.hasNext()){
-				HtmlHyperLink img = itImg.next(); 
-				if (img.Image.endsWith(file)) {
-					StringBuilder b = new StringBuilder(folder);
-					b.append("/");
-					b.append(file);
-					db.insert(img.Extra, b.toString(), img.Link, img.Name);
-					itImg.remove();
-					rmFile = true;
+		
+		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
+			boolean rmFile = false;
+			Iterator<String> itFile = files.iterator();
+			while(itFile.hasNext()){
+				String file = itFile.next();
+				rmFile = false;
+				Iterator<HtmlHyperLink> itImg = links.iterator();
+				while(itImg.hasNext()){
+					HtmlHyperLink img = itImg.next(); 
+					if (img.Image.endsWith(file)) {
+						StringBuilder b = new StringBuilder(folder);
+						b.append("/");
+						b.append(file);
+						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						itImg.remove();
+						rmFile = true;
+					}
 				}
-			}
-			if( rmFile ){
-				itFile.remove();
-			}
+				if( rmFile ){
+					itFile.remove();
+				}
 
+			}
 		}
 
 		// remove useless pictures

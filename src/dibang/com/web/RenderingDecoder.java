@@ -94,23 +94,26 @@ public class RenderingDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		Iterator<HtmlHyperLink> itImg = links.iterator();
-		while(itImg.hasNext()){
-			HtmlHyperLink img = itImg.next();
-			Iterator<String> itFile = files.iterator();
-			while( itFile.hasNext() ){
-				String file = itFile.next();
-				if (img.Image.endsWith(file)) {
-					StringBuilder b = new StringBuilder(folder);
-					b.append("/");
-					b.append(file);
-					db.insert(img.Extra, b.toString(), img.Link);
-					itFile.remove();
-					itImg.remove();
-					break;
+		
+		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
+			Iterator<HtmlHyperLink> itImg = links.iterator();
+			while(itImg.hasNext()){
+				HtmlHyperLink img = itImg.next();
+				Iterator<String> itFile = files.iterator();
+				while( itFile.hasNext() ){
+					String file = itFile.next();
+					if (img.Image.endsWith(file)) {
+						StringBuilder b = new StringBuilder(folder);
+						b.append("/");
+						b.append(file);
+						db.insert(img.Extra, b.toString(), img.Link);
+						itFile.remove();
+						itImg.remove();
+						break;
+					}
 				}
-			}
 
+			}
 		}
 
 		// remove useless pictures

@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.android.camera.DesignCaseDb;
 import com.android.camera.ImageDb;
 
 import dibang.com.Const;
@@ -56,23 +57,32 @@ public class TopGalleryDecoder extends WebBaseDecoder{
 	}
 	private void syncImage(ArrayList<String> links) {
 		System.out.print("syncImage");
+		DesignCaseDb db = new DesignCaseDb(mCntx, DesignCaseDb.TBL_TOP_GALLERY);
+		db.clear();
 
 		String folder = IOFile.getModuleFolder(Const.FOLDER_top_gallery);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-		Iterator<String> itImg = links.iterator();
-		while(itImg.hasNext()){
-			String img = itImg.next();
-			Iterator<String> itFile = files.iterator();
-			while( itFile.hasNext() ){
-				String file = itFile.next();
-				if (img.endsWith(file)) {
-					itFile.remove();
-					itImg.remove();
-					break;
+		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
+			Iterator<String> itImg = links.iterator();
+			while(itImg.hasNext()){
+				String img = itImg.next();
+				Iterator<String> itFile = files.iterator();
+				while( itFile.hasNext() ){
+					String file = itFile.next();
+					if (img.endsWith(file)) {
+						StringBuilder b = new StringBuilder(folder);
+						b.append("/");
+						b.append(file);
+						db.insert("", b.toString(), "", "");
+						
+						itFile.remove();
+						itImg.remove();
+						break;
+					}
 				}
-			}
 
+			}
 		}
 
 		// remove useless pictures
@@ -84,8 +94,15 @@ public class TopGalleryDecoder extends WebBaseDecoder{
 		// download images
 		for (String img : links) {
 			Log.v(TAG, "download "+img);
+			String file = IOFile.getFileName(img);
+			StringBuilder b = new StringBuilder(folder);
+			b.append("/");
+			b.append(file);
+			db.insert("", b.toString(), "", "");
 			downloadImg(img);
 		}
+
+		db.close();
 	}
 
 	private void deleteFile(String file, String folder) {

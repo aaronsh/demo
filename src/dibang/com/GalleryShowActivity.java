@@ -55,7 +55,7 @@ public class GalleryShowActivity extends BaseActivity implements OnClickListener
 	}
 
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
 		
 	}	

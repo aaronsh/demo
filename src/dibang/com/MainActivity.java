@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.android.camera.DesignCaseDb;
 import com.android.camera.ImageManager;
 import com.android.camera.ViewImage;
 import com.android.camera.gallery.IImage;
@@ -20,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -37,10 +39,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class MainActivity extends BaseActivity implements OnItemClickListener, WebUpdateNotification {
+public class MainActivity extends BaseActivity implements OnItemClickListener {
 	private static final String TAG = "MainActivity";
 	private ListView listviews;
 	EfficientAdapter mAdapter;
+
 
 	/** Called when the activity is first created. */
 	@Override
@@ -192,13 +195,6 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
         }
     }
 
-	public void onWebUpdateFinish(int updater) {
-		// TODO Auto-generated method stub
-		Log.v(TAG, "onWebUpdateFinish");
-		if( updater == WebUpdateService.UPDATE_TASK_TOP_GALLERY)
-			onTopGalleryUpdated();
-	}
-	
 
 
 	@Override
@@ -217,11 +213,12 @@ public class MainActivity extends BaseActivity implements OnItemClickListener, W
 	}
 
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
 		
+		Log.v(TAG, "onSyncFinished");
+		if( UpdateType == WebUpdateService.UPDATE_TASK_TOP_GALLERY)
+			onTopGalleryUpdated();
 	}
-
-
 
 }

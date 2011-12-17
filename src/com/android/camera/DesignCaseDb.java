@@ -22,8 +22,11 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	public static final String TBL_ANI_CASES = "ani_cases";
 	public static final String TBL_EBOOK_CASES = "ebook_cases";
 	public static final String TBL_PARTNER = "partner";
+	public static final String TBL_TOP_GALLERY = "top_gallery";
 	
-	protected static final int DATABASE_VERSION = 3;
+	private static final String[] TABLES = {TBL_WEB_CASES, TBL_ANI_CASES, TBL_EBOOK_CASES, TBL_PARTNER, TBL_TOP_GALLERY};
+	
+	protected static final int DATABASE_VERSION = 4;
 	private static final String DB_NAME = "designcases.db";
 
 
@@ -81,6 +84,10 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		b.append(TBL_PARTNER);
 		b.append(cols);
 		db.execSQL(b.toString());
+		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+		b.append(TBL_TOP_GALLERY);
+		b.append(cols);
+		db.execSQL(b.toString());
 	}
 	
 	public void onOpen (SQLiteDatabase db){
@@ -123,6 +130,11 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	public Cursor query() {
 		obtainWritableDatabase();
 		Cursor c = mDB.query(TBL_NAME, null, null, null, null, null, null);
+		c.moveToFirst();
+		while(!c.isAfterLast()){
+			Log.v(TAG, c.getString(COL_INDEX_PATH));
+			c.moveToNext();
+		}
 		return c;
 	}
 
@@ -156,9 +168,11 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		String sql = "drop table " + TBL_NAME;
-		mDB.execSQL(sql);
-		onCreate(mDB);
+		for( String tbl:TABLES ){
+			String sql = "drop table IF EXISTS " + tbl;
+			db.execSQL(sql);
+		}
+		onCreate(db);
 	}
 
 	private void obtainWritableDatabase() {

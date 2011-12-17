@@ -139,26 +139,27 @@ public class AniDesignDecoder extends WebBaseDecoder {
 		String folder = IOFile.getModuleFolder(path);
 		ArrayList<String> files = IOFile.getFileNameList(folder);
 		// TODO Auto-generated method stub
-
-		boolean rmFile = false;
-		Iterator<String> iterator = files.iterator();
-		while(iterator.hasNext()){
-			String file = iterator.next();
-			rmFile = false;
-			Iterator<Object> it = links.iterator();
-			while(it.hasNext()){
-				HtmlHyperLink img = (HtmlHyperLink)it.next();
-				if (img.Image.endsWith(file)) {
-					StringBuilder b = new StringBuilder(folder);
-					b.append("/");
-					b.append(file);
-					db.insert(img.Extra, b.toString(), img.Link, img.Name);
-					it.remove();
-					rmFile = true;
+		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
+			boolean rmFile = false;
+			Iterator<String> iterator = files.iterator();
+			while(iterator.hasNext()){
+				String file = iterator.next();
+				rmFile = false;
+				Iterator<Object> it = links.iterator();
+				while(it.hasNext()){
+					HtmlHyperLink img = (HtmlHyperLink)it.next();
+					if (img.Image.endsWith(file)) {
+						StringBuilder b = new StringBuilder(folder);
+						b.append("/");
+						b.append(file);
+						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						it.remove();
+						rmFile = true;
+					}
 				}
-			}
-			if( rmFile ){
-				iterator.remove();
+				if( rmFile ){
+					iterator.remove();
+				}
 			}
 		}
 

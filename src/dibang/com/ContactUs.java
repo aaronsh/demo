@@ -137,7 +137,7 @@ public class ContactUs extends BaseActivity {
 	}
 
 	@Override
-	protected void onSyncFinished() {
+	protected void onSyncFinished(int UpdateType) {
 		// TODO Auto-generated method stub
 		
 	}
