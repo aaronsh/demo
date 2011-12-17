@@ -83,7 +83,7 @@ public class WebUpdateService extends Service implements OnWebTaskFinish {
 
 	private static final String PREFERENCE_KEY_TIME_STAMP = "last_udpate_time";
 
-	private static final long TWO_DAYS = 60*1000;//2*24*60*60*1000;
+	private static final long TWO_DAYS = 2*24*60*60*1000;
 
 	private static final int MSG_TIMER = 0xFFFF;
 
