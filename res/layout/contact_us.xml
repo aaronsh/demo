@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_marginRight="5.0dip" >
+    android:layout_height="fill_parent" >
 
     <FrameLayout
         android:id="@+id/frameLayout1"
@@ -79,7 +78,7 @@
                             android:orientation="vertical" >
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -108,7 +107,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_fax"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -137,7 +136,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_mobile"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -166,7 +165,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -195,7 +194,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_website"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -224,7 +223,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_postcode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -253,7 +252,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:id="@+id/linearLayout6"
+                                android:id="@+id/item_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" >
 
@@ -283,7 +282,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/linearLayout5"
+                            android:id="@+id/item_map"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/map"
