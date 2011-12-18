@@ -84,6 +84,9 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     private static final String EXTRA_SLIDESHOW = "slideshow";
     private static final String TAG = "ViewImage";
 
+	private static final int MOVE_TO_NEXT = 1;
+	private static final int MOVE_TO_PREV = -1;
+
     private ImageGetter mGetter;
 //    private Uri mSavedUri;
     boolean mPaused = true;
@@ -347,10 +350,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 // right to left swipe
                 if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    moveNextOrPrevious(1);
+                    moveNextOrPrevious(MOVE_TO_NEXT);
                 } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
                         && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                    moveNextOrPrevious(-1);
+                    moveNextOrPrevious(MOVE_TO_PREV);
                 }
             } catch (Exception e) {
                 // nothing
@@ -681,10 +684,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
         mImageView = (ArtSwitcher) findViewById(R.id.switcher);
         mImageView.setFactory(this);
-        mImageView.setInAnimation(AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_in_left));
-        mImageView.setOutAnimation(AnimationUtils.loadAnimation(this,
-                android.R.anim.slide_out_right));
+		mImageView.setInAnimation(AnimationUtils.loadAnimation(this,
+				R.anim.in_righttoleft));
+		mImageView.setOutAnimation(AnimationUtils.loadAnimation(this,
+				R.anim.out_righttoleft));
+
 
 
         makeGetter();
@@ -1164,10 +1168,10 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                 MenuHelper.deletePhoto(this, mDeletePhotoRunnable);
                 break;
             case R.id.next_image:
-                moveNextOrPrevious(1);
+                moveNextOrPrevious(MOVE_TO_NEXT);
                 break;
             case R.id.prev_image:
-                moveNextOrPrevious(-1);
+                moveNextOrPrevious(MOVE_TO_PREV);
                 break;
             case R.id.btn_prev:
             	mSView.scrollBy(-40, 0);
@@ -1187,11 +1191,23 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
     private void moveNextOrPrevious(int delta) {
-        int nextImagePos = mCurrentPosition + delta;
-        if ((0 <= nextImagePos) && (nextImagePos < mAllImages.getCount())) {
-            setImage(nextImagePos, true);
-            showOnScreenControls();
-        }
+    	int nextImagePos = mCurrentPosition + delta;
+    	if ((0 <= nextImagePos) && (nextImagePos < mAllImages.getCount())) {
+    		if( delta == MOVE_TO_NEXT ){
+    			mImageView.setInAnimation(AnimationUtils.loadAnimation(this,
+    					R.anim.in_righttoleft));
+    			mImageView.setOutAnimation(AnimationUtils.loadAnimation(this,
+    					R.anim.out_righttoleft));
+    		}
+    		else{
+    			mImageView.setInAnimation(AnimationUtils.loadAnimation(this,
+    					R.anim.in_lefttoright));
+    			mImageView.setOutAnimation(AnimationUtils.loadAnimation(this,
+    					R.anim.out_lefttoright));			
+    		}
+    		setImage(nextImagePos, true);
+    		showOnScreenControls();
+    	}
     }
 
 
