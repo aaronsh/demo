@@ -1,6 +1,7 @@
 package dibang.com;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,13 @@ public class MainActivity extends BaseActivity implements OnItemClickListener {
 		setContentView(R.layout.main);
 		InitView();
 //		enableBackBtn();
+		Calendar c = Calendar.getInstance();
+
+		if(c.get(Calendar.YEAR)>2011){
+			Intent intent = new Intent(this, DialogActivity.class);
+			intent.putExtra(DialogActivity.KEY_DIALOG_TYPE, DialogActivity.DIALOG_TYPE_LEGAL);
+			startActivity(intent);
+		}
 		
 		mSM.startService();
 		mSM.bindService();

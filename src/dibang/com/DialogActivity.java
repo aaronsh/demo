@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -49,7 +50,8 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 
 	public final static int DIALOG_TYPE_QUIT_CNFM = 0;
 	public final static int DIALOG_TYPE_UPDATING = 1;
-	
+	public final static int DIALOG_TYPE_LEGAL = 2;
+		
 	public final static int ACTION_GET_USER_SELECTION = 1;
 	public final static int ACTION_WAITING_FOR_UPDATING = 2;
 	private static final String TAG = "DialogActivity";
@@ -77,7 +79,7 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 			btn.setOnClickListener(this);
 			btn = (Button) findViewById(R.id.button_cancel);
 			btn.setOnClickListener(this);
-		} else {
+		} else if(mDialogType == DIALOG_TYPE_UPDATING){
 			setContentView(R.layout.updating_dlg);
 			mWatchEvent = intent.getIntExtra(KEY_WATCH_EVENT, 0xff);
 			mSM.registerEvent(mWatchEvent, this);
@@ -88,6 +90,11 @@ public class DialogActivity extends BaseActivity implements OnClickListener, Web
 				setResult(RESULT_FAIL, null);
 				finish();
 			}
+		}
+		else if (mDialogType == DIALOG_TYPE_LEGAL){
+			setContentView(R.layout.updating_dlg);
+			TextView txt = (TextView)findViewById(R.id.dialog_message);
+			txt.setText("此软件存在版权问题，请确认");
 		}
 
 	}
