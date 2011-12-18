@@ -171,9 +171,10 @@ public class GridShowActivity extends BaseActivity implements OnClickListener, O
 		Log.v(TAG, "onItemClick:"+arg1.getTag());
 		String link = (String)arg1.getTag();
 		if( link != null && link.length() > 0 && link.startsWith("http://") ){
-			Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-			it.setClassName("com.Android.browser", "com.android.browser.BrowserActivity");
-			startActivity(it);
+			Uri uri = Uri.parse(link);
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			startActivity(intent);
+
 		}
 
 

@@ -57,6 +57,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher.ViewFactory;
 import android.widget.ZoomButtonsController;
 
 import com.android.camera.gallery.IImage;
@@ -73,7 +74,7 @@ import java.util.Random;
 // the user view one image at a time, and can click "previous" and "next"
 // button to see the previous or next image. In slide show mode it shows one
 // image after another, with some transition effect.
-public class ViewImage extends NoSearchActivity implements View.OnClickListener , ScaleGestureDetector.OnScaleGestureListener{
+public class ViewImage extends NoSearchActivity implements View.OnClickListener , ScaleGestureDetector.OnScaleGestureListener, ViewFactory{
     private static final String PREF_SLIDESHOW_REPEAT =
             "pref_gallery_slideshow_repeat_key";
     private static final String PREF_SHUFFLE_SLIDESHOW =
@@ -148,9 +149,9 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 	HorizontalScrollView mSView;
 	ArrayList<View> mTopButtons;
 	int mUpdateEvent = 0xFF;
-
+	
     // The image view displayed for normal mode.
-    private ImageViewTouch mImageView;
+    private ArtSwitcher mImageView;
     // This is the cache for thumbnail bitmaps.
     private BitmapCache mCache;
     private MenuHelper.MenuItemsResult mImageMenuRunnable;
@@ -239,7 +240,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
     private void updateZoomButtonsEnabled() {
-        ImageViewTouch imageView = mImageView;
+        ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
         float scale = imageView.getScale();
         mZoomButtonsController.setZoomInEnabled(scale < imageView.mMaxZoom);
         mZoomButtonsController.setZoomOutEnabled(scale > 1);
@@ -288,10 +289,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             }
 
             public void onZoom(boolean zoomIn) {
+            	ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
                 if (zoomIn) {
-                    mImageView.zoomIn();
+                    imageView.zoomIn();
                 } else {
-                    mImageView.zoomOut();
+                    imageView.zoomOut();
                 }
                 mZoomButtonsController.setVisible(true);
                 updateZoomButtonsEnabled();
@@ -360,7 +362,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         public boolean onScroll(MotionEvent e1, MotionEvent e2,
                 float distanceX, float distanceY) {
             if (mPaused) return false;
-            ImageViewTouch imageView = mImageView;
+            ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
             if (imageView.getScale() > 1F) {
                 imageView.postTranslateCenter(-distanceX, -distanceY);
                 updateZoomButtonsEnabled();     // fix buf #32932 by zhibowu
@@ -386,13 +388,13 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
             if (mPaused) return false;
-            ImageViewTouch imageView = mImageView;
+            ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
 
             // Switch between the original scale and 3x scale.
             if (imageView.getScale() > 2F) {
-                mImageView.zoomTo(1f);
+                imageView.zoomTo(1f);
             } else {
-                mImageView.zoomToPoint(3f, e.getX(), e.getY());
+                imageView.zoomToPoint(3f, e.getX(), e.getY());
             }
 
             updateZoomButtonsEnabled();     // fix buf #32932 by zhibowu
@@ -402,7 +404,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
     public boolean onScale(ScaleGestureDetector detector) {
         float scale = detector.getScaleFactor();
-        float currentScale = mImageView.getScale();
+        ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
+        float currentScale = imageView.getScale();
         
         if (currentScale < 0.7f && scale < 1.0f) {
             scale = 1.0f;
@@ -411,7 +414,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             scale = 1.0f;
         }
 
-        mImageView.zoomToPoint(currentScale * scale, detector.getFocusX(), detector.getFocusY());
+        imageView.zoomToPoint(currentScale * scale, detector.getFocusX(), detector.getFocusY());
         return true;
     }
 
@@ -465,7 +468,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                         // We might have deleted all images in the callback, so
                         // call setImage() only if we still have some images.
                         if (mAllImages.getCount() > 0) {
-                            mImageView.clear();
+                        	ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
+                            imageView.clear();
                             setImage(mCurrentPosition, false);
                         }
                     }
@@ -500,7 +504,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                     mCurrentPosition -= 1;
                 }
             }
-            mImageView.clear();
+            ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
+            imageView.clear();
             mCache.clear();  // Because the position number is changed.
             setImage(mCurrentPosition, true);
         }
@@ -543,8 +548,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         Bitmap b = mCache.getBitmap(pos);
         if (b != null) {
             IImage image = mAllImages.getImageAt(pos);
-            mImageView.setImageRotateBitmapResetBase(
-                    new RotateBitmap(b, image.getDegreesRotated()), true);
+			RotateBitmap bmp = new RotateBitmap(b, image.getDegreesRotated());
+            mImageView.setImageRotateBitmapResetBase(bmp
+                    , true);
+			fixFirstShowError(
+                    bmp, true);
             updateZoomButtonsEnabled();
         }
 
@@ -593,6 +601,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
                     // reset the supp matrix for then thumb bitmap, and keep
                     // the supp matrix when the full bitmap is loaded.
                     mImageView.setImageRotateBitmapResetBase(bitmap, isThumb);
+					fixFirstShowError(bitmap, isThumb);
                     updateZoomButtonsEnabled();
                 }
             }
@@ -605,6 +614,11 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         if (showControls) showOnScreenControls();
         scheduleDismissOnScreenControls();
     }
+
+	private void fixFirstShowError(RotateBitmap bmp, boolean isThumb)
+	{
+		mImageView.setImageRotateBitmapResetBase(bmp, isThumb);
+	}
 
     @Override
     public void onCreate(Bundle instanceState) {
@@ -665,10 +679,13 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 		btn.setOnClickListener(this);
 		onInitView(BaseActivity.PAGE_TYPE_HOME);
 
-        mImageView = (ImageViewTouch) findViewById(R.id.image);
-        mImageView.setEnableTrackballScroll(true);
-        mCache = new BitmapCache(3);
-        mImageView.setRecycler(mCache);
+        mImageView = (ArtSwitcher) findViewById(R.id.switcher);
+        mImageView.setFactory(this);
+        mImageView.setInAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_in_left));
+        mImageView.setOutAnimation(AnimationUtils.loadAnimation(this,
+                android.R.anim.slide_out_right));
+
 
         makeGetter();
 
@@ -728,7 +745,19 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         setupOnScreenControls(findViewById(R.id.rootLayout), mImageView);
     }
 
+    public View makeView() {
+    	LayoutInflater inflater = getLayoutInflater();
+    	ImageViewTouch imageView = (ImageViewTouch)inflater.inflate(R.layout.image_show, null);
 
+    	imageView.setEnableTrackballScroll(true);
+    	if( mCache == null){
+    		mCache = new BitmapCache(3);
+    	}
+    	imageView.setRecycler(mCache);
+    	Log.v(TAG, "makeView "+imageView);
+    	return imageView;
+    }
+    
     private void setTopButton() {
 		// TODO Auto-generated method stub
     	Cursor c = mImages.query();
@@ -825,7 +854,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
             win.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            mImageView.clear();
+            ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
+            imageView.clear();
 
             slideshowPanel.getRootView().requestLayout();
 
@@ -858,7 +888,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 
 
 
-            ImageViewTouchBase dst = mImageView;
+            ImageViewTouchBase dst = (ImageViewTouch)mImageView.getCurrentView();
             dst.mLastXTouchPos = -1;
             dst.mLastYTouchPos = -1;
 
@@ -1036,7 +1066,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     }
 
 	private void initStartImageShow()
-		{
+	{
         mPaused = false;
 
         if (!init(null)) {
@@ -1091,7 +1121,8 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
         }
 
         hideOnScreenControls();
-        mImageView.clear();
+        ImageViewTouch imageView = (ImageViewTouch)mImageView.getCurrentView();
+        imageView.clear();
         mCache.clear();
 
         for (ImageViewTouchBase iv : mSlideShowImageViews) {

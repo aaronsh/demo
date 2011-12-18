@@ -23,6 +23,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
@@ -125,6 +126,7 @@ abstract class ImageViewTouchBase extends ImageView {
     }
 
     private void setImageBitmap(Bitmap bitmap, int rotation) {
+    	Log.v(TAG, "setImageBitmap()"+bitmap);
         super.setImageBitmap(bitmap);
         Drawable d = getDrawable();
         if (d != null) {
