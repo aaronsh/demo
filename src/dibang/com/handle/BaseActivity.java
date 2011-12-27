@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +32,9 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 	protected final static int PAGE_TYPE_WEIBO = 3;
 	protected final static int PAGE_TYPE_REFRESH = 4;
 	protected final static int PAGE_TYPE_BACK = 5;
+	
+	private static final int TIMER_INTERVAL = 5000;
+	private static final int MSG_TIMER = 0;
 
 	private static final String TAG = "BaseActivity";
 	protected BaseHandler mBaseHandler = null;
@@ -44,6 +49,40 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 	private int mPageType;
 	private int mUpdateEvent=0xFF;
 	private GalleryImageAdapter mTopAdapter = null;
+	
+	protected void finalize()
+	{
+		if( mHandler != null ){
+			mHandler.removeMessages(MSG_TIMER);
+			mHandler = null;
+		}
+	}
+	
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			Log.v(TAG, "handleMessage" + msg.what);
+			switch (msg.what) {
+			case MSG_TIMER:
+				Gallery g = (Gallery) findViewById(R.id.gallery);
+				if( g != null ){
+					int pos = g.getSelectedItemPosition();
+					pos++;
+					if( pos >= mTopAdapter.getCount() )
+						pos = 0;
+					g.setSelection(pos);
+				}
+				if( mTopAdapter != null ){
+					mHandler.sendEmptyMessageDelayed(MSG_TIMER, TIMER_INTERVAL); 
+				}
+				break;
+			default:
+			}
+			super.handleMessage(msg);
+		}
+
+	};
 
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
@@ -57,6 +96,10 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 	protected void onDestroy() {
 		if( mTopAdapter != null ){
 			mTopAdapter.close();
+		}
+		if( mHandler != null ){
+			mHandler.removeMessages(MSG_TIMER);
+			mHandler = null;
 		}
 		super.onDestroy();
 	}
@@ -79,6 +122,7 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 
 			// Set a item click listener, and just Toast the clicked position
 			g.setOnItemClickListener(this);
+			mHandler.sendEmptyMessageDelayed(MSG_TIMER, TIMER_INTERVAL);
 		}
 
 		// set bottom menu
