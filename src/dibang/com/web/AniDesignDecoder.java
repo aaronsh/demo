@@ -99,8 +99,8 @@ public class AniDesignDecoder extends WebBaseDecoder {
 		String addr = a.attr("href");
 		if( !addr.startsWith("http://" ) )
 			addr = BASE_URL + addr;
-		link.Link = addr;
-		link.Image = BASE_URL + img.attr("src");
+		link.ForwardLink = addr;
+		link.ImageUrl = BASE_URL + img.attr("src");
 		link.Extra = "";
 		return link;
 	}
@@ -148,11 +148,11 @@ public class AniDesignDecoder extends WebBaseDecoder {
 				Iterator<Object> it = links.iterator();
 				while(it.hasNext()){
 					HtmlHyperLink img = (HtmlHyperLink)it.next();
-					if (img.Image.endsWith(file)) {
+					if (img.ImageUrl.endsWith(file)) {
 						StringBuilder b = new StringBuilder(folder);
 						b.append("/");
 						b.append(file);
-						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
 						it.remove();
 						rmFile = true;
 					}
@@ -175,11 +175,11 @@ public class AniDesignDecoder extends WebBaseDecoder {
 			Log.v(TAG, "download " + img);
 			StringBuilder b = new StringBuilder(folder);
 			b.append("/");
-			b.append(IOFile.getFileName(img.Image));
-			db.insert(img.Extra, b.toString(), img.Link, img.Name);
+			b.append(IOFile.getFileName(img.ImageUrl));
+			db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
 			try {
-				ImageDownloader.downFile(img.Image, path, null);
-				Log.v(TAG, "down img "+img.Image);
+				ImageDownloader.downFile(img.ImageUrl, path, null);
+				Log.v(TAG, "down img "+img.ImageUrl);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

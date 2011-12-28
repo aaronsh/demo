@@ -96,11 +96,11 @@ public class WebDesignDecoder extends WebBaseDecoder {
 				Iterator<HtmlHyperLink> itImg = links.iterator();
 				while(itImg.hasNext()){
 					HtmlHyperLink img = itImg.next(); 
-					if (img.Image.endsWith(file)) {
+					if (img.ImageUrl.endsWith(file)) {
 						StringBuilder b = new StringBuilder(folder);
 						b.append("/");
 						b.append(file);
-						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
 						itImg.remove();
 						rmFile = true;
 					}
@@ -123,11 +123,11 @@ public class WebDesignDecoder extends WebBaseDecoder {
 			Log.v(TAG, "download " + img);
 			StringBuilder b = new StringBuilder(folder);
 			b.append("/");
-			b.append(IOFile.getFileName(img.Image));
-			db.insert(img.Extra, b.toString(), img.Link, img.Name);
+			b.append(IOFile.getFileName(img.ImageUrl));
+			db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
 			try {
-				ImageDownloader.downFile(img.Image, path, null);
-				Log.v(TAG, "down img "+img.Image);
+				ImageDownloader.downFile(img.ImageUrl, path, null);
+				Log.v(TAG, "down img "+img.ImageUrl);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

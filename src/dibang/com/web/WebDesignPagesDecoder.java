@@ -67,9 +67,9 @@ public class WebDesignPagesDecoder extends WebBaseDecoder {
 		}
 		Element a = list.first();
 		a = a.child(0);
-		link.Link = a.attr("href");
+		link.ForwardLink = a.attr("href");
 		a = a.child(0);
-		link.Image = BASE_URL + a.attr("src");
+		link.ImageUrl = BASE_URL + a.attr("src");
 		list = e.getElementsByAttributeValue("class", "showtitle");
 		if( list == null || list.size() != 1 ){
 			return null;

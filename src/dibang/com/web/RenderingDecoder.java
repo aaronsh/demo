@@ -102,11 +102,11 @@ public class RenderingDecoder extends WebBaseDecoder {
 				Iterator<String> itFile = files.iterator();
 				while( itFile.hasNext() ){
 					String file = itFile.next();
-					if (img.Image.endsWith(file)) {
+					if (img.ImageUrl.endsWith(file)) {
 						StringBuilder b = new StringBuilder(folder);
 						b.append("/");
 						b.append(file);
-						db.insert(img.Extra, b.toString(), img.Link);
+						db.insert(img.Extra, b.toString(), img.ForwardLink);
 						itFile.remove();
 						itImg.remove();
 						break;
@@ -127,10 +127,10 @@ public class RenderingDecoder extends WebBaseDecoder {
 			Log.v(TAG, "download "+img);
 			StringBuilder b = new StringBuilder(folder);
 			b.append("/");
-			b.append(IOFile.getFileName(img.Image));
-			db.insert(img.Extra, b.toString(), img.Link);
+			b.append(IOFile.getFileName(img.ImageUrl));
+			db.insert(img.Extra, b.toString(), img.ForwardLink);
 			try {
-				ImageDownloader.downFile(img.Image, path,
+				ImageDownloader.downFile(img.ImageUrl, path,
 						null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

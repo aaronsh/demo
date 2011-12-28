@@ -49,8 +49,8 @@ public class RenderingImageDecoder extends WebBaseDecoder {
 		
 		HtmlHyperLink link = new HtmlHyperLink();
 		link.Extra = mImageClass;
-		link.Image = b.toString();
-		link.Link = "";
+		link.ImageUrl = b.toString();
+		link.ForwardLink = "";
 		link.Name = "";
 		return link;
 	}

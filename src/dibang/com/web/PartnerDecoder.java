@@ -64,11 +64,11 @@ public class PartnerDecoder extends WebBaseDecoder {
 				Iterator<HtmlHyperLink> it = links.iterator();
 				while(it.hasNext()){
 					HtmlHyperLink img = it.next();
-					if (img.Image.endsWith(file)) {
+					if (img.ImageUrl.endsWith(file)) {
 						StringBuilder b = new StringBuilder(folder);
 						b.append("/");
 						b.append(file);
-						db.insert(img.Extra, b.toString(), img.Link, img.Name);
+						db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
 						it.remove();
 						rmFile = true;
 					}
@@ -87,14 +87,14 @@ public class PartnerDecoder extends WebBaseDecoder {
 		System.out.print(links.toString());
 		// download images
 		for (HtmlHyperLink img : links) {
-			Log.v(TAG, "download "+img.Image);
+			Log.v(TAG, "download "+img.ImageUrl);
 			try {
-				String file = IOFile.getFileName(img.Image);
+				String file = IOFile.getFileName(img.ImageUrl);
 				StringBuilder b = new StringBuilder(folder);
 				b.append("/");
 				b.append(file);
-				db.insert(img.Extra, b.toString(), img.Link, img.Name);
-				ImageDownloader.downFile(img.Image, Const.FOLDER_partner,
+				db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
+				ImageDownloader.downFile(img.ImageUrl, Const.FOLDER_partner,
 						null);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -133,12 +133,12 @@ public class PartnerDecoder extends WebBaseDecoder {
 		HtmlHyperLink link = new HtmlHyperLink();
 		Element a = img.parent();
 		if( "a".compareTo(a.tagName()) == 0 ){
-			link.Link = a.attr("href");
+			link.ForwardLink = a.attr("href");
 		}
 		else{
-			link.Link = "";
+			link.ForwardLink = "";
 		}
-		link.Image = URL_BASE + img.attr("src");
+		link.ImageUrl = URL_BASE + img.attr("src");
 		link.Name = "";
 		link.Extra = "";
 		return link;
