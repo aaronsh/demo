@@ -83,8 +83,8 @@ public class GridAdapter extends BaseAdapter {
 		int width = 0;
 		int height = 0;
 		if (mCursor != null) {
-			mCursor.moveToPosition(mCursorCount - position - 1);
-			// mCursor.moveToNext();
+//			mCursor.moveToPosition(mCursorCount - position - 1);
+			mCursor.moveToPosition( position );
 			Log.v(TAG,
 					"position:" + position + ",index:" + mCursor.getPosition()
 							+ ","
@@ -154,7 +154,7 @@ public class GridAdapter extends BaseAdapter {
 		int width = 0;
 		int height = 0;
 		if (mCursor != null) {
-			mCursor.moveToPosition(mCursorCount - position - 1);
+			mCursor.moveToPosition(position);
 			// mCursor.moveToNext();
 			Log.v(TAG,
 					"position:" + position + ",index:" + mCursor.getPosition()

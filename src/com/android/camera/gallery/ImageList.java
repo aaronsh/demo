@@ -23,7 +23,8 @@ import android.provider.MediaStore.Images.Media;
 
 import java.util.HashMap;
 
-import com.android.camera.ImageDb;
+import com.android.camera.DesignCaseDb;
+
 
 /**
  * Represents an ordered collection of Image objects. Provides an API to add
@@ -121,8 +122,8 @@ public class ImageList extends BaseImageList implements IImageList {
 
     @Override
     protected BaseImage loadImageFromCursor(Cursor cursor) {
-        long id = cursor.getLong(ImageDb.COL_INDEX_ID);
-        String dataPath = cursor.getString(ImageDb.COL_INDEX_PATH);
+        long id = cursor.getLong(DesignCaseDb.COL_INDEX_ID);
+        String dataPath = cursor.getString(DesignCaseDb.COL_INDEX_PATH);
 /*        
         long dateTaken = cursor.getLong(INDEX_DATE_TAKEN);
         if (dateTaken == 0) {
@@ -142,7 +143,7 @@ public class ImageList extends BaseImageList implements IImageList {
     }
 
 	@Override
-	public IImage getImageForDb(ImageDb mImages) {
+	public IImage getImageForDb(DesignCaseDb mImages) {
 		// TODO Auto-generated method stub
 		return null;
 	}

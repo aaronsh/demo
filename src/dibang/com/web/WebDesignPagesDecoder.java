@@ -1,21 +1,10 @@
 package dibang.com.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import com.android.camera.ImageDb;
-
-import dibang.com.Const;
-
-import android.content.Context;
 import android.util.Log;
 
 public class WebDesignPagesDecoder extends WebBaseDecoder {

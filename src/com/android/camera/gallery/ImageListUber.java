@@ -18,7 +18,7 @@ package com.android.camera.gallery;
 
 import android.net.Uri;
 
-import com.android.camera.ImageDb;
+import com.android.camera.DesignCaseDb;
 import com.android.camera.ImageManager;
 import com.android.camera.Util;
 
@@ -295,7 +295,7 @@ public class ImageListUber implements IImageList {
     }
 
 	@Override
-	public IImage getImageForDb(ImageDb mImages) {
+	public IImage getImageForDb(DesignCaseDb mImages) {
 		// TODO Auto-generated method stub
 		return null;
 	}

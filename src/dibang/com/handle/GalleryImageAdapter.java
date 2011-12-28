@@ -71,7 +71,7 @@ public class GalleryImageAdapter extends BaseAdapter {
 		if (i == null) {
 			i = new ImageView(mContext);
 			if( mCursorCount > 0 ){
-				mCursor.moveToPosition(mCursorCount - position - 1);
+				mCursor.moveToPosition( position );
 				Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
 				String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
 				Bitmap bmp = BitmapFactory.decodeFile(pathName);

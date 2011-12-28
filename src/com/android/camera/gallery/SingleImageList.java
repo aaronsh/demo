@@ -21,7 +21,8 @@ import android.net.Uri;
 
 import java.util.HashMap;
 
-import com.android.camera.ImageDb;
+import com.android.camera.DesignCaseDb;
+
 
 /**
  * An implementation of interface <code>IImageList</code> which contains only
@@ -78,7 +79,7 @@ public class SingleImageList implements IImageList {
     }
 
 	@Override
-	public IImage getImageForDb(ImageDb mImages) {
+	public IImage getImageForDb(DesignCaseDb mImages) {
 		// TODO Auto-generated method stub
 		return null;
 	}

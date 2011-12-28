@@ -23,10 +23,12 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 	public static final String TBL_EBOOK_CASES = "ebook_cases";
 	public static final String TBL_PARTNER = "partner";
 	public static final String TBL_TOP_GALLERY = "top_gallery";
+	public static final String TBL_EFFECT_SHOW = "effect_show";
+	public static final String TBL_HOUSE_SHOW = "house_show";
 	
-	private static final String[] TABLES = {TBL_WEB_CASES, TBL_ANI_CASES, TBL_EBOOK_CASES, TBL_PARTNER, TBL_TOP_GALLERY};
+	private static final String[] TABLES = {TBL_WEB_CASES, TBL_ANI_CASES, TBL_EBOOK_CASES, TBL_PARTNER, TBL_TOP_GALLERY, TBL_EFFECT_SHOW, TBL_HOUSE_SHOW};
 	
-	protected static final int DATABASE_VERSION = 4;
+	protected static final int DATABASE_VERSION = 5;
 	private static final String DB_NAME = "designcases.db";
 
 
@@ -67,27 +69,13 @@ public class DesignCaseDb extends SQLiteOpenHelper {
 		cols.append(" text, ");
 		cols.append(Key_name);
 		cols.append(" text)");
-		
-		StringBuilder b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-		b.append(TBL_WEB_CASES);
-		b.append(cols);
-		db.execSQL(b.toString());
-		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-		b.append(TBL_ANI_CASES);
-		b.append(cols);
-		db.execSQL(b.toString());
-		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-		b.append(TBL_EBOOK_CASES);
-		b.append(cols);
-		db.execSQL(b.toString());
-		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-		b.append(TBL_PARTNER);
-		b.append(cols);
-		db.execSQL(b.toString());
-		b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-		b.append(TBL_TOP_GALLERY);
-		b.append(cols);
-		db.execSQL(b.toString());
+
+		for( String tbl:TABLES ){
+			StringBuilder b = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
+			b.append(tbl);
+			b.append(cols);
+			db.execSQL(b.toString());
+		}
 	}
 	
 	public void onOpen (SQLiteDatabase db){

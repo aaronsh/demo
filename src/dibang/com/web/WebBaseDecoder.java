@@ -1,18 +1,23 @@
 package dibang.com.web;
 
+
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.ListIterator;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.android.camera.DesignCaseDb;
 
 
 
@@ -25,6 +30,10 @@ public class WebBaseDecoder {
 	public static final int DECODE_URL_GET = 3;
 	public static final int DECODE_URL_POST = 4;
 	private static final String TAG = "WebBaseDecoder";
+	
+
+	private static final int SKIP_IMAGE=1;
+	private static final int DOWNLOAD_IMAGE = 2;
 	
 	private int mDecodeMethod;
 	protected String mDecodeWhich;
@@ -166,4 +175,109 @@ public class WebBaseDecoder {
 		}
 		return urlBase + strBuilder.toString();
 	}
+
+	/*
+		It synchronizes images from the list. All images in the list are in right order.
+	*/
+	protected void syncImage(LinkedList<HtmlHyperLink> links, String ImgFolder,
+			String DbName) {
+		System.out.print("syncImage");
+
+		DesignCaseDb db = new DesignCaseDb(mCntx, DbName);
+		db.clear();
+		String folder = IOFile.getModuleFolder(ImgFolder);
+		ArrayList<String> files = IOFile.getFileNameList(folder);
+		// TODO Auto-generated method stub
+
+		if (UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE) {
+			int action = DOWNLOAD_IMAGE;
+
+			Iterator<HtmlHyperLink> itImg = links.iterator();
+			while (itImg.hasNext()) {
+				HtmlHyperLink img = itImg.next();
+				String imgShortName = IOFile.getFileName(img.ImageUrl);
+				StringBuilder b = new StringBuilder(folder);
+				b.append("/");
+				b.append(imgShortName);
+				db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
+				action = DOWNLOAD_IMAGE;
+				Iterator<String> itFile = files.iterator();
+				while (itFile.hasNext()) {
+					String file = itFile.next();
+					if (img.ImageUrl.endsWith(file)) {
+						action = SKIP_IMAGE;
+						break;
+					}
+				}
+				if (action == DOWNLOAD_IMAGE) {
+					try {
+						ImageDownloader.downFile(img.ImageUrl, ImgFolder, null);
+						Log.v(TAG, "down img " + img.ImageUrl);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
+			ListIterator<String> localFiles = files.listIterator();
+			while (localFiles.hasNext()) {
+				String fileName = localFiles.next();
+				ListIterator<HtmlHyperLink> images = links.listIterator();
+				while (images.hasNext()) {
+					HtmlHyperLink img = images.next();
+					if (img.ImageUrl.endsWith(fileName)) {
+						images.remove();
+						localFiles.remove();
+					}
+				}
+			}
+			for (String toDelete : files) {
+				deleteFile(toDelete, ImgFolder);
+			}
+		} else {
+			// remove useless pictures
+			for (String file : files) {
+				deleteFile(file, ImgFolder);
+			}
+
+			System.out.print(links.toString());
+			// download images
+			Iterator<HtmlHyperLink> itImg = links.iterator();
+			while (itImg.hasNext()) {
+				HtmlHyperLink img = itImg.next();
+				Log.v(TAG, "download " + img);
+				StringBuilder b = new StringBuilder(folder);
+				b.append("/");
+				b.append(IOFile.getFileName(img.ImageUrl));
+				db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
+				try {
+					ImageDownloader.downFile(img.ImageUrl, ImgFolder, null);
+					Log.v(TAG, "down img " + img.ImageUrl);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		db.close();
+	}
+
+	private void deleteFile(String file, String ImgFolder) {
+		// TODO Auto-generated method stub
+		String img;
+		if (!IOFile.sdcardExist())
+			return;
+		StringBuilder b = new StringBuilder();
+		b.append(IOFile.getModuleFolder(ImgFolder));
+		b.append("/");
+		b.append(file);
+
+		img = b.toString();
+		Log.v(TAG, "delete " + img);
+		File f = new File(img);
+		f.delete();
+	}
+
+	
 }

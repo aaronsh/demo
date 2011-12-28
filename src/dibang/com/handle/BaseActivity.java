@@ -35,7 +35,7 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 	protected final static int PAGE_TYPE_REFRESH = 4;
 	protected final static int PAGE_TYPE_BACK = 5;
 	
-	private static final int TIMER_INTERVAL = 5000;
+	private static final int TIMER_INTERVAL = 10000;
 	private static final int MSG_TIMER = 0;
 
 	private static final String TAG = "BaseActivity";

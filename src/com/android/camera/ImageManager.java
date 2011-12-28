@@ -361,7 +361,7 @@ public class ImageManager {
 		}
 
 		@Override
-		public IImage getImageForDb(ImageDb mImages) {
+		public IImage getImageForDb(DesignCaseDb mImages) {
 			// TODO Auto-generated method stub
 			return null;
 		}

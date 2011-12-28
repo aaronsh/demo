@@ -91,7 +91,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 //    private Uri mSavedUri;
     boolean mPaused = true;
     private boolean mShowControls = true;
-    private ImageDb mImages = null;
+    private DesignCaseDb mImages = null;
     private Cursor mCursor = null;
     private String mFilter = null;
 
@@ -651,12 +651,12 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
 			text.setText("三维动画");
 			break;
 		case  Const.UI_TYPE_EFFECT_SHOW:
-			mImages = new ImageDb(this, ImageDb.TBL_EFFECT_SHOW);
+			mImages = new DesignCaseDb(this, DesignCaseDb.TBL_EFFECT_SHOW);
 			text.setText("效果图");
 			mUpdateEvent = WebUpdateService.UPDATE_TASK_EFFECT;
 			break;
 		case  Const.UI_TYPE_HOUSE_SHOW:
-			mImages = new ImageDb(this, ImageDb.TBL_HOUSE_SHOW);
+			mImages = new DesignCaseDb(this, DesignCaseDb.TBL_HOUSE_SHOW);
 			text.setText("户型图");
 			mUpdateEvent = WebUpdateService.UPDATE_TASK_HOUSE;
 			break;
@@ -768,7 +768,7 @@ public class ViewImage extends NoSearchActivity implements View.OnClickListener 
     	c.moveToFirst();
     	ArrayList<String> cat = new ArrayList<String>();
     	while(!c.isAfterLast()){
-    		String key = c.getString(ImageDb.COL_INDEX_CLASS); 
+    		String key = c.getString(DesignCaseDb.COL_INDEX_CLASS); 
 
     		Iterator<String> it = cat.iterator();
     		boolean existed = false;

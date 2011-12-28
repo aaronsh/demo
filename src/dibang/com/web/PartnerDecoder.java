@@ -1,26 +1,22 @@
 package dibang.com.web;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.LinkedList;
+
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.android.camera.DesignCaseDb;
-import com.android.camera.ImageDb;
 
 import dibang.com.Const;
 
 import android.content.Context;
-import android.util.Log;
+
 
 public class PartnerDecoder extends WebBaseDecoder {
-	private static final String TAG = "TopGalleryDecoder";
+	private static final String TAG = "PartnerDecoder";
 	private static final String URL_BASE = "http://www.depcn.com/";
 
 	
@@ -34,90 +30,16 @@ public class PartnerDecoder extends WebBaseDecoder {
 	protected LinkedList<Object> decodeDocument(Document doc) throws Exception {
 		Elements list = doc.select("div[class=classicbox]");
 		test(list);
-		String folder = IOFile.getModuleFolder(Const.FOLDER_partner);
 
-		ArrayList<HtmlHyperLink> links = new ArrayList<HtmlHyperLink>();
+		LinkedList<HtmlHyperLink> links = new LinkedList<HtmlHyperLink>();
 		for (Element e : list) {
 			HtmlHyperLink l = getImgLink(e);
 			if (l != null)
 				links.add(l);
 		}
-		syncImage(links);
+		syncImage(links, Const.FOLDER_partner, DesignCaseDb.TBL_PARTNER);
 
 		return null;
-	}
-
-	private void syncImage(ArrayList<HtmlHyperLink> links) {
-		System.out.print("syncImage");
-		// TODO Auto-generated method stub
-		DesignCaseDb db = new DesignCaseDb(mCntx, DesignCaseDb.TBL_PARTNER);
-		db.clear();
-		String folder = IOFile.getModuleFolder(Const.FOLDER_partner);
-		ArrayList<String> files = IOFile.getFileNameList(folder);
-		// TODO Auto-generated method stub
-		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
-			boolean rmFile = false;
-			Iterator<String> iterator = files.iterator();
-			while(iterator.hasNext()){
-				String file = iterator.next();
-				rmFile = false;
-				Iterator<HtmlHyperLink> it = links.iterator();
-				while(it.hasNext()){
-					HtmlHyperLink img = it.next();
-					if (img.ImageUrl.endsWith(file)) {
-						StringBuilder b = new StringBuilder(folder);
-						b.append("/");
-						b.append(file);
-						db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
-						it.remove();
-						rmFile = true;
-					}
-				}
-				if( rmFile ){
-					iterator.remove();
-				}
-			}
-		}
-		
-				// remove useless pictures
-		for (String file : files) {
-			deleteFile(file, folder);
-		}
-
-		System.out.print(links.toString());
-		// download images
-		for (HtmlHyperLink img : links) {
-			Log.v(TAG, "download "+img.ImageUrl);
-			try {
-				String file = IOFile.getFileName(img.ImageUrl);
-				StringBuilder b = new StringBuilder(folder);
-				b.append("/");
-				b.append(file);
-				db.insert(img.Extra, b.toString(), img.ForwardLink, img.Name);
-				ImageDownloader.downFile(img.ImageUrl, Const.FOLDER_partner,
-						null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		db.close();
-	}
-
-	private void deleteFile(String file, String folder) {
-		// TODO Auto-generated method stub
-		String img;
-		if (!IOFile.sdcardExist())
-			return;
-		StringBuilder b = new StringBuilder();
-		b.append(folder);
-		b.append("/");
-		b.append(file);
-
-		img = b.toString();
-		Log.v(TAG, "delete "+img);
-		File f = new File(img);
-		f.delete();
 	}
 
 	private HtmlHyperLink getImgLink(Element e) {

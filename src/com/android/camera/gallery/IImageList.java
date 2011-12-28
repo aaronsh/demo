@@ -20,7 +20,7 @@ import android.net.Uri;
 
 import java.util.HashMap;
 
-import com.android.camera.ImageDb;
+import com.android.camera.DesignCaseDb;
 
 //
 // ImageList and Image classes have one-to-one correspondence.
@@ -74,7 +74,7 @@ public interface IImageList {
      * @param mImages
      * @return      the image with a particular Uri. null if not found.
      */
-    public IImage getImageForDb(ImageDb mImages);
+    public IImage getImageForDb(DesignCaseDb mImages);
 
     /**
      *

@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.android.camera.ImageDb;
+import com.android.camera.DesignCaseDb;
 
 import dibang.com.Const;
 
@@ -41,20 +41,24 @@ public class RenderingDecoder extends WebBaseDecoder {
 	protected LinkedList<Object> decodeDocument(Document doc) throws Exception {
 		Elements list = doc.select("div");
 		test(list);
-		ArrayList<HtmlHyperLink> links = new ArrayList<HtmlHyperLink>();
+		LinkedList<HtmlHyperLink> links = new LinkedList<HtmlHyperLink>();
 		for (Element e : list) {
 			String attr = e.attr("class");
 			if( attr.startsWith("leibie")){
 				decodeImages(e, links);
 			}
 		}
-		
-		syncImage(links);
+		if(mDecoderType == DECODER_TYPE_EFFECT_SHOW){
+			syncImage(links,Const.FOLDER_effect_show,DesignCaseDb.TBL_EFFECT_SHOW);
+		}
+		else{
+			syncImage(links,Const.FOLDER_house_show,DesignCaseDb.TBL_HOUSE_SHOW);
+		}		
 
 		return null;
 	}
 
-	private void decodeImages(Element e, ArrayList<HtmlHyperLink> images) {
+	private void decodeImages(Element e, LinkedList<HtmlHyperLink> images) {
 		// TODO Auto-generated method stub
 		Element a = e.child(0);
 		String Name = a.text();
@@ -74,86 +78,6 @@ public class RenderingDecoder extends WebBaseDecoder {
 			ex.printStackTrace();
 		}
 		return ;
-	}
-
-	private void syncImage(ArrayList<HtmlHyperLink> links) {
-		System.out.print("syncImage");
-		String path = null;
-		String tbl = null;
-		
-		if(mDecoderType == DECODER_TYPE_EFFECT_SHOW){
-			path = Const.FOLDER_effect_show;
-			tbl = ImageDb.TBL_EFFECT_SHOW;
-		}
-		else{
-			path = Const.FOLDER_house_show;
-			tbl = ImageDb.TBL_HOUSE_SHOW;
-		}
-		ImageDb db = new ImageDb(mCntx, tbl);
-		db.clear();
-		String folder = IOFile.getModuleFolder(path);
-		ArrayList<String> files = IOFile.getFileNameList(folder);
-		// TODO Auto-generated method stub
-		
-		if( UpdateMode.getUpdateMode() == UpdateMode.FAST_UPDATE_MODE ){
-			Iterator<HtmlHyperLink> itImg = links.iterator();
-			while(itImg.hasNext()){
-				HtmlHyperLink img = itImg.next();
-				Iterator<String> itFile = files.iterator();
-				while( itFile.hasNext() ){
-					String file = itFile.next();
-					if (img.ImageUrl.endsWith(file)) {
-						StringBuilder b = new StringBuilder(folder);
-						b.append("/");
-						b.append(file);
-						db.insert(img.Extra, b.toString(), img.ForwardLink);
-						itFile.remove();
-						itImg.remove();
-						break;
-					}
-				}
-
-			}
-		}
-
-		// remove useless pictures
-		for (String file : files) {
-			deleteFile(file, folder);
-		}
-
-		System.out.print(links.toString());
-		// download images
-		for (HtmlHyperLink img : links) {
-			Log.v(TAG, "download "+img);
-			StringBuilder b = new StringBuilder(folder);
-			b.append("/");
-			b.append(IOFile.getFileName(img.ImageUrl));
-			db.insert(img.Extra, b.toString(), img.ForwardLink);
-			try {
-				ImageDownloader.downFile(img.ImageUrl, path,
-						null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		db.close();
-	}
-
-	private void deleteFile(String file, String folder) {
-		// TODO Auto-generated method stub
-		String img;
-		if (!IOFile.sdcardExist())
-			return;
-		StringBuilder b = new StringBuilder();
-		b.append(folder);
-		b.append("/");
-		b.append(file);
-
-		img = b.toString();
-		Log.v(TAG, "delete "+img);
-		File f = new File(img);
-		f.delete();
 	}
 
 }
