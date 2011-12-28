@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">迪邦视觉</string>
 
     <!-- General strings -->
@@ -389,4 +388,68 @@
     <!-- The messsage shown on progress dialog when deleting images -->
     <string name="delete_images_message">Deleting images, please wait\u2026</string>
     <string name="updating_from_web">"Updating..."</string>
+    <string name="buttonname">ok</string>
+    <string name="selfInfo">我的资料</string>
+    <string name="home">首页</string>
+    <string name="message">信息</string>
+    <string name="square">广场</string>
+    <string name="more">更多</string>
+    <string name="blackList">黑名单</string>
+    <string name="fans">粉丝</string>
+    <string name="weibo">微博</string>
+    <string name="favorite">收藏</string>
+    <string name="address">地址：</string>
+    <string name="loginName">登录名：</string>
+    <string name="unattention">取消关注</string>
+    <string name="topic">话题</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="accountManage">帐号管理</string>
+    <string name="readMode">浏览模式</string>
+    <string name="official">官方微博</string>
+    <string name="feedback">意见反馈</string>
+    <string name="version">检测新版本</string>
+    <string name="comment">评论</string>
+    <string name="privateLetter">私信</string>
+    <string name="atme">\@我</string>
+    <string name="searchWeibo">搜索微博</string>
+    <string name="searchPeople">找人</string>
+    <string name="edit">编辑</string>
+    <string name="updateWeibo">发表新微博</string>
+    <string name="send">发送</string>
+    <string name="saySth">说点儿什么吧...</string>
+    <string name="rt_sametime_comment">同时做为评论发布</string>
+    <string name="comment_sametime_update">同时发一条微博</string>
+    <string name="redirectWeibo">转发微博</string>
+    <string name="commentWeibo">评论微博</string>
+    <string name="note">注意</string>
+    <string name="isSave">微博尚未发送，是否保存？</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="clean">清除文字？</string>
+    <string name="camera">相机拍摄</string>
+    <string name="phoneGallery">手机相册</string>
+    <string name="weiboBody">微博正文</string>
+    <string name="refresh">刷新</string>
+    <string name="redirect">转发</string>
+    <string name="info">资料</string>
+    <string name="attention">关注</string>
+    <string name="sina_v">新浪认证：</string>
+    <string name="intro">介绍：</string>
+    <string name="atelse">\@他</string>
+    <string name="sendMsg">发私信</string>
+    <string name="addToBlacklist">加入黑名单</string>
+    <string name="weiboFunction">微博功能</string>
+    <string name="checkUserInfo">查看个人资料</string>
+    <string name="gender">性别</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="updateIcon">上传头像</string>
+    <string name="nickName">昵称：</string>
+    <string name="editInfo">编辑资料</string>
+    <string name="from">来自:</string>
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    <string name="reply">回复评论</string>
+    <string name="viewProfile">查看个人资料</string>
 </resources>

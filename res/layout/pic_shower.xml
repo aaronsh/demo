@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="#FF000000">
+	<FrameLayout android:id="@+id/picshower_title"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_gravity="top|center_horizontal"
+		android:layout_marginTop="5.0dip">
+		<Button android:id="@+id/picshower_back" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_gravity="left|center_vertical"
+			android:text="@string/back" />
+		<Button android:id="@+id/picshower_save" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_gravity="right|center_vertical"
+			android:text="@string/save" />
+	</FrameLayout>
+<!--	<ImageView android:id="@+id/picshower_pic"-->
+<!--		android:layout_width="fill_parent" android:layout_height="fill_parent"-->
+<!--		android:layout_below="@id/picshower_title" android:scaleType="centerInside" />-->
+	<com.weibo.zoom.ImageZoomView
+    android:id="@+id/zoomview"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    />
+	<ZoomControls android:id="@+id/picshower_zoom"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" android:layout_marginBottom="15.0dip" />
+
+</RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#FFF4F4F4">
+	<!-- title bar -->
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="center"
+		android:background="@drawable/titlebar_bg_nor">
+		<ImageView android:id="@+id/weiboUpdater_title_back"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:clickable="true" android:background="@drawable/title_back" />
+		<TextView android:id="@+id/weiboUpdater_title_name"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1" android:gravity="center" android:text="@string/updateWeibo"
+			android:textColor="#FF000000" android:textSize="18.0sp" />
+		<Button android:id="@+id/weiboUpdater_title_send"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/title_send" android:text="@string/send"
+			android:textSize="14.0sp" />
+	</LinearLayout>
+	<EditText android:id="@+id/weiboUpdater_edit"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_weight="2" android:gravity="top" android:hint="@string/saySth"
+		android:layout_margin="3.0dip" android:background="@null" />
+	<FrameLayout android:layout_width="fill_parent"
+		android:layout_height="50.0dip" android:padding="5.0dip">
+		<ImageView android:id="@+id/updater_content_pic"
+			android:layout_width="60.0dip" android:layout_height="50.0dip"
+			android:scaleType="centerInside" />
+		<LinearLayout android:id="@+id/weiboUpdater_del"
+			android:layout_width="60.0dip" android:layout_height="35.0dip"
+			android:layout_gravity="right|center" android:gravity="center"
+			android:clickable="true" android:background="@drawable/weiboupdater_del">
+			<TextView android:id="@+id/weiboUpdater_del_num"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginRight="5.0dip" android:text="140"
+				android:textColor="#FF333333" />
+			<ImageView android:layout_width="10.0dip"
+				android:layout_height="10.0dip" android:background="@drawable/icon_delwords" />
+		</LinearLayout>
+	</FrameLayout>
+	<!-- bottom -->
+	<LinearLayout android:id="@+id/updater_bottomBar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:background="@drawable/bg_btn_nor">
+		<LinearLayout android:id="@+id/weiboUpdater_rtAndComment"
+			style="@style/create_btn_bg" android:gravity="center_vertical"
+			android:clickable="true" android:orientation="horizontal"
+			android:visibility="gone">
+			<CheckBox android:id="@+id/weiboUpdater_check"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:button="@null" android:background="@drawable/checkbox" />
+			<TextView android:id="@+id/weiboUpdater_rtAndComment_tv"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_weight="1" android:paddingLeft="5.0dip"
+				android:text="@string/rt_sametime_comment" android:textColor="#FF555B6D"
+				android:textSize="14.0sp" />
+		</LinearLayout>
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_weight="1"
+			android:orientation="horizontal">
+			<ImageButton android:id="@+id/weiboUpdater_bottom_location"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_location" />
+			<ImageButton android:id="@+id/weiboUpdater_bottom_pic"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_pic" />
+			<ImageButton android:id="@+id/weiboUpdater_bottom_topic"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_topic" />
+			<ImageButton android:id="@+id/weiboUpdater_bottom_at"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_at" />
+			<ImageButton android:id="@+id/weiboUpdater_bottom_face"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_face" />
+			<ImageButton android:id="@+id/weiboUpdater_bottom_keyboard"
+				style="@style/create_btn_bg" android:src="@drawable/btn_insert_keyboard"
+				android:visibility="gone" />
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/updater_trendsList_layout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_weight="1" android:orientation="vertical"
+		android:background="@drawable/pic_bg_scaleable" android:visibility="gone">
+		<ImageView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:src="@drawable/suggestion_top_line" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="推荐话题"
+			android:textColor="#FF000000" android:textSize="12.0sp"
+			android:background="@drawable/suggestion_title_bg" />
+		<ListView android:id="@+id/updater_trendsList"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:cacheColorHint="#00000000" android:divider="@drawable/suggestion_line"></ListView>
+	</LinearLayout>
+	<LinearLayout android:id="@+id/updater_atList_layout"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:layout_weight="1" android:orientation="vertical"
+		android:background="@drawable/pic_bg_scaleable" android:visibility="gone">
+		<ImageView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:src="@drawable/suggestion_top_line" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text="首页AT"
+			android:textColor="#FF000000" android:textSize="12.0sp"
+			android:background="@drawable/suggestion_title_bg" />
+		<ListView android:id="@+id/updater_atList"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:cacheColorHint="#00000000" android:divider="@drawable/suggestion_line"></ListView>
+	</LinearLayout>
+	<GridView android:id="@+id/updater_faceGrid"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1" android:numColumns="6" android:stretchMode="columnWidth"
+		android:verticalSpacing="30.0dip" android:visibility="gone"></GridView>
+</LinearLayout>

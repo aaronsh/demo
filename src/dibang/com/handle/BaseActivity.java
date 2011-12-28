@@ -1,5 +1,7 @@
 package dibang.com.handle;
 
+import com.weibo.Front;
+
 import dibang.com.CompanyIntroduce;
 import dibang.com.ContactUs;
 import dibang.com.DialogActivity;
@@ -198,6 +200,7 @@ public abstract class BaseActivity extends Activity implements OnItemClickListen
 			intent = new Intent(this, ContactUs.class);
 			break;
 		case R.id.bottom_menu_weibo:
+			intent = new Intent(this, Front.class);
 			break;
 		case R.id.bottom_menu_refresh:
 			if( mUpdateEvent != 0xFF ){

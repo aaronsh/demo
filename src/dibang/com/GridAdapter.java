@@ -40,9 +40,9 @@ public class GridAdapter extends BaseAdapter {
 	private int mScreenHeight = 0;
 	int mItemType;
 	LayoutInflater mInflater;
-	Cursor mCursor=null;
+	Cursor mCursor = null;
 	int mCursorCount = 0;
-	
+
 	private boolean WithSdCard = true;
 	private ArrayList<String> mFileList = null;
 	private HashMap<Integer, View> mViewList = new HashMap<Integer, View>();
@@ -59,7 +59,7 @@ public class GridAdapter extends BaseAdapter {
 
 		mInflater = LayoutInflater.from(mCntx);
 		mItemType = itemType;
-		
+
 		WithSdCard = IOFile.sdcardExist();
 		if (WithSdCard) {
 			String path = IOFile.getModuleFolder(Const.FOLDER_partner);
@@ -82,27 +82,42 @@ public class GridAdapter extends BaseAdapter {
 				ViewGroup.LayoutParams.FILL_PARENT));
 		int width = 0;
 		int height = 0;
-		if( mCursor != null ){
+		if (mCursor != null) {
 			mCursor.moveToPosition(mCursorCount - position - 1);
-//			mCursor.moveToNext();
-			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
+			// mCursor.moveToNext();
+			Log.v(TAG,
+					"position:" + position + ",index:" + mCursor.getPosition()
+							+ ","
+							+ mCursor.getString(DesignCaseDb.COL_INDEX_TEXT));
 			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
+			Log.v(TAG, "pathName:" + pathName);
 			Bitmap bmp = BitmapFactory.decodeFile(pathName);
-			i.setImageBitmap(bmp);
-			width = mScreenWidth / 2 - 24;
-			height = (bmp.getHeight() * width)
-					/ bmp.getWidth();
-			
+			if (bmp != null) {
+				i.setImageBitmap(bmp);
+				width = mScreenWidth / 2 - 24;
+				height = (bmp.getHeight() * width) / bmp.getWidth();
+			} else {
+				Drawable icon = mCntx.getResources().getDrawable(
+
+				R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+
+				i.setImageDrawable(icon);
+
+				width = mScreenWidth / 2 - 24;
+				height = (icon.getIntrinsicHeight() * width)
+						/ icon.getIntrinsicWidth();
+
+			}
+
 			title = mCursor.getString(DesignCaseDb.COL_INDEX_TEXT);
 			frm.setTag(mCursor.getString(DesignCaseDb.COL_INDEX_LINK));
-		}
-		else{
+		} else {
 			Drawable icon = mCntx.getResources().getDrawable(
 
-					R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+			R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
 
 			i.setImageDrawable(icon);
-			
+
 			width = mScreenWidth / 2 - 24;
 			height = (icon.getIntrinsicHeight() * width)
 					/ icon.getIntrinsicWidth();
@@ -118,7 +133,7 @@ public class GridAdapter extends BaseAdapter {
 
 		TextView titleView = (TextView) frm.findViewById(R.id.text);
 		titleView.setText(title);
-		titleView.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM);
+		titleView.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
 		// frm.addView(title);
 		return frm;
 
@@ -138,24 +153,25 @@ public class GridAdapter extends BaseAdapter {
 				ViewGroup.LayoutParams.FILL_PARENT));
 		int width = 0;
 		int height = 0;
-		if( mCursor != null ){
+		if (mCursor != null) {
 			mCursor.moveToPosition(mCursorCount - position - 1);
-//			mCursor.moveToNext();
-			Log.v(TAG, "position:"+position+",index:"+ mCursor.getPosition() +","+mCursor.getString(DesignCaseDb.COL_INDEX_PATH));
+			// mCursor.moveToNext();
+			Log.v(TAG,
+					"position:" + position + ",index:" + mCursor.getPosition()
+							+ ","
+							+ mCursor.getString(DesignCaseDb.COL_INDEX_PATH));
 			String pathName = mCursor.getString(DesignCaseDb.COL_INDEX_PATH);
 			Bitmap bmp = BitmapFactory.decodeFile(pathName);
 			i.setImageBitmap(bmp);
 			width = mScreenWidth / 2 - 24;
-			height = (bmp.getHeight() * width)
-					/ bmp.getWidth();
-		}
-		else{
+			height = (bmp.getHeight() * width) / bmp.getWidth();
+		} else {
 			Drawable icon = mCntx.getResources().getDrawable(
 
-					R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
+			R.drawable.grid_imgtxt_item);// info.activityInfo.loadIcon(mCntx.getPackageManager());
 
 			i.setImageDrawable(icon);
-			
+
 			width = mScreenWidth / 2 - 24;
 			height = (icon.getIntrinsicHeight() * width)
 					/ icon.getIntrinsicWidth();
@@ -177,7 +193,7 @@ public class GridAdapter extends BaseAdapter {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		Log.v(TAG, "getView("+position+")");
+		Log.v(TAG, "getView(" + position + ")");
 		View v = mViewList.get(position);
 		if (v == null) {
 
@@ -187,16 +203,15 @@ public class GridAdapter extends BaseAdapter {
 				v = buildImageView(position);
 			}
 			mViewList.put(position, v);
-		} 
-		
-		return v;
+		}
 
+		return v;
 
 		// return i;
 	}
 
 	public final int getCount() {
-		if( mCursor != null )
+		if (mCursor != null)
 			return mCursorCount;
 		if (WithSdCard)
 			return mFileList.size();
@@ -220,6 +235,5 @@ public class GridAdapter extends BaseAdapter {
 		notifyDataSetInvalidated();
 		notifyDataSetChanged();
 	}
-
 
 }

@@ -172,7 +172,7 @@ public class EbookDecoder extends WebBaseDecoder {
 			Log.v(TAG, "download " + img);
 			StringBuilder b = new StringBuilder(folder);
 			b.append("/");
-			b.append(IOFile.getFileName(img.Link));
+			b.append(IOFile.getFileName(img.Image));
 			db.insert(img.Extra, b.toString(), img.Link, img.Name);
 			try {
 				ImageDownloader.downFile(img.Image, path, null);

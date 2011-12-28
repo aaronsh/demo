@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:layout_height="wrap_content" android:gravity="center"
+	android:background="@drawable/titlebar_bg_nor">
+	<Button android:id="@+id/titlebar_back" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:background="@drawable/title_back"
+		android:visibility="gone" />
+	<Button android:id="@+id/titlebar_createWeibo"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:background="@drawable/profile_title_new" android:visibility="gone" />
+	<LinearLayout android:id="@+id/titlebar_point"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_weight="1" android:gravity="center" android:background="@drawable/title_bg">
+		<TextView android:id="@+id/titlebar_name"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_gravity="center" android:textColor="#FF000000"
+			android:textSize="18.0sp" android:visibility="gone" />
+		<ImageView android:id="@+id/titlebar_point_nor"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/icon_grouppoint_titlebar_nor"
+			android:visibility="gone" />
+		<ImageView android:id="@+id/titlebar_point_sel"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/icon_grouppoint_titlebar_sel"
+			android:visibility="gone" />
+	</LinearLayout>
+	<Button android:id="@+id/titlebar_home" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:background="@drawable/title_home"
+		android:visibility="gone" />
+	<Button android:id="@+id/titlebar_refresh" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:background="@drawable/profile_title_reload"
+		android:visibility="gone" />
+	<ProgressBar android:id="@+id/titlebar_progress"
+		android:layout_width="20.0dip" android:layout_height="20.0dip"
+		android:layout_marginLeft="15.0dip" android:layout_marginRight="15.0dip"
+		style="@android:style/Widget.ProgressBar.Small.Inverse"
+		android:visibility="gone" />
+
+</LinearLayout>

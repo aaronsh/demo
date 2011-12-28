@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<!-- title -->
+	<include android:id="@+id/selfinfo_titlebar" layout="@layout/titlebar" />
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		<LinearLayout android:orientation="vertical"
+			android:layout_width="match_parent" android:layout_height="wrap_content"
+			android:background="#FFFFFFFF">
+			<!-- 头像 姓名 -->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dip"
+				android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip"
+				android:orientation="horizontal">
+				<FrameLayout android:layout_width="120.0dip"
+					android:layout_height="120.0dip">
+					<ImageView android:id="@+id/selfinfo_userIcon"
+						android:layout_width="fill_parent" android:layout_height="fill_parent"
+						android:src="@drawable/portrait" />
+					<ImageView android:layout_width="fill_parent"
+						android:layout_height="fill_parent" android:src="@drawable/portrait_round" />
+				</FrameLayout>
+				<RelativeLayout android:layout_width="wrap_content"
+					android:layout_height="fill_parent" android:layout_marginLeft="10.0dip">
+					<TextView android:id="@+id/selfinfo_userName"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_marginTop="10.0dip" android:textSize="18.0sp"
+						android:textColor="#FF000000" />
+					<ImageView android:id="@+id/selfinfo_userGender"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_below="@id/selfinfo_userName" android:background="@drawable/icon_male" />
+					<Button android:id="@+id/selfinfo_editInfo"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_alignParentBottom="true" android:background="@drawable/selfinfo_edit_button"
+						android:text="@string/edit" android:textColor="#FFFFFFFF" />
+				</RelativeLayout>
+			</LinearLayout>
+			<!-- 头像 姓名 -->
+			<!-- 地址 登录名 -->
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dp"
+				android:layout_gravity="center_horizontal" android:gravity="center_vertical"
+				android:orientation="horizontal" android:background="@drawable/list_above_nor">
+				<TextView style="@style/userinfo_font" android:text="@string/address" />
+				<TextView android:id="@+id/selfinfo_address"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:singleLine="true" android:textColor="#FF000000"
+					android:textSize="16.0sp" />
+			</LinearLayout>
+			<LinearLayout android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
+				android:gravity="center_vertical" android:orientation="horizontal"
+				android:background="@drawable/list_below_nor">
+				<TextView style="@style/userinfo_font" android:text="@string/loginName" />
+				<TextView android:id="@+id/selfinfo_loginName"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:singleLine="true" android:textColor="#FF000000"
+					android:textSize="16.0sp" />
+			</LinearLayout>
+			<!-- 地址 登录名 -->
+			<!-- 关注 微博  粉丝 话题-->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dp"
+				android:gravity="center_horizontal" android:orientation="horizontal">
+				<!-- 关注 -->
+				<LinearLayout android:id="@+id/selfinfo_attentionLayout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_left_above">
+					<TextView android:id="@+id/selfinfo_guanzhu" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/attention" />
+				</LinearLayout>
+				<!-- 微博 -->
+				<LinearLayout android:id="@+id/selfinfo_weiboLayout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_right_above">
+					<TextView android:id="@+id/selfinfo_weibo" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/weibo" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:gravity="center_horizontal"
+				android:orientation="horizontal">
+				<!-- 粉丝 -->
+				<LinearLayout android:id="@+id/selfinfo_fansLayout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_left_below">
+					<TextView android:id="@+id/selfinfo_fans" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/fans" />
+				</LinearLayout>
+				<!-- 话题 -->
+				<LinearLayout android:id="@+id/selfinfo_topicLayout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_right_below">
+					<TextView android:id="@+id/selfinfo_topic" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/topic" />
+				</LinearLayout>
+			</LinearLayout>
+			<!-- 关注 微博 粉丝 话题-->
+			<!-- 收藏 黑名单 -->
+			<LinearLayout android:id="@+id/selfinfo_favLayout"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginTop="10.0dp" android:layout_gravity="center_horizontal"
+				android:gravity="center_vertical" android:clickable="true"
+				android:orientation="horizontal" android:background="@drawable/list_above">
+				<TextView style="@style/userinfo_font"
+					android:layout_marginLeft="20.0dp" android:text="@string/favorite" />
+				<TextView android:id="@+id/selfinfo_favorite"
+					android:layout_width="fill_parent" android:layout_height="wrap_content"
+					android:layout_weight="1" android:layout_marginLeft="10.0dp"
+					android:textSize="16.0sp" />
+				<ImageView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_marginRight="20.0dp"
+					android:background="@drawable/triangle" />
+			</LinearLayout>
+			<LinearLayout android:id="@+id/selfinfo_blacklistLayout"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal" android:gravity="center_vertical"
+				android:clickable="true" android:orientation="horizontal"
+				android:background="@drawable/list_below">
+				<TextView style="@style/userinfo_font"
+					android:layout_marginLeft="20.0dp" android:text="@string/blackList" />
+				<TextView android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:layout_marginLeft="10.0dp" android:text="0"
+					android:textSize="16.0sp" />
+				<ImageView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_marginRight="20.0dp"
+					android:background="@drawable/triangle" />
+			</LinearLayout>
+			<!-- 收藏 黑名单 -->
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

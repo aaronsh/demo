@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#FFF4F4F4">
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:gravity="center"
+		android:background="@drawable/titlebar_bg_nor">
+		<RadioGroup android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:orientation="horizontal">
+			<RadioButton android:id="@+id/msg_atme"
+				android:background="@drawable/title_button_left" style="@style/selfinfo_radio"
+				android:text="@string/atme" />
+			<RadioButton android:id="@+id/msg_comment"
+				android:background="@drawable/title_button_mid" style="@style/selfinfo_radio"
+				android:text="@string/comment" />
+			<RadioButton android:id="@+id/msg_letter"
+				android:background="@drawable/title_button_right" style="@style/selfinfo_radio"
+				android:text="@string/privateLetter" />
+		</RadioGroup>
+	</LinearLayout>
+	<ListView android:id="@+id/msg_atList" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:scrollbars="vertical"
+		android:visibility="gone" android:cacheColorHint="#00000000"></ListView>
+	<ListView android:id="@+id/msg_commentList"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:scrollbars="vertical" android:visibility="gone"
+		android:cacheColorHint="#00000000"></ListView>
+</LinearLayout>

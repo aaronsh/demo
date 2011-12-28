@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="center_horizontal"
+	android:background="#FFF4F4F4">
+	<include android:id="@+id/editor_titlebar" layout="@layout/titlebar" />
+	<LinearLayout android:id="@+id/editor_updateIcon"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_marginTop="10.0dip" android:gravity="center_vertical"
+		android:orientation="horizontal" android:background="@drawable/list_mid"
+		android:clickable="true">
+		<ImageView android:id="@+id/editor_icon"
+			android:layout_width="35.0dip" android:layout_height="35.0dip"
+			android:paddingRight="8.0dip" android:paddingBottom="8.0dip"
+			android:background="@drawable/portrait" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:layout_weight="1"
+			android:text="@string/updateIcon" />
+		<ImageView style="@style/more_triangle" />
+
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_marginTop="10.0dip"
+		android:gravity="center_vertical" android:orientation="horizontal">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_marginLeft="30.0dip"
+			android:text="@string/gender" android:textColor="#FF000000"
+			android:textSize="18.0sp" />
+		<RadioGroup android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_marginLeft="20.0dip"
+			android:orientation="horizontal">
+			<RadioButton android:id="@+id/editor_male"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:text="@string/male" android:textColor="#FF000000"
+				android:textSize="18.0sp" />
+			<RadioButton android:id="@+id/editor_female"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginLeft="30.0dip" android:text="@string/female"
+				android:textColor="#FF000000" android:textSize="18.0sp" />
+		</RadioGroup>
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/editor_updateNickName"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_marginTop="10.0dip" android:gravity="center_vertical"
+		android:orientation="horizontal" android:background="@drawable/list_above"
+		android:clickable="true">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="@string/nickName" />
+		<TextView android:id="@+id/editor_nickName"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1" />
+		<ImageView style="@style/more_triangle" />
+	</LinearLayout>
+	<LinearLayout android:id="@+id/editor_updateIntro"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:gravity="center_vertical" android:orientation="horizontal"
+		android:background="@drawable/list_below" android:clickable="true">
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="@string/intro" />
+		<TextView android:id="@+id/editor_intro"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:layout_weight="1" />
+		<ImageView style="@style/more_triangle" />
+	</LinearLayout>
+
+</LinearLayout>

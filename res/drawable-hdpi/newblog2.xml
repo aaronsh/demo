@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:orientation="vertical"
+	android:background="@android:color/white" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+	<RelativeLayout android:background="#fff4f4f4"
+		android:layout_width="fill_parent" android:layout_height="0.0dip"
+		android:layout_weight="1.0">
+		<LinearLayout android:orientation="horizontal"
+			android:id="@+id/btns_bottom" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true">
+			<LinearLayout android:id="@+id/ll_operation_thesame"
+				android:background="@drawable/create_btn_bg" android:focusable="true"
+				android:visibility="gone" android:clickable="true"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_weight="1.0">
+				<CheckBox android:layout_gravity="center_vertical"
+					android:id="@+id/rb_comment_sametime" android:background="@drawable/btn_comment_sametime"
+					android:duplicateParentState="true" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:layout_marginLeft="5.0dip"
+					android:layout_marginRight="5.0dip" android:button="@null" />
+				<TextView android:textSize="14.0sp" android:textColor="#ff555b6d"
+					android:layout_gravity="center_vertical" android:id="@+id/tv_extra_feature_desc"
+					android:layout_width="wrap_content" android:layout_height="wrap_content" />
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:layout_weight="1.0">
+				<ImageButton android:background="@drawable/create_btn_bg"
+					android:visibility="gone" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_save"
+					android:layout_weight="1.0" />
+				<ImageButton android:id="@+id/ib_insert_location"
+					android:background="@drawable/create_btn_bg" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_location"
+					android:layout_weight="1.0" />
+				<ImageButton android:id="@+id/ib_insert_pic"
+					android:background="@drawable/create_btn_bg" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_pic"
+					android:layout_weight="1.0" />
+				<ImageButton android:id="@+id/ib_insert_topic"
+					android:background="@drawable/create_btn_bg" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_topic"
+					android:layout_weight="1.0" />
+				<ImageButton android:id="@+id/ib_insert_at"
+					android:background="@drawable/create_btn_bg" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_at"
+					android:layout_weight="1.0" />
+				<ImageButton android:id="@+id/ib_face_keyboard"
+					android:background="@drawable/create_btn_bg" android:layout_width="fill_parent"
+					android:layout_height="fill_parent" android:src="@drawable/btn_insert_face"
+					android:layout_weight="1.0" />
+			</LinearLayout>
+		</LinearLayout>
+		<RelativeLayout android:id="@+id/marks" android:padding="3.0dip"
+			android:layout_width="fill_parent" android:layout_height="50.0dip"
+			android:layout_above="@id/btns_bottom">
+			<ImageView android:id="@+id/iv_insertpic"
+				android:visibility="gone" android:layout_width="50.0dip"
+				android:layout_height="fill_parent" android:scaleType="centerCrop" />
+			<ImageView android:id="@+id/iv_location" android:visibility="gone"
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:layout_marginLeft="15.0dip" android:src="@drawable/icon_insertlocation"
+				android:layout_toRightOf="@+id/iv_insertpic"
+				android:layout_centerVertical="true" />
+			<ProgressBar android:id="@+id/pg_loadlocation"
+				android:visibility="gone" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:layout_marginLeft="15.0dip"
+				android:layout_toRightOf="@+id/iv_insertpic"
+				android:layout_centerVertical="true"
+				style="\@android:style/Widget.ProgressBar.Small.Inverse" />
+			<LinearLayout android:gravity="center" android:id="@+id/ll_text_limit_unit"
+				android:background="@drawable/bg_delwords" android:focusable="true"
+				android:clickable="true" android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentRight="true"
+				android:layout_alignParentBottom="false"
+				android:layout_centerVertical="true">
+				<TextView android:textColor="#ff333333" android:id="@+id/tv_text_limit"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_marginRight="5.0px" android:text="140" />
+				<ImageView android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:src="@drawable/icon_delwords" />
+			</LinearLayout>
+		</RelativeLayout>
+		<LinearLayout android:gravity="top|left|center"
+			android:orientation="vertical" android:id="@+id/lySuggestion"
+			android:background="@null" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_above="@+id/marks">
+			<EditText
+				android:gravity="top|left|center" android:id="@+id/et_mblog"
+				android:background="@null" android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:layout_margin="3.0px"
+				android:hint="说点儿" android:singleLine="false"
+				android:capitalize="sentences" android:isScrollContainer="true"
+				android:imeOptions="actionDone" />
+			<ImageView android:id="@+id/ivSuggestionTopLine"
+				android:background="@drawable/suggestion_top_line"
+				android:visibility="gone" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+			<ListView android:id="@+id/lvSuggestionRecent"
+				android:background="#ffe4e6e9" android:visibility="gone"
+				android:fadingEdgeLength="0.0sp" android:layout_width="fill_parent"
+				android:layout_height="fill_parent" android:drawSelectorOnTop="false"
+				android:cacheColorHint="#00000000" android:divider="@drawable/suggestion_line"
+				android:dividerHeight="2.0px" />
+		</LinearLayout>
+	</RelativeLayout>
+	<EditText
+		android:id="@+id/emotion_view" android:visibility="gone"
+		android:layout_width="fill_parent" android:layout_height="wrap_content" />
+</LinearLayout>

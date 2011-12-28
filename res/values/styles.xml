@@ -32,4 +32,85 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:drawablePadding">3dip</item>
     </style>
+	<style name="create_btn_bg">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:background">@drawable/create_btn_bg</item>
+	</style>
+	<style name="userinfo_font">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#FF999999</item>
+		<item name="android:textSize">16.0sp</item>
+	</style>
+	<style name="selfinfo_num">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#FF005500</item>
+		<item name="android:textSize">16.0sp</item>
+	</style>
+	<style name="more_font">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:layout_gravity">center</item>
+		<item name="android:layout_marginLeft">10.0dp</item>
+		<item name="android:textColor">#FF666666</item>
+		<item name="android:textSize">16.0sp</item>
+	</style>
+	<style name="more_triangle">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">center_vertical</item>
+		<item name="android:layout_marginRight">15.0dp</item>
+	</style>
+
+	<style name="mainTabs_radio">
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#FFFFFFFF</item>
+		<item name="android:textSize">10.0sp</item>
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:background">@drawable/maintabs_radio</item>
+		<item name="android:paddingTop">5.0dp</item>
+		<item name="android:button">@null</item>
+		<item name="android:layout_weight">1.0</item>
+	</style>
+
+	<style name="selfinfo_radio">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">#FF000000</item>
+		<item name="android:textSize">12.0sp</item>
+		<item name="android:gravity">center</item>
+		<item name="android:button">@null</item>
+	</style>
+	<style name="detail_bottom">
+	<item name="android:layout_width">fill_parent</item>
+	<item name="android:layout_height">wrap_content</item>
+	<item name="android:layout_weight">1</item>
+	<item name="android:gravity">center</item>
+	<item name="android:clickable">true</item>
+	<item name="android:textColor">#FFFFFFFF</item>
+	<item name="android:textSize">10.0sp</item>
+	</style>
+	<style name="detail_sub_bt">
+	<item name="android:layout_width">wrap_content</item>
+	<item name="android:layout_height">wrap_content</item>
+	<item name="android:gravity">center</item>
+	<item name="android:clickable">true</item>
+	<item name="android:background">@drawable/detail_sub_redirect</item>
+	<item name="android:orientation">horizontal</item>
+	</style>
+	
+	<style name="transDialog" parent="android:Theme.Dialog">
+	<item name="android:windowFrame">@null</item>
+	<item name="android:windowNoTitle">true</item>
+	<item name="android:windowBackground">@null</item>
+	<item name="android:windowIsFloating">true</item>
+	<item name="android:windowContentOverlay">@null</item>
+	
+	</style>
+
 </resources>

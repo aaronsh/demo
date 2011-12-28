@@ -66,6 +66,48 @@
         </activity>
 
         <service android:name=".handle.WebUpdateService" />
+
+        <activity android:name="com.weibo.Front" />
+        <activity android:name="com.weibo.MainTabs" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="OAuthActivity"
+                    android:scheme="weibo4android" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.weibo.MainTabs" >
+        </activity>
+        <activity android:name="com.weibo.Home" >
+        </activity>
+        <activity android:name="com.weibo.Msg" >
+        </activity>
+        <activity android:name="com.weibo.SelfInfo" >
+        </activity>
+        <activity android:name="com.weibo.Square" >
+        </activity>
+        <activity android:name="com.weibo.More" >
+        </activity>
+        <activity android:name="com.weibo.WeiboUpdater" >
+        </activity>
+        <activity android:name="com.weibo.WeiboDetail" >
+        </activity>
+        <activity android:name="com.weibo.UserInfo" >
+        </activity>
+        <activity android:name="com.weibo.UserList" >
+        </activity>
+        <activity android:name="com.weibo.WeiboList" >
+        </activity>
+        <activity android:name="com.weibo.UserInfoEditor" >
+        </activity>
+        <activity android:name="com.weibo.CommentList" >
+        </activity>
+        <activity android:name="com.weibo.PicShower" >
+        </activity>
     </application>
 
     <uses-sdk android:minSdkVersion="8" />

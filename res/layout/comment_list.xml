@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#FFF4F4F4">
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" android:background="@drawable/titlebar_bg_nor">
+		<Button android:id="@+id/commentList_title_back"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/title_back" />
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:layout_weight="1"
+			android:gravity="center" android:text="@string/comment"
+			android:textColor="#FF000000" android:textSize="18.0sp" />
+		<Button android:id="@+id/commentList_title_comment"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:background="@drawable/title_send" android:text="@string/comment"
+			android:textSize="14.0sp" />
+	</LinearLayout>
+	<ListView android:id="@+id/commentList_list"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:cacheColorHint="#00000000" android:divider="@drawable/suggestion_line"></ListView>
+
+</LinearLayout>

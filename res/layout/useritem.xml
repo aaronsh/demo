@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="horizontal" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" gravity="center">
+	<!-- icon -->
+	<FrameLayout android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"
+		android:layout_marginTop="5.0dip">
+		<ImageView android:id="@+id/useritem_icon"
+			android:layout_width="35.0dip" android:layout_height="35.0dip"
+			android:paddingRight="8.0dip" android:paddingBottom="8.0dip"
+			android:background="@drawable/portrait" />
+		<ImageView android:id="@+id/useritem_v"
+			android:layout_width="42.0dip" android:layout_height="42.0dip"
+			android:background="@drawable/portrait_v" />
+	</FrameLayout>
+	<!-- name & weibo -->
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1"
+		android:orientation="vertical">
+		<TextView android:id="@+id/useritem_name"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_weight="1" android:singleLine="true"/>
+		<TextView android:id="@+id/useritem_weibo"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:layout_weight="1" android:layout_marginTop="5.0dip"
+			android:gravity="bottom" android:singleLine="true" />
+	</LinearLayout>
+	<!-- attention & unattention -->
+	<Button android:id="@+id/useritem_attention"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_marginTop="5.0dip" android:layout_marginRight="10.0dip"
+		android:background="@drawable/btn_attention" android:text="@string/attention" />
+	<Button android:id="@+id/useritem_unattention"
+		android:layout_marginTop="5.0dip" android:layout_marginRight="10.0dip"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:background="@drawable/btn_unattention" android:text="@string/unattention" />
+</LinearLayout>

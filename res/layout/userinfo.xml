@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="#FFF4F4F4">
+	<!-- titlebar -->
+	<include android:id="@+id/userinfo_titlebar" layout="@layout/titlebar" />
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1"
+		android:layout_marginBottom="10.0dip" android:scrollbars="vertical">
+		<LinearLayout android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:orientation="vertical">
+			<!-- 头像 姓名 -->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dip"
+				android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip"
+				android:orientation="horizontal">
+				<FrameLayout android:layout_width="120.0dip"
+					android:layout_height="120.0dip">
+					<ImageView android:id="@+id/userinfo_icon"
+						android:layout_width="fill_parent" android:layout_height="fill_parent"
+						android:src="@drawable/portrait" />
+					<ImageView android:layout_width="fill_parent"
+						android:layout_height="fill_parent" android:src="@drawable/portrait_round" />
+				</FrameLayout>
+				<RelativeLayout android:layout_width="wrap_content"
+					android:layout_height="fill_parent" android:layout_marginLeft="10.0dip">
+					<TextView android:id="@+id/userinfo_name"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:maxWidth="150dip" android:layout_marginTop="10.0dip"
+						android:textSize="18.0sp" android:textColor="#FF000000" />
+					<ImageView android:id="@+id/userinfo_v"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_marginLeft="5.0dip" android:layout_toRightOf="@id/userinfo_name"
+						android:layout_alignBottom="@id/userinfo_name" android:src="@drawable/v" />
+					<ImageView android:id="@+id/userinfo_gender"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_below="@id/userinfo_name" android:background="@drawable/icon_male" />
+					<Button android:id="@+id/userinfo_attention_bt"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_alignParentBottom="true" android:background="@drawable/btn_attention"
+						android:text="@string/attention" android:textColor="#FFFFFFFF"
+						android:visibility="gone" />
+					<Button android:id="@+id/userinfo_unattention_bt"
+						android:layout_width="wrap_content" android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_alignParentBottom="true" android:background="@drawable/btn_unattention"
+						android:text="@string/unattention" android:textColor="#FFFFFFFF"
+						android:visibility="gone" />
+				</RelativeLayout>
+			</LinearLayout>
+			<!-- 认证 -->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dp"
+				android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip"
+				android:layout_gravity="center_horizontal" android:gravity="center_vertical"
+				android:orientation="horizontal" android:background="@drawable/list_above_nor">
+				<TextView style="@style/userinfo_font" android:text="@string/sina_v" />
+				<TextView android:id="@+id/userinfo_elseSinaV"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:textColor="#FF000000" android:textSize="16.0sp" />
+			</LinearLayout>
+			<!-- 地址 -->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"
+				android:layout_marginRight="10.0dip" android:layout_gravity="center_horizontal"
+				android:gravity="center_vertical" android:orientation="horizontal"
+				android:background="@drawable/list_mid_nor" >
+				<TextView style="@style/userinfo_font" android:text="@string/address" />
+				<TextView android:id="@+id/userinfo_elseAddress"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:textColor="#FF000000" android:textSize="16.0sp" />
+			</LinearLayout>
+			<!-- 介绍 -->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"
+				android:layout_marginRight="10.0dip" android:layout_gravity="center_horizontal"
+				android:gravity="center_vertical" android:orientation="horizontal"
+				android:background="@drawable/list_below_nor" >
+				<TextView style="@style/userinfo_font" android:text="@string/intro" />
+				<TextView android:id="@+id/userinfo_elseIntro"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:textColor="#FF000000" android:textSize="16.0sp" />
+			</LinearLayout>
+			<!-- 关注 微博  粉丝 话题-->
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginTop="10.0dp"
+				android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip"
+				android:gravity="center_horizontal" android:orientation="horizontal">
+				<!-- 关注 -->
+				<LinearLayout android:id="@+id/userinfo_attention_layout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_left_above">
+					<TextView android:id="@+id/userinfo_attention" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/attention" />
+				</LinearLayout>
+				<!-- 微博 -->
+				<LinearLayout android:id="@+id/userinfo_weibo_layout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_right_above">
+					<TextView android:id="@+id/userinfo_weibo" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/weibo" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:layout_marginLeft="10.0dip"
+				android:layout_marginRight="10.0dip" android:gravity="center_horizontal"
+				android:orientation="horizontal">
+				<!-- 粉丝 -->
+				<LinearLayout android:id="@+id/userinfo_fans_layout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_left_below">
+					<TextView android:id="@+id/userinfo_fans" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/fans" />
+				</LinearLayout>
+				<!-- 话题 -->
+				<LinearLayout android:id="@+id/userinfo_topic_layout"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:gravity="center" android:clickable="true"
+					android:orientation="vertical" android:background="@drawable/panel_right_below">
+					<TextView android:id="@+id/userinfo_topic" style="@style/selfinfo_num"
+						android:text="0" />
+					<TextView style="@style/userinfo_font" android:text="@string/topic" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+	<!-- bottom -->
+	<LinearLayout android:id="@+id/userinfo_bottombar"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+		<Button android:id="@+id/userinfo_refresh" style="@style/detail_bottom"
+			android:drawableTop="@drawable/toolbar_refresh_icon" android:text="@string/refresh"
+			android:background="@drawable/detail_bottom_left" />
+		<Button android:id="@+id/userinfo_atElse" style="@style/detail_bottom"
+			android:drawableTop="@drawable/ui_icon_at" android:background="@drawable/detail_bottom_mid"
+			android:text="@string/atelse" />
+		<Button android:id="@+id/userinfo_senMsg" style="@style/detail_bottom"
+			android:drawableTop="@drawable/ui_icon_letter" android:text="@string/sendMsg"
+			android:background="@drawable/detail_bottom_mid" />
+		<Button android:id="@+id/userinfo_addToBlacklist" style="@style/detail_bottom"
+			android:drawableTop="@drawable/ui_icon_blacklist" android:text="@string/addToBlacklist"
+			android:background="@drawable/detail_bottom_right" />
+	</LinearLayout>
+</LinearLayout>

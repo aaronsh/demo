@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="picFrom">
+        <item>@string/camera</item>
+        <item>@string/phoneGallery</item>
+    </string-array>
+    <string-array name="weiboFunction">
+        <item>@string/redirect</item>
+        <item>@string/comment</item>
+        <item>@string/favorite</item>
+        <item>@string/checkUserInfo</item>
+    </string-array>
+    <string-array name="commentList_options">
+        <item>@string/reply</item>
+        <item>@string/viewProfile</item>
+    </string-array>
+    
+</resources>
