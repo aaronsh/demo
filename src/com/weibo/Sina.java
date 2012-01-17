@@ -33,7 +33,7 @@ public class Sina {
 		return weibo;
 	}
 	/**
-	 * è¿›å…¥å‘å¸ƒå¾®åšç•Œé¢
+	 * ½øÈë·¢²¼Î¢²©½çÃæ
 	 * @param context
 	 */
 	public void updateWeibo(Context context) {
@@ -44,9 +44,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿›å…¥è½¬å‘å¾®åšç•Œé¢
+	 * ½øÈë×ª·¢Î¢²©½çÃæ
 	 * @param context
-	 * @param id è¦è½¬å‘çš„å¾®åšid
+	 * @param id Òª×ª·¢µÄÎ¢²©id
 	 */
 	public void redirectWeibo(Context context, long id) {
 		Intent i = new Intent(context, WeiboUpdater.class);
@@ -57,7 +57,7 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿›å…¥è¯„è®ºåˆ—è¡¨ç•Œé¢
+	 * ½øÈëÆÀÂÛÁĞ±í½çÃæ
 	 * @param context context
 	 * @param id
 	 */
@@ -69,7 +69,7 @@ public class Sina {
 		context.startActivity(i);		
 	}
 	/**
-	 * è¿›å…¥è¯„è®ºå¾®åšç•Œé¢
+	 * ½øÈëÆÀÂÛÎ¢²©½çÃæ
 	 * @param context
 	 * @param id
 	 */
@@ -82,7 +82,7 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿”å›é¦–é¡µ/Home
+	 * ·µ»ØÊ×Ò³/Home
 	 * @param context
 	 */
 	public void backToHome(Context context) {
@@ -91,9 +91,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿›å…¥å¾®åšè¯¦ç»†ä¿¡æ¯ç•Œé¢
+	 * ½øÈëÎ¢²©ÏêÏ¸ĞÅÏ¢½çÃæ
 	 * @param context
-	 * @param status å¯¹åº”å¾®åšçš„Status
+	 * @param status ¶ÔÓ¦Î¢²©µÄStatus
 	 */
 	public void goToDetail(Context context, Status status) {
 		Intent i = new Intent(context, WeiboDetail.class);
@@ -103,9 +103,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿›å…¥ç”¨æˆ·èµ„æ–™ç•Œé¢
+	 * ½øÈëÓÃ»§×ÊÁÏ½çÃæ
 	 * @param context
-	 * @param userId å¯¹åº”ç”¨æˆ·id
+	 * @param userId ¶ÔÓ¦ÓÃ»§id
 	 */
 	public void goToUserInfo(Context context, long userId) {
 		Intent i = new Intent(context, UserInfo.class);
@@ -115,7 +115,7 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * è¿›å…¥ç”¨æˆ·èµ„æ–™ç¼–è¾‘ç•Œé¢ï¼ˆä»…æ”¯æŒç¼–è¾‘è‡ªå·±çš„èµ„æ–™ï¼‰
+	 * ½øÈëÓÃ»§×ÊÁÏ±à¼­½çÃæ£¨½öÖ§³Ö±à¼­×Ô¼ºµÄ×ÊÁÏ£©
 	 * @param context
 	 * @param user
 	 */
@@ -127,9 +127,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * æ˜¾ç¤ºå…³æ³¨ç•Œé¢
+	 * ÏÔÊ¾¹Ø×¢½çÃæ
 	 * @param context
-	 * @param userId å¯¹åº”çš„ç”¨æˆ·id
+	 * @param userId ¶ÔÓ¦µÄÓÃ»§id
 	 */
 	public void showAttention(Context context, long userId) {
 		Intent i=new Intent(context,UserList.class);
@@ -140,9 +140,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * æ˜¾ç¤ºå‘è¡¨çš„å¾®åšç•Œé¢
+	 * ÏÔÊ¾·¢±íµÄÎ¢²©½çÃæ
 	 * @param context
-	 * @param userId å¯¹åº”çš„ç”¨æˆ·id
+	 * @param userId ¶ÔÓ¦µÄÓÃ»§id
 	 */
 	public void showWeibo(Context context,long userId){
 		Intent i=new Intent(context,WeiboList.class);
@@ -153,9 +153,9 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * æ˜¾ç¤ºç²‰ä¸ç•Œé¢
+	 * ÏÔÊ¾·ÛË¿½çÃæ
 	 * @param context
-	 * @param userId å¯¹åº”çš„ç”¨æˆ·id
+	 * @param userId ¶ÔÓ¦µÄÓÃ»§id
 	 */
 	public void showFans(Context context, long userId) {
 		Intent i=new Intent(context,UserList.class);
@@ -166,13 +166,13 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * æ˜¾ç¤ºè¯é¢˜ç•Œé¢ï¼ˆæœªå®Œæˆï¼‰
+	 * ÏÔÊ¾»°Ìâ½çÃæ£¨Î´Íê³É£©
 	 */
 	public void ShowTopic() {
 
 	}
 	/**
-	 * æ˜¾ç¤ºæ”¶è—ç•Œé¢ï¼ˆä»…æ”¯æŒæ˜¾ç¤ºè‡ªå·±çš„æ”¶è—ï¼‰
+	 * ÏÔÊ¾ÊÕ²Ø½çÃæ£¨½öÖ§³ÖÏÔÊ¾×Ô¼ºµÄÊÕ²Ø£©
 	 * @param context
 	 */
 	public void showFavorite(Context context) {
@@ -183,7 +183,7 @@ public class Sina {
 		context.startActivity(i);
 	}
 	/**
-	 * æ˜¾ç¤ºé»‘åå•ç•Œé¢ï¼ˆæš‚ä¸æ”¯æŒï¼‰ï¼ˆSDKæœ‰è¯¯ï¼Œå°šæœªä¿®æ”¹ï¼‰
+	 * ÏÔÊ¾ºÚÃûµ¥½çÃæ£¨Ôİ²»Ö§³Ö£©£¨SDKÓĞÎó£¬ÉĞÎ´ĞŞ¸Ä£©
 	 * @param context
 	 * @param userId
 	 */

@@ -119,7 +119,7 @@ public class CheckVersionActivity extends Activity {
 		}
 		if (!invalid) {
 			long current = System.currentTimeMillis();
-			final long ONE_WEEK = 7 * 24 * 60 * 60 * 1000;
+			final long ONE_WEEK = 10 * 24 * 60 * 60 * 1000;
 			final long ONE_MINUTE = 60 * 1000;
 			if ((current - firstRun) > ONE_WEEK) {
 				Log.v(TAG, "set invalid flag");

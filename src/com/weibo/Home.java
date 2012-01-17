@@ -48,7 +48,7 @@ public class Home extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.weibo_main);
+		setContentView(R.layout.home);
 
 		getViews();
 		setViews();
